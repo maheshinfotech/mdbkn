@@ -1,0 +1,14 @@
+.class-inner-padding{
+    padding: 13px!important;
+}
+
+.nav-main-submenu .nav-main-link.active, .nav-main-submenu .nav-main-link:focus, .nav-main-submenu .nav-main-link:hover ,.nav-main-link.active {
+
+    /* color : red */
+    color : #ee1a26
+}
+
+.qr-modal-body svg{
+    height: 300px;
+    width: 300px;
+}
