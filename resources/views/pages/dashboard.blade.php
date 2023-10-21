@@ -1,5 +1,5 @@
 @php
-    $pageName = 'Dashboard';
+    $pageName = 'dashboard';
     $tableHead = ['Full Name', 'Machine Name', 'Reading Number', 'Fuel in Liters'];
     $tableHeadSecond = ['Full Name', 'Machine Name', 'Working Hours'];
 @endphp

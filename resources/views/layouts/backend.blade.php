@@ -1,6 +1,6 @@
 @php
     $routePrefix = request()->path();
-    $parentRoute = isset($parentRoute) && $parentRoute ? config('app.admin_prefix').$parentRoute : ''; 
+    $parentRoute = isset($parentRoute) && $parentRoute ? config('app.admin_prefix') . $parentRoute : '';
     $userFirstCharacter = Auth::user() ? substr(Auth::user()->name, 0, 1) : '#';
     $role_id = Auth::user() ? Auth::user()->role_id : 1;
 @endphp
@@ -13,7 +13,8 @@
 
     <title>{{ config('app.app_name') }} | {{ $pageName ?? '' }}</title>
 
-    <meta name="description" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
+    <meta name="description"
+        content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
     <meta name="author" content="pixelcave">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="robots" content="noindex, nofollow">
@@ -28,27 +29,28 @@
     <link rel="stylesheet" href="{{ asset('js/plugins/select2/css/select2.min.css') }} ">
     <link rel="stylesheet" href="{{ asset('js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
     <link rel="stylesheet" href="{{ asset('js/plugins/dropzone/min/dropzone.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('js/plugins/datatables-responsive-bs5/css/responsive.bootstrap5.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('js/plugins/datatables-responsive-bs5/css/responsive.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('js/plugins/flatpickr/flatpickr.min.css') }}">
-    <link rel="stylesheet" id="css-main" href="{{asset('theme/css/oneui.min.css')}}">
+    <link rel="stylesheet" id="css-main" href="{{ asset('theme/css/oneui.min.css') }}">
     <link rel="stylesheet" href="{{ asset('js/plugins/ion-rangeslider/css/ion.rangeSlider.css') }}">
-    <link rel="stylesheet" id="css-main" href="{{asset('assets/css/custom.css?'.date('Ymdhis'))}}">
+    <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/custom.css?' . date('Ymdhis')) }}">
 
     {{-- Datatable --}}
 
     <style>
-        .cursor-pointer{
-            cursor : pointer!important;
+        .cursor-pointer {
+            cursor: pointer !important;
         }
     </style>
     <!-- Modules -->
-    
+
     {{-- @vite(['resources/sass/main.scss', 'resources/js/oneui/app.js']) --}}
 
     <!-- Alternatively, you can also include a specific color theme after the main stylesheet to alter the default color theme of the template -->
     {{-- @vite(['resources/sass/main.scss', 'resources/sass/oneui/themes/amethyst.scss', 'resources/js/oneui/app.js']) --}}
     <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
-    
+
     <script>
         const base = "{!! url(config('app.admin_prefix')) !!}";
     </script>
@@ -79,17 +81,18 @@
     <!-- <script src="{{ asset('theme/js/pages/be_comp_calendar.min.js') }}"></script> -->
     <script src="{{ asset('theme/js/pages/be_comp_calendar.js') }}"></script>
     <script src="{{ asset('js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js') }}"></script>
-    <script src="{{ asset('assets/js/custom.js?ver='.time()) }}"></script>
+    <script src="{{ asset('assets/js/custom.js?ver=' . time()) }}"></script>
 
-    <script>One.helpersOnLoad(['js-flatpickr', 'jq-datepicker', 'jq-maxlength', 'jq-select2', 'jq-rangeslider']);</script>
+    <script>
+        One.helpersOnLoad(['js-flatpickr', 'jq-datepicker', 'jq-maxlength', 'jq-select2', 'jq-rangeslider']);
+    </script>
     @yield('js')
 </head>
 
 <body>
 
-    <!-- add class sidebar-dark for dark code --> 
-    <div id="page-container"
-        class="sidebar-o enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+    <!-- add class sidebar-dark for dark code -->
+    <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-fixed main-content-narrow">
         <!-- Side Overlay-->
         <aside id="side-overlay">
             <!-- Side Header -->
@@ -149,9 +152,10 @@
                     </span>
                     <!-- <span class="smini-hide fs-5 tracking-wider">{{ config('app.app_name') }}</span> -->
                     <span class="smini-hide fs-5 tracking-wider">
-                        <img class="" src="{{ asset('media/logo.png') }}" alt="Header Avatar" style="width: 100px;height:95px">
+                        <img class="" src="{{ asset('media/logo.png') }}" alt="Header Avatar"
+                            style="width: 100px;height:95px">
                     </span>
-                    
+
                 </a>
                 <!-- END Logo -->
 
@@ -185,26 +189,26 @@
 
                         @foreach ($parentMenus as $parentMenu)
                             @php
-                                if($parentMenu->is_active==0){
+                                if ($parentMenu->is_active == 0) {
                                     continue;
                                 }
-                                $otherClass = count($parentMenu->childMenus)  ? '' : '';
-                                $otherSubClass = count($parentMenu->childMenus)  ? 'nav-main-link-submenu' : '';
-                                $otherAttributes = count($parentMenu->childMenus)  ? "data-toggle='submenu' aria-haspopup='true' aria-expanded='false'" : '';
+                                $otherClass = count($parentMenu->childMenus) ? '' : '';
+                                $otherSubClass = count($parentMenu->childMenus) ? 'nav-main-link-submenu' : '';
+                                $otherAttributes = count($parentMenu->childMenus) ? "data-toggle='submenu' aria-haspopup='true' aria-expanded='false'" : '';
 
                                 $menu_arr = $parentMenu->toArray();
                                 $parentMenuOpen = '';
-                                if(isset($menu_arr['child_menus']) && !empty(isset($menu_arr['child_menus']))){
-                                    foreach($menu_arr['child_menus'] as $cm){
-                                        if (str_contains($routePrefix, $cm['menu_href'])) { 
+                                if (isset($menu_arr['child_menus']) && !empty(isset($menu_arr['child_menus']))) {
+                                    foreach ($menu_arr['child_menus'] as $cm) {
+                                        if (str_contains($routePrefix, $cm['menu_href'])) {
                                             $parentMenuOpen = 'open';
                                         }
                                     }
                                 }
-                                
+
                             @endphp
 
-                            <li class="nav-main-item {{$parentMenuOpen}} {{ $otherClass }}">
+                            <li class="nav-main-item {{ $parentMenuOpen }} {{ $otherClass }}">
                                 <a class=" nav-main-link {{ in_array(config('app.admin_prefix') . $parentMenu['menu_href'], [$routePrefix, $parentRoute]) ? 'active' : '' }} {{ $otherSubClass }}"
                                     href="{{ $parentMenu['menu_href'] ? url(config('app.admin_prefix') . $parentMenu['menu_href']) : '#' }}"
                                     {!! $otherAttributes !!}>
@@ -218,16 +222,17 @@
                                             <!-- if($role_id==1 && ($childMenu->id==14 || $childMenu->id==15))
                                                 continue
                                             endif -->
-                                            @if($childMenu->is_active==0)
+                                            @if ($childMenu->is_active == 0)
                                                 @continue;
-                                            @endif 
-                                            @php 
-                                            $is_active_menu = (config('app.admin_prefix') . $childMenu['menu_href']==$routePrefix)?'active':'';
-                                            @endphp 
+                                            @endif
+                                            @php
+                                                $is_active_menu = config('app.admin_prefix') . $childMenu['menu_href'] == $routePrefix ? 'active' : '';
+                                            @endphp
                                             <li class="nav-main-item">
                                                 <a class="nav-main-link {{ $is_active_menu }} "
                                                     href="{{ url(config('app.admin_prefix') . $childMenu['menu_href']) }}">
-                                                    <span class="nav-main-link-name">{{$childMenu['menu_placeholder']}}</span>
+                                                    <span
+                                                        class="nav-main-link-name">{{ $childMenu['menu_placeholder'] }}</span>
                                                 </a>
                                             </li>
                                         @endforeach
@@ -298,7 +303,7 @@
                             <img class="rounded-circle" src="{{ asset('media/avatars/avatar10.jpg') }}"
                                 alt="Header Avatar" style="width: 21px;">
                             <span
-                                class="d-none d-sm-inline-block ms-2 text-capitalize">{{   auth('sanctum')->user()->name ?? 'Guest' }}</span>
+                                class="d-none d-sm-inline-block ms-2 text-capitalize">{{ auth('sanctum')->user()->name ?? 'Guest' }}</span>
                             <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block ms-1 mt-1"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0"
@@ -306,16 +311,16 @@
                             {{-- <div role="separator" class="dropdown-divider m-0"></div> --}}
                             {{-- <div class="p-2"> --}}
 
-                            @can('update-profile' , 'user')
-                                <a class="dropdown-item"
-                                    href="{{ route('update-profile') }}">
-                                <i class="fa-solid fa-user-pen"></i> <span class="fs-sm fw-medium mx-2">Update Profile</span>
+                            @can('update-profile', 'user')
+                                <a class="dropdown-item" href="{{ route('update-profile') }}">
+                                    <i class="fa-solid fa-user-pen"></i> <span class="fs-sm fw-medium mx-2">Update
+                                        Profile</span>
                                 </a>
                             @endCan
 
-                            <a class="dropdown-item"
-                                href="{{ url(config('app.admin_prefix').'logout') }}">
-                                <i class="fa-solid fa-right-from-bracket"></i> <span class="fs-sm fw-medium mx-2">Log Out</span>
+                            <a class="dropdown-item" href="{{ url(config('app.admin_prefix') . 'logout') }}">
+                                <i class="fa-solid fa-right-from-bracket"></i> <span class="fs-sm fw-medium mx-2">Log
+                                    Out</span>
                             </a>
                             {{-- </div> --}}
                         </div>
@@ -378,40 +383,40 @@
         </main>
     </div>
 
-    <script src="{{asset('theme/js/oneui.app.min.js')}}"></script>
+    <script src="{{ asset('theme/js/oneui.app.min.js') }}"></script>
 
     <!-- Page JS Code -->
-    <script src="{{url('theme/js/pages/be_tables_datatables.min.js')}}"></script>
+    <script src="{{ url('theme/js/pages/be_tables_datatables.min.js') }}"></script>
 
     @php
-        
+
         $flash = request()
             ->session()
             ->get('flash_data');
         $message = '';
         $status = false;
-        
+
         if ($flash) {
             $notification_class = $flash['status'] ? 'success' : 'danger';
             $message = $flash['message'];
             $status = $flash['status'];
         } elseif ($errors->any()) {
             $notification_class = 'danger';
-        
+
             foreach ($errors->all() as $error) {
                 $message .= "<span>$error</span><br>";
             }
         }
-        
+
         $flashData = [];
-        
+
         if ($message) {
             $flashData = [
                 'class' => $notification_class,
                 'message' => $message,
             ];
         }
-        
+
     @endphp
 
     <script>

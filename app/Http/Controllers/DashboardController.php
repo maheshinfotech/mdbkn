@@ -18,7 +18,6 @@ class DashboardController extends Controller
     public function index()
     {
         Gate::authorize('view', 'dashboard');
-
         return view('pages.dashboard');
     }
 }
