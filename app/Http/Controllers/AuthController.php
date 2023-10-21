@@ -29,17 +29,15 @@ class AuthController extends Controller
 
         $validated = $request;
 
-        if (\Auth::attempt(['email' => $validated['email'], 'password' => $validated['password'] ,'is_active' => 1])) {
-            
+        if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password'], 'is_active' => 1])) {
+
             return redirect()->route('dashboard');
-        
         } else {
-            
-            return redirect()->route('login')->with("error" , "Opps! Seems like Credentials are not Correct.");
-                
+
+            return redirect()->route('login')->with("error", "Opps! Seems like Credentials are not Correct.");
         }
     }
-    
+
     public function logout()
     {
         auth()->logout();
@@ -73,30 +71,32 @@ class AuthController extends Controller
         return redirect()->route('index');
     }
 
-    public function forgotPasswordView(){
+    public function forgotPasswordView()
+    {
 
         return view('forgot-password');
-
     }
 
-    public function forgotPasswordEmail(){
-        
+    public function forgotPasswordEmail()
+    {
+
         request()->validate([
             'recover_email' => 'required|email|exists:users',
         ]);
 
-        $this->setFlashSession(true , 'Great! Please follow the Email that We have just Sent You.');
+        $this->setFlashSession(true, 'Great! Please follow the Email that We have just Sent You.');
 
         return redirect()->route('forgotPassword');
-
     }
 
-    public function resetPasswordView($id){
+    public function resetPasswordView($id)
+    {
         return view('reset-password');
     }
 
-    public function resetPassword($id){
-            
+    public function resetPassword($id)
+    {
+
         request()->validate([
             'password' => 'required|confirmed',
         ]);
@@ -111,14 +111,11 @@ class AuthController extends Controller
 
         $this->setFlashSession($res);
 
-        if($res){
-        
+        if ($res) {
+
             return redirect()->route('login');
-        
         }
-        
-        return redirect()->route('reset-password' , ['id' => $id]);
 
+        return redirect()->route('reset-password', ['id' => $id]);
     }
-
 }

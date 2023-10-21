@@ -80,68 +80,12 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::post('/permissions', 'setPermissions')->name('set-permission');
         });
 
-        Route::controller(\App\Http\Controllers\GroupController::class)->group(function () {
 
-            Route::get('/groups', 'index')->name('index-group');
 
-            Route::get('/manage-group/{group_placeholder?}', 'showForm')->name('show-group');
-
-            Route::get('/toggle-group-status/{group_placeholder}', 'toggleStatus')->name('toggle-group-status');
-
-            Route::post('/manage-group', 'manage')->name('create-group');
-
-            Route::put('/manage-group/{group_placeholder}', 'manage')->name('update-group');
-
-            Route::delete('/group/{group_placeholder}', 'delete')->name('delete-group');
-        });
-
-        Route::controller(\App\Http\Controllers\MachineryController::class)->group(function () {
-
-            Route::get('/machinery', 'index')->name('index-machinery');
-
-            Route::get('/manage-machinery/{machinery_placeholder?}', 'showForm')->name('show-machinery');
-
-            Route::post('/manage-machinery', 'manage')->name('create-machinery');
-
-            Route::get('/toggle-machine-status/{machine_placeholder}', 'toggleStatus')->name('toggle-machine-status');
-
-            Route::put('/manage-machinery/{machinery_placeholder}', 'manage')->name('update-machinery');
-
-            Route::delete('/machinery/{machinery_placeholder}', 'delete')->name('delete-machinery');
-
-            Route::get('/fuel-consumption-reading', 'fuelConsumptionReading')->name('fuel-consumption-reading-listing');
-
-            Route::get('/machine-working-hours', 'machineWorkingHours')->name('machine-working-hours-listing');
-
-            /**Backend Edit */
-
-            Route::get('/manage-machine-working-hours/{id}', 'showMachineWorkingHour')->name('show-machine-working-hours');
-
-            Route::post('/manage-machine-working-hours/{id}', 'updateMachineWorkingHour')->name('update-machine-working-hours');
-
-            Route::get('/manage-fuel-consumption-reading/{id}', 'showFuelReading')->name('show-fuel-reading');
-
-            Route::post('/manage-fuel-consumption-reading/{id}', 'updateFuelReading')->name('update-fuel-reading');
-
-            /**End */
-
-            Route::get('/machine-fuel-summary', 'machineFuelSummary')->name('machine-fuel-summary');
-
-            Route::get('/group-fuel-summary', 'groupFuelSummary')->name('group-fuel-summary');
-
-            Route::get('/monthly-report', 'monthlyReport')->name('monthly-report');
-
-            /**Mass Insert through excel file */
-
-            Route::get('/manage-fuel-consumption-reading', 'createFuelReading')->name('create-fuel-reading');
-
-            Route::get('/manage-machine-working-hours', 'createMachineHours')->name('create-machine-hours');
-
-            Route::post('/mass-insert-fuel-reading', 'massInsertFuelConsumption')->name('mass-insert-fuel-reading');
-
-            Route::post('/mass-insert-machine-hours', 'massInsertMachineHours')->name('mass-insert-machine-hours');
-
-            /**End */
+        Route::controller(\App\Http\Controllers\BookingController::class)->group(function () {
+            Route::get('/bookings', 'index')->name('index-booking');
+            Route::get('/bookings', 'create')->name('create-booking');
+            Route::post('/checkout', 'checkout')->name('checkout-booking');
         });
 
         Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
