@@ -23,6 +23,7 @@ class CreateRoomsTable extends Migration
             $table->date('booked_date')->nullable();
             $table->string('guest_capacity')->nullable();
             $table->foreign('category_id')->references('id')->on('room_categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->boolean('room_status')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
