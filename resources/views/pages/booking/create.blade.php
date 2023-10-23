@@ -8,6 +8,11 @@
 
 @section('content')
     <x-reusables.app-header pageName="{{ $pageName }}" />
+
+    @if (Session::has('message'))
+    <div class="alert alert-success w-25 text-center  mx-auto" role="alert" id="alert1"> {{Session::get('message')}}
+    </div>
+    @endif
     <div class="content  mx-0 w-100">
         <div class="block block-rounded">
             <div class="block-content block-content-full">
@@ -21,16 +26,17 @@
                         <!--card body starts -->
                         <div class="card-body">
                             <!--form starts -->
-                            <form action="" method="post">
+                            <form action="/bookings" method="post" enctype="multipart/form-data">
+                                @csrf
                                 <!--begin::Input group -->
                                 <div class="row mb-4 justify-content-center align-items-center">
                                     <!-- col 1 starts  -->
                                     <div class="col-lg-6 col-12">
                                         <label class=" fs-7 fw-bold mb-1 ">Choose Category:</label>
-                                        <select id="category" class="form-select" name="category">
-                                            <option selected>Category...</option>
+                                        <select id="category" class="form-select" name="category" required>
+                                            <option selected  value="">Category...</option>
                                             @foreach ($category as $cat)
-                                                <option value="1">1</option>
+                                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                             @endforeach
 
                                         </select>
@@ -39,11 +45,11 @@
                                     <!-- col 2 starts  -->
                                     <div class="col-lg-6 col-12">
                                         <label class=" fs-7 fw-bold mb-1 ">Choose Room:</label>
-                                        <select id="room" class="form-select" name="room">
-                                            <option selected>Rooms...</option>
-                                            <option value="1">1</option>
-                                            <option value="1">1</option>
-                                            <option value="1">1</option>
+                                        <select id="room"  class="form-select" name="room" required>
+                                            <option value="" selected>Rooms...</option>
+                                            @foreach ($rooms as $room )
+                                            <option value="{{ $room->id }}">{{ $room->room_number }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <!-- col 2 ends-->
@@ -56,7 +62,7 @@
                                     <!-- col start -->
                                     <div class="col-md-3 mb-3">
                                         <label class=" fw-bold mb-1 ">Guest Name:</label>
-                                        <input type="text" class="form-control" name="guest_name" id="name" />
+                                        <input type="text" class="form-control" name="guest_name" id="name"  required/>
                                     </div>
                                     <!-- col start -->
                                     <div class="col-md-3 mb-3">
@@ -82,34 +88,34 @@
                                     <!-- col start -->
                                     <div class="col-md-2 mb-3">
                                         <label class=" fw-bold mb-1 ">Patient Name:</label>
-                                        <input type="text" class="form-control" name="patient_name" id="patient_name" />
+                                        <input type="text" class="form-control" name="patient_name" id="patient_name" required />
                                     </div>
                                     <!-- col start -->
                                     <div class="col-md-2 mb-3">
                                         <label class=" fw-bold mb-1 ">Patient Ward No:</label>
-                                        <input type="text" class="form-control" name="wardno" id="wardnno" />
+                                        <input type="text" class="form-control" name="wardno" id="wardno" required />
                                     </div>
                                     <!-- col start -->
                                     <div class="col-md-2 mb-3">
                                         <label class=" fw-bold mb-1 ">Patient Bed No:</label>
-                                        <input type="text" class="form-control" name="bedno" id="bedno" />
+                                        <input type="text" class="form-control" name="bedno" id="bedno" required />
                                     </div>
                                     <!-- col start -->
                                     <div class="col-md-2 mb-3">
                                         <label class="fw-bold mb-1 ">Check-In Time:</label>
-                                        <input type="time" class="form-control" name="checkin" id="checkin" />
+                                        <input type="time" class="form-control" name="checkin" id="checkin" required />
                                     </div>
                                     <!-- col start -->
-                                    <div class="col-md-2 mb-3">
+                                    {{-- <div class="col-md-2 mb-3">
                                         <label class=" fw-bold mb-1">Check-Out Time:</label>
                                         <input type="time" class="form-control" name="checkout" id="checkout" />
-                                    </div>
+                                    </div> --}}
                                     <!-- col start -->
-                                    <div class="col-md-2 mb-3">
+                                    {{-- <div class="col-md-2 mb-3">
                                         <label class="fw-bold mb-1"> Estimated Total Days:</label>
                                         <input type="text" class="form-control" id="estimateddays"
                                             name="estimateddays" />
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <!--end::Input group-->
 
@@ -133,11 +139,11 @@
                                     <!-- col start -->
                                     <div class="col-md-2 mb-3">
                                         <label class=" fw-bold mb-1">Mobile No:</label>
-                                        <input type="number" class="form-control" name="mobile" id="mobile" />
+                                        <input type="number" class="form-control" name="mobile" id="mobile" required />
                                     </div>
                                     <!-- col start -->
                                     <div class="col-md-2 mb-3">
-                                        <label class="fw-bold mb-1">ID-Proof:</label>
+                                        <label class="fw-bold mb-1">(Guest)ID-Proof:</label>
                                         <input type="file" class="form-control" id="idproof" name="idproof" />
                                     </div>
                                     <!-- col start -->
@@ -153,29 +159,29 @@
                                     <!-- col start -->
                                     <div class="col-md-2 mb-3">
                                         <label class="fw-bold mb-1">Ward-Type (Ct/Rt):</label>
-                                        <input type="text" class="form-control" id="wardtype" name="wardtype" />
+                                        <input type="text" class="form-control" id="wardtype" name="wardtype" required />
                                     </div>
                                     <!-- col start -->
-                                    <div class="col-md-2 mb-3">
+                                    {{-- <div class="col-md-2 mb-3">
                                         <label class="fw-bold mb-1">Payable Rent:</label>
                                         <input type="text" class="form-control" id="payablerent"
                                             name="payablerent" />
-                                    </div>
+                                    </div> --}}
                                     <!-- col start -->
-                                    <div class="col-md-2 mb-3">
+                                    {{-- <div class="col-md-2 mb-3">
                                         <label class="fw-bold mb-1">Base Rent:</label>
                                         <input type="text" class="form-control" id="baserent" name="baserent" />
-                                    </div>
+                                    </div> --}}
                                     <!-- col start -->
-                                    <div class="col-md-2 mb-3">
+                                    {{-- <div class="col-md-2 mb-3">
                                         <label class="fw-bold mb-1">Paid Rent:</label>
                                         <input type="text" class="form-control" id="paidrent" name="paidrent" />
-                                    </div>
+                                    </div> --}}
                                     <!-- col start -->
                                     <div class="col-md-2 mb-3">
                                         <label class="fw-bold mb-1">Parking Provided:</label>
                                         <select id="" class="form-select" name="parking" id="parking">
-                                            <option selected>Choose...</option>
+                                            <option value="" selected>Choose...</option>
                                             <option value="1">Yes</option>
                                             <option value="2">No</option>
                                         </select>
@@ -192,8 +198,7 @@
                                     </div>
                                 </div>
                                 <!--end::Input group-->
-                            </form>
-                            <!--form ends -->
+
 
                             <!--begin repeater-->
                             <div class="repeater mt-4">
@@ -251,10 +256,12 @@
                             </div>
                             <!--end repeater-->
                             <div class="text-center mt-4">
-                                <button class="btn btn-purple btn-lg">Create Booking</button>
+                                <button type="submit"  class="btn btn-purple btn-lg">Create Booking</button>
                             </div>
                         </div>
                         <!--card body ends -->
+                    </form>
+                    <!--form ends -->
                     </div>
                     <!-- card ends -->
                 </div>
@@ -276,5 +283,11 @@
         $('.repeater').repeater({
 
         });
+
+$("#alert1")
+    .fadeTo(2000, 2000)
+    .slideUp(500, function () {
+        $("#alert1").slideUp(500);
+    });
     </script>
 @endsection
