@@ -12,3 +12,16 @@
     height: 300px;
     width: 300px;
 }
+
+/* new css */
+.text-purple{
+    color: rgba(50, 53, 93, 0.9);
+  }
+  .btn-purple{
+    background-color: rgba(50, 53, 93, 0.9);
+    color: white;
+  }
+  .btn-purple:hover{
+    background-color: rgba(50, 53, 93, 0.9);
+    color: white;
+  }

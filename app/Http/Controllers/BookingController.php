@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use  App\Model\Booking;
+use App\Models\RoomCategory;
 use Illuminate\Support\Facades\Gate;
 
 class BookingController extends Controller
@@ -14,10 +15,17 @@ class BookingController extends Controller
 
         return view('pages.booking.view');
     }
-
     public function create()
+
+    {
+        $category = RoomCategory::all();
+        return view('pages.booking.create', compact('category'));
+    }
+
+    public function store(Request $request)
     {
         Gate::authorize('create', 'booking');
+
 
         return view('pages.booking.create');
     }

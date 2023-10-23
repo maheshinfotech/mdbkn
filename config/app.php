@@ -246,7 +246,7 @@ return [
     'dateTimeFormat'            =>        'd M, Y H:i A',
     'timeFormat'                =>        'H:i A',
     'menu_permissions'          =>         [1 => 'View', 2 => 'Create', 3 => 'Update', 4 => 'Delete', 5 => 'UpdateProfile'],
-    'app_name'                  =>         'PRECIDENCY INFRACON LLP',
+    'app_name'                  =>         'MAHESHWARI DHARAMSHALA',
     'accessibility'             =>         ['3' => "Both", '1' => "Portal Only", '2' =>  "App Only"],
     'machine_permission'        =>         ['3' => "Both", '1' => "Fuel Consumption Only", '2' => "Working Hours Only"],
     'admin_role'                =>         '1',
