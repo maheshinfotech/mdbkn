@@ -7,8 +7,8 @@
                     {{ $pageName }}
                 </h1>
             </div>
-            @if (isset($createButton) && $createButton )
-                @can( 'create'  , $module)
+            @if (isset($createButton) && $createButton)
+                @can('create', $module)
                     <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                         <a class="btn btn-primary" href="{{ url(config('app.admin_prefix') . "manage-$module") }}">
                             <i class="fa fa-plus"></i> Add {{ ucfirst($modulePlaceholder ?? $module) }}

@@ -1,5 +1,5 @@
 @php
-    $pageName = 'dashboard';
+    $pageName = 'booking';
     $tableHead = ['Full Name', 'Machine Name', 'Reading Number', 'Fuel in Liters'];
     $tableHeadSecond = ['Full Name', 'Machine Name', 'Working Hours'];
 @endphp
@@ -11,7 +11,7 @@
     <div class="content  mx-0 w-100">
         <div class="block block-rounded">
             <div class="block-content block-content-full">
-                <h1>Welcome to Maheshwari Dharamshala</h1>
+                <h1>View Booking</h1>
             </div>
         </div>
     </div>

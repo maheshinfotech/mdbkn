@@ -21,7 +21,7 @@ class Menu extends Model
         'is_active'
     ];
 
-    protected $with = ['childMenus'];
+    // protected $with = ['childMenus'];
 
     public function parentMenu()
     {

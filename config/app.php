@@ -234,7 +234,7 @@ return [
 
 
     /**Basic constants */
-    'admin_prefix'              =>        'control-panel/',
+    'admin_prefix'              =>        '',
     'front_prefix'              =>        '',
     'success'                   =>        'Great! Your Operation was Successful.',
     'failed'                    =>        'Opps! Seems like some Error Occured.',
