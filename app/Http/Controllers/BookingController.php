@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Room;
 use  App\Models\Booking;
+use App\Models\BookingLogs;
+use Illuminate\Support\Str;
 use App\Models\RoomCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Carbon\Carbon;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class BookingController extends Controller
@@ -65,7 +66,20 @@ $booking->is_parking_provided=$request->parking;
 $booking->extra_remark=$request->remark;
 $booking->save();
 // booking record save block end
-
+// ==================add guest code=============================
+if($booking->save()){
+    if ($request->guestlists) {
+        foreach($request->guestlists as $guests){
+            $guest = new  BookingLogs;
+            $guest->booking_id = $booking->id;
+            $guest->guest_name = $guests['guestname'];
+            $guest->guest_age = $guests['guestage'];
+            $guest->guest_relation = $guests['guestrelation'];
+            $guest->guest_remarks = $guests['guestremarks'];
+            $guest->save();
+        }
+    }
+}
 
 
 

@@ -212,7 +212,7 @@
                                 </div>
                                 <!--heading end-->
                                 <!--begin repeater list-->
-                                <div data-repeater-list="">
+                                <div data-repeater-list="guestlists">
                                     <!--begin repeater item-->
                                     <div data-repeater-item>
                                         <!--begin::Input group-->
@@ -220,25 +220,25 @@
                                             <!-- col start -->
                                             <div class="col-md-2 mb-3">
                                                 <label class=" fw-bold mb-1 ">Guest Name:</label>
-                                                <input type="text" class="form-control" name=""
+                                                <input type="text" class="form-control" name="guestname" required
                                                     id="" />
                                             </div>
                                             <!-- col start -->
                                             <div class="col-md-2 mb-3">
                                                 <label class=" fw-bold mb-1 ">Guest Age:</label>
-                                                <input type="number" class="form-control" name=""
+                                                <input type="number" class="form-control" name="guestage"
                                                     id="" />
                                             </div>
                                             <!-- col start -->
                                             <div class="col-md-2 mb-3">
                                                 <label class=" fw-bold mb-1 ">Guest Relation:</label>
-                                                <input type="text" class="form-control" name=""
+                                                <input type="text" class="form-control" name="guestrelation"
                                                     id="" />
                                             </div>
                                             <!-- col start -->
                                             <div class="col-md-2 mb-3">
                                                 <label class="fw-bold mb-1 ">Guest Remarks:</label>
-                                                <input type="text" class="form-control" name=""
+                                                <input type="text" class="form-control" name="guestremarks"
                                                     id="" />
                                             </div>
                                             <!-- col start -->
