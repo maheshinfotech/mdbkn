@@ -54,7 +54,7 @@ class RoomCategoriesSeeder extends Seeder
             [
                'name'=> 'Other',
                'facility' => null,
-               'description'=> null,
+               'description'=> 'for office use only',
                'normal_rent'=> null,
                'patient_rent'=> null,
 
