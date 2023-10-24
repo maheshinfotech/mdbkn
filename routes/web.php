@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RoomCategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -88,6 +89,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::post('/bookings', 'store')->name('store-booking');
             Route::post('/checkout', 'checkout')->name('checkout-booking');
         });
+        Route::resource('/category', RoomCategoryController::class);
 
         Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 

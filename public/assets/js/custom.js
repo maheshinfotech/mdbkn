@@ -54,6 +54,10 @@ $(document).ready(function () {
             });
 
       })
+      $('.edit-record').click(function(){
+            let context =  $(this);
+            
+      });
 
       $('.update-user-credentials').click(function(){
             let context = $(this);
