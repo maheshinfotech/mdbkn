@@ -7,7 +7,7 @@ $(document).ready(function () {
             beforeSend : function(){
                   // $('.ajax-loader').show();
                   One.loader('show')
-            } , 
+            } ,
             complete : function(){
                   // $('.ajax-loader').hide();
                   One.loader('hide')
@@ -19,25 +19,25 @@ $(document).ready(function () {
       });
 
       $('.delete-record').click(function(){
-            
+
             let context =  $(this);
-            
+
             Swal.fire({
-                  
+
                   title: "Are you sure?",
                   text:  `You want to delete this record?`,
                   icon: "warning",
-                  showCancelButton : true , 
+                  showCancelButton : true ,
                   confirmButtonColor: '#3085d6',
                   cancelButtonColor: '#d33',
                   confirmButtonText: 'Yes, delete it!'
-                  
+
             }).then((willDelete) => {
-                  
+
                   if (willDelete.isConfirmed) {
                         $.ajax({
-                              url : `${base}/${$(context).data('module')}/${$(context).data('id')}` , 
-                              data : '' , 
+                              url : `${base}/${$(context).data('module')}/${$(context).data('id')}` ,
+                              data : '' ,
                               method : 'DELETE',
                               success : function(res){
                                     if(res.status){
@@ -50,7 +50,7 @@ $(document).ready(function () {
                               },
 
                         });
-                  } 
+                  }
             });
 
       })
@@ -74,7 +74,7 @@ $(document).ready(function () {
       });
 
       $('select').select2();
-      
+
       $('.datepicker').datepicker();
 
       // let myDropzone = $(".file-upload").Dropzone();
@@ -119,7 +119,7 @@ $(document).ready(function () {
                   }
             });
       }
-      
+
       $('.open-qr-modal').click(function (event) {
                   let context = $(this);
                   $('.qr-modal-body').html(context.html());
@@ -127,35 +127,35 @@ $(document).ready(function () {
       })
 
       $('.print-qr').click(function (event){
-      
+
             var prtContent = $(".qr-modal-body").clone();
-            
+
             prtContent.find('svg').css({height : '300px' , width : '300px' });
 
             console.log(prtContent);
 
             var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-            
+
             WinPrint.document.write(prtContent.html());
-            
+
             // WinPrint.document.close();
-            
+
             WinPrint.focus();
-            
+
             WinPrint.print();
-            
+
             // WinPrint.close();
-      
+
       })
 
       $('.triggger-role').change(function(){
 
             console.log("Hello World how are you");
-            
+
             let context = $(this);
 
             let type = $(this).find(":selected").attr('is_manager');
-            
+
             if( type == '1' ){
 
                   $('.machine-box').hide();
@@ -181,3 +181,10 @@ function callAjax(url, dataset, callbackfun, async_type = false) {
           }
       });
   }
+
+
+
+
+
+
+  

@@ -88,6 +88,8 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/bookings/create', 'create')->name('create-booking');
             Route::post('/bookings', 'store')->name('store-booking');
             Route::post('/checkout', 'checkout')->name('checkout-booking');
+            Route::get('/bookings/{id}', 'show')->name('show-booking');
+
         });
         Route::resource('/category', RoomCategoryController::class);
 

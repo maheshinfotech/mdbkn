@@ -290,4 +290,8 @@ $("#alert1")
         $("#alert1").slideUp(500);
     });
     </script>
+
+
+
+
 @endsection
