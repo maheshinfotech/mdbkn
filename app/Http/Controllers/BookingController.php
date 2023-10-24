@@ -15,9 +15,11 @@ class BookingController extends Controller
 {
     public function index()
     {
-        Gate::authorize('view', 'booking');
+        // Gate::authorize('view', 'booking');
+        $bookings= Booking::latest('id')->get();
+        // dd($bookings);
 
-        return view('pages.booking.view');
+        return view('pages.booking.view',compact('bookings'));
     }
     public function create()
 
@@ -78,5 +80,13 @@ return redirect()->back()->with('message', 'Booking added successfully');
     public function checkout()
     {
         Gate::authorize('update', 'booking');
+    }
+
+    public function show($id){
+
+        $booking= Booking::with('room')->find($id);
+        // dd($booking);
+
+        return view('pages.booking.show',compact('booking'));
     }
 }
