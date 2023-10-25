@@ -1,11 +1,13 @@
 .class-inner-padding{
     padding: 13px!important;
 }
-
+body{
+    background-color: aliceblue;
+}
 .nav-main-submenu .nav-main-link.active, .nav-main-submenu .nav-main-link:focus, .nav-main-submenu .nav-main-link:hover ,.nav-main-link.active {
 
     /* color : red */
-    color : #ee1a26
+    color : rgba(50, 53, 93, 0.9);
 }
 
 .qr-modal-body svg{
@@ -13,18 +15,6 @@
     width: 300px;
 }
 
-/* new css */
-.text-purple{
-    color: rgba(50, 53, 93, 0.9);
-  }
-  .btn-purple{
-    background-color: rgba(50, 53, 93, 0.9);
-    color: white;
-  }
-  .btn-purple:hover{
-    background-color: rgba(50, 53, 93, 0.9);
-    color: white;
-  }
 
 
 
@@ -60,4 +50,4 @@
 
 
 
-  
+

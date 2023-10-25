@@ -66,13 +66,34 @@
                                     </div>
                                     <!-- col start -->
                                     <div class="col-md-3 mb-3">
+                                        <label class="fw-bold mb-1">Relation (Patient):</label>
+                                        <input type="text" class="form-control" id="relation" name="relation" />
+                                    </div>
+                                    <!-- col start -->
+                                    <div class="col-md-3 mb-3">
                                         <label class="fw-bold mb-1 ">Guest Father Name:</label>
                                         <input type="text" class="form-control" name="guest_father" id="guest_father" />
                                     </div>
+                                      <!-- col start -->
+                                      <div class="col-md-3 mb-3">
+                                        <label class=" fw-bold mb-1 ">Patient Name:</label>
+                                        <input type="text" class="form-control" name="patient_name" id="patient_name" required />
+                                    </div>
+
+                                </div>
+                                <!--end::Input group-->
+
+                                <!--begin::Input group-->
+                                <div class="row">
                                     <!-- col start -->
                                     <div class="col-md-3 mb-3">
                                         <label class="d-flex align-items-center fw-bold mb-1"> Guest Caste:</label>
                                         <input type="text" class="form-control" name="caste" id="caste" />
+                                    </div>
+                                     <!-- col start -->
+                                     <div class="col-md-2 mb-3">
+                                        <label class=" fw-bold mb-1 ">Age:</label>
+                                        <input type="number" class="form-control" name="age" id="age" />
                                     </div>
                                     <!-- col start -->
                                     <div class="col-md-3 mb-3">
@@ -80,31 +101,19 @@
                                         <input type="text" class="form-control" id="guest_address"
                                             name="guest_address" />
                                     </div>
-                                </div>
-                                <!--end::Input group-->
+                                     <!-- col start -->
+                                     <div class="col-md-2 mb-3">
+                                        <label class="fw-bold mb-1">Tehsil:</label>
+                                        <input type="text" class="form-control" id="tehsil" name="tehsil" />
+                                    </div>
+                                     <!-- col start -->
+                                     <div class="col-md-2 mb-3">
+                                        <label class=" fw-bold mb-1 ">City:</label>
+                                        <input type="text" class="form-control" name="city" id="city" />
+                                    </div>
 
-                                <!--begin::Input group-->
-                                <div class="row">
-                                    <!-- col start -->
-                                    <div class="col-md-2 mb-3">
-                                        <label class=" fw-bold mb-1 ">Patient Name:</label>
-                                        <input type="text" class="form-control" name="patient_name" id="patient_name" required />
-                                    </div>
-                                    <!-- col start -->
-                                    <div class="col-md-2 mb-3">
-                                        <label class=" fw-bold mb-1 ">Patient Ward No:</label>
-                                        <input type="text" class="form-control" name="wardno" id="wardno" required />
-                                    </div>
-                                    <!-- col start -->
-                                    <div class="col-md-2 mb-3">
-                                        <label class=" fw-bold mb-1 ">Patient Bed No:</label>
-                                        <input type="text" class="form-control" name="bedno" id="bedno" required />
-                                    </div>
-                                    <!-- col start -->
-                                    <div class="col-md-2 mb-3">
-                                        <label class="fw-bold mb-1 ">Check-In Time:</label>
-                                        <input type="time" class="form-control" name="checkin" id="checkin" required />
-                                    </div>
+
+
                                     <!-- col start -->
                                     {{-- <div class="col-md-2 mb-3">
                                         <label class=" fw-bold mb-1">Check-Out Time:</label>
@@ -121,45 +130,55 @@
 
                                 <!--begin::Input group-->
                                 <div class="row justify-content-center">
-                                    <!-- col start -->
-                                    <div class="col-md-2 mb-3">
-                                        <label class=" fw-bold mb-1 ">Age:</label>
-                                        <input type="number" class="form-control" name="age" id="age" />
+                                      <!-- col start -->
+                                      <div class="col-md-2 mb-3">
+                                        <label class=" fw-bold mb-1">State:</label>
+                                        <input type="text" class="form-control" name="state" id="state" required />
                                     </div>
                                     <!-- col start -->
                                     <div class="col-md-2 mb-3">
-                                        <label class=" fw-bold mb-1 ">City:</label>
-                                        <input type="text" class="form-control" name="city" id="city" />
+                                        <label class=" fw-bold mb-1 ">Patient Ward No:</label>
+                                        <input type="text" class="form-control" name="wardno" id="wardno" required />
                                     </div>
+                                     <!-- col start -->
+                                     <div class="col-md-2 mb-3">
+                                        <label class=" fw-bold mb-1 ">Patient Bed No:</label>
+                                        <input type="text" class="form-control" name="bedno" id="bedno" required />
+                                    </div>
+                                    <!-- col start -->
+                                    <div class="col-md-2 mb-3">
+                                        <label class="fw-bold mb-1 ">Check-In Time:</label>
+                                        <input type="time" class="form-control" name="checkin" id="checkin" required />
+                                    </div>
+                                       <!-- col start -->
+                                       <div class="col-md-2 mb-3">
+                                        <label class="fw-bold mb-1">(Guest)ID-Proof:</label>
+                                        <input type="file" class="form-control" id="idproof" name="idproof" />
+                                    </div>
+
+
                                     <!-- col start -->
                                     <div class="col-md-2 mb-3">
                                         <label class="fw-bold mb-1 ">Doctor Name:</label>
                                         <input type="text" class="form-control" name="doctor" id="doctor" />
                                     </div>
+
                                     <!-- col start -->
                                     <div class="col-md-2 mb-3">
                                         <label class=" fw-bold mb-1">Mobile No:</label>
                                         <input type="number" class="form-control" name="mobile" id="mobile" required />
                                     </div>
-                                    <!-- col start -->
-                                    <div class="col-md-2 mb-3">
-                                        <label class="fw-bold mb-1">(Guest)ID-Proof:</label>
-                                        <input type="file" class="form-control" id="idproof" name="idproof" />
-                                    </div>
-                                    <!-- col start -->
-                                    <div class="col-md-2 mb-3">
-                                        <label class="fw-bold mb-1">Tehsil:</label>
-                                        <input type="text" class="form-control" id="tehsil" name="tehsil" />
-                                    </div>
-                                    <!-- col start -->
-                                    <div class="col-md-2 mb-3">
-                                        <label class="fw-bold mb-1">Relation (Patient):</label>
-                                        <input type="text" class="form-control" id="relation" name="relation" />
-                                    </div>
+
+
                                     <!-- col start -->
                                     <div class="col-md-2 mb-3">
                                         <label class="fw-bold mb-1">Ward-Type (Ct/Rt):</label>
-                                        <input type="text" class="form-control" id="wardtype" name="wardtype" required />
+                                        <select id="wardtype" class="form-select" name="wardtype" required>
+                                            <option value="" selected>Choose...</option>
+                                            <option value="ct">Ct</option>
+                                            <option value="rt">Rt</option>
+                                        </select>
+                                        {{-- <input type="text" class="form-control" id="wardtype" name="wardtype" required /> --}}
                                     </div>
                                     <!-- col start -->
                                     {{-- <div class="col-md-2 mb-3">
@@ -188,7 +207,7 @@
                                     </div>
                                     <!-- col start -->
                                     <!-- col start -->
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-2 mb-3">
                                         <label class="fw-bold mb-1">Advance Payment:</label>
                                         <input type="text" class="form-control" id="advance" name="advance" />
                                     </div>

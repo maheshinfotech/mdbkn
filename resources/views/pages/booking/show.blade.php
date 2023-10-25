@@ -34,21 +34,42 @@
                       <span class="text-muted d-block">500 (Per Unit)</span>
                   </div>
                   <div class="col-3">
+                    <span class=" fs-5">Relation (Patient)</span>
+                    <span class="text-muted d-block">{{ $booking->relation_patient }}</span>
+                </div>
+                  <div class="col-3">
                       <span class=" fs-5">Guest Father Name</span>
                       <span class="text-muted d-block">{{ $booking->guest_father_name }}</span>
                   </div>
+                  <div class="col-3">
+                    <span class=" fs-5">Patient Name</span>
+                    <span class="text-muted d-block">{{ $booking->patient_name }}</span>
+                </div>
                   <div class="col-3">
                       <span class=" fs-5">Guest Caste</span>
                       <span class="text-muted d-block">{{ $booking->guest_cast }}</span>
                   </div>
                   <div class="col-3">
+                    <span class=" fs-5">Age</span>
+                    <span class="text-muted d-block">{{ $booking->age }}</span>
+                </div>
+                  <div class="col-3">
                       <span class=" fs-5">Guest Address</span>
                       <span class="text-muted d-block">{{ $booking->guest_address }}</span>
                   </div>
                   <div class="col-3">
-                      <span class=" fs-5">Patient Name</span>
-                      <span class="text-muted d-block">{{ $booking->patient_name }}</span>
-                  </div>
+                    <span class=" fs-5">Tehsil</span>
+                    <span class="text-muted d-block">{{ $booking->tehsil }}</span>
+                </div>
+                  <div class="col-3">
+                    <span class=" fs-5">City</span>
+                    <span class="text-muted d-block">{{ $booking->city }}</span>
+                </div>
+                <div class="col-3">
+                    <span class=" fs-5">State</span>
+                    <span class="text-muted d-block">{{ $booking->state }}</span>
+                </div>
+
                   <div class="col-3">
                       <span class=" fs-5">Patient Ward No</span>
                       <span class="text-muted d-block">{{ $booking->patient_ward_no }}</span>
@@ -66,14 +87,8 @@
                           Estimated Total Days</span>
                       <span class="text-muted d-block">{{ $booking->estimated_total_days }}</span>
                   </div>
-                  <div class="col-3">
-                      <span class=" fs-5">Age</span>
-                      <span class="text-muted d-block">{{ $booking->age }}</span>
-                  </div>
-                  <div class="col-3">
-                      <span class=" fs-5">City</span>
-                      <span class="text-muted d-block">{{ $booking->city }}</span>
-                  </div>
+
+
                   <div class="col-3">
                       <span class=" fs-5">Mobile No.</span>
                       <span class="text-muted d-block">{{ $booking->mobile_number }}</span>
@@ -83,14 +98,8 @@
                       <span class="text-muted d-block">{{ $booking->docter_name }}</span>
                   </div>
 
-                  <div class="col-3">
-                      <span class=" fs-5">Tehsil</span>
-                      <span class="text-muted d-block">{{ $booking->tehsil }}</span>
-                  </div>
-                  <div class="col-3">
-                      <span class=" fs-5">Relation (Patient)</span>
-                      <span class="text-muted d-block">{{ $booking->relation_patient }}</span>
-                  </div>
+
+
                   <div class="col-3">
                       <span class=" fs-5">Ward-Type (Ct/Rt)</span>
                       <span class="text-muted d-block">{{ $booking->ward_type }}</span>
@@ -115,7 +124,7 @@
                       <span class=" fs-5">Advance Payment</span>
                       <span class="text-muted d-block">{{ $booking->advance_payment }}</span>
                   </div>
-                  <div class="col-3">
+                  <div class="col-12">
                       <span class=" fs-5">Extra Remarks</span>
                       <span class="text-muted d-block">{{ $booking->extra_remark }}</span>
                   </div>

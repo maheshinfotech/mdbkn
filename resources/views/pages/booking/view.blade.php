@@ -8,7 +8,7 @@
 
 @section('content')
     <x-reusables.app-header pageName="{{ $pageName }}" />
-    <div class="content  mx-0 w-100">
+    <div class="content px-3 py-0 w-100">
            <!-- container starts -->
     <div class="container-fluid my-5">
         <!-- card starts -->
@@ -16,7 +16,7 @@
           <div class="card-header d-flex justify-content-between">
               <h3 class="text-purple fw-bold">Booking Records</h3>
               <div>
-                  <a href="booking_form.html" type="button" class="btn btn-purple">
+                  <a href="/bookings/create" type="button" class="btn btn-purple">
                       Add Bookings +
                   </a>
               </div>
@@ -37,7 +37,7 @@
                           </tr>
                       </thead>
                       <tbody class="text-capitalize">
-@foreach ($bookings as $booking)
+                        @foreach ($bookings as $booking)
 
                           <tr>
                               <td class="text-start">{{$booking->guest_name}}</td>

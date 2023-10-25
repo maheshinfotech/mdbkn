@@ -50,6 +50,7 @@ $booking->advance_payment=$request->advance;
 $booking->check_in_time= date('Y-m-d').' '.$request->checkin;
 $booking->age=$request->age;
 $booking->city=$request->city;
+$booking->state=$request->state;
 $booking->docter_name=$request->docter;
 $booking->mobile_number=$request->mobile;
 
