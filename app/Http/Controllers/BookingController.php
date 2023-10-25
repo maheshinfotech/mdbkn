@@ -21,9 +21,14 @@ class BookingController extends Controller
 
         return view('pages.booking.view',compact('bookings'));
     }
-    public function create()
+    public function create(Request $request)
 
     {
+
+        if($request->ajax()){
+            $rooms=Room::where('category_id',$request->id)->get();
+            return response()->json($rooms);
+        }
         $category = RoomCategory::all();
         $rooms =Room::whereNull('is_booked')->orWhere('is_booked','!=',1)->get();
         // dd($rooms);

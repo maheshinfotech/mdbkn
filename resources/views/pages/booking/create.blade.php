@@ -33,7 +33,7 @@
                                     <!-- col 1 starts  -->
                                     <div class="col-lg-6 col-12">
                                         <label class=" fs-7 fw-bold mb-1 ">Choose Category:</label>
-                                        <select id="category" class="form-select" name="category" required>
+                                        <select id="category" class="form-select" name="category" required onchange="select_category()">
                                             <option selected  value="">Category...</option>
                                             @foreach ($category as $cat)
                                                 <option value="{{ $cat->id }}">{{ $cat->name }}</option>
@@ -280,6 +280,30 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
+
+function select_category(){
+    var id =$('#category').val();
+    $.ajax({
+        url:'/bookings/create',
+        data:{id:id},
+        type:'get',
+        success:function(response){
+            var html=`<option value="" selected>Rooms...</option>`;
+            console.log(response);
+            $('#room').html('');
+
+            for(let i=0;i<response.length;i++){
+                html+=`<option value="${response[i].id}"> ${response[i].room_number}</option>`;
+            }
+            $('#room').html(html);
+
+
+        }
+    });
+}
+
+
+
         $('.repeater').repeater({
 
         });
