@@ -4,11 +4,17 @@
 
         @can('update', $module)
 
-            <a href="{{ url(config('app.admin_prefix') . "$module/$id") }}" class="btn text-primary edit-record" data-bs-toggle="tooltip"
-                title="Edit Record">
-                <i class="fa-solid fa-pen"></i>
-            </a>
-
+            @if ($module == 'category')
+                <a class="btn text-primary edit-category-record" data-bs-toggle="tooltip" title="Edit Record"
+                    onclick="edit_category({{ $id }})">
+                    <i class="fa-solid fa-pen"></i>
+                </a>
+            @else
+                <a href="{{ url(config('app.admin_prefix') . "$module/$id") }}" class="btn text-primary edit-record"
+                    data-bs-toggle="tooltip" title="Edit Record">
+                    <i class="fa-solid fa-pen"></i>
+                </a>
+            @endif
             @if ($module == 'user')
                 <button class="btn text-success update-user-credentials" data-id="{{ $id }}"
                     data-name="{{ $name }}" data-bs-toggle="tooltip" title="Update Password">

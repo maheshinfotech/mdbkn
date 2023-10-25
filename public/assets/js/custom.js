@@ -54,10 +54,12 @@ $(document).ready(function () {
             });
 
       })
-      $('.edit-record').click(function(){
-            let context =  $(this);
+      // $('.edit-record').click(function(){
+      //       let context =  $(this);
             
-      });
+      // });
+      //updatte categories
+     
 
       $('.update-user-credentials').click(function(){
             let context = $(this);
@@ -180,4 +182,32 @@ function callAjax(url, dataset, callbackfun, async_type = false) {
               callbackfun(response);
           }
       });
+  }
+
+  function edit_category(id)
+  {
+        console.log(id);
+        $.ajax({
+            url: "/category/" + id + "/edit",
+            type: "GET",
+            data: { category: id },
+            success: function (data) {
+                console.log(data);
+                $("#category_form_heading").text("Edit Category");
+                $("#categoty_form_button").text("Update");
+                $("#category_method").val("PUT");
+                $("#category_form").attr("action", "/category/" + data.data.id);
+                //input value insert 
+                $("input[name=name]").val(data.data.name);
+                $("input[name=facility]").val(data.data.facility);
+                $('input[name=description]').val(data.data.description);
+                $("input[name=normalrent]").val(data.data.normal_rent);
+                $("input[name=patientrent]").val(data.data.patient_rent);
+               
+            
+               
+                
+            },
+        });
+    
   }
