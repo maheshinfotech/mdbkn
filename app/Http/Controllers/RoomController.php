@@ -16,7 +16,8 @@ class RoomController extends Controller
     public function index()
     {
         $category = RoomCategory::all();
-        return view('pages.room.index', compact('category'));
+        $rooms = Room::orderBy('room_number')->get();
+        return view('pages.room.index', compact('category', 'rooms'));
     }
 
     /**
@@ -39,14 +40,14 @@ class RoomController extends Controller
     {
         dd($request->all());
         $room = new Room;
-        $room->floor_number = $request->floor_number;
-        $room->room_number = $request->room_number;
+        $room->floor_number = $request->floor;
+        $room->room_number = $request->room_no;
         $room->category_id = $request->category;
-        $room->extra_remark = $request->remark;
+        $room->extra_remark = $request->remarks;
         $room->guest_capacity = $request->capacity;
         $room->room_status = $request->status;
         $room->save();
-        return redirect()->back()->with('message','Room added Successfully');
+        return redirect()->back()->with('message', 'Room added Successfully');
     }
 
     /**
@@ -57,7 +58,6 @@ class RoomController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -68,7 +68,8 @@ class RoomController extends Controller
      */
     public function edit($id)
     {
-        //
+        $room = Room::with('category')->find($id);
+        return response()->json($room);
     }
 
     /**
@@ -80,7 +81,17 @@ class RoomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        // dd($request->all());
+        $room = Room::find($id);
+        $room->floor_number = $request->floor;
+        $room->room_number = $request->room_no;
+        $room->category_id = $request->category;
+        $room->extra_remark = $request->remarks;
+        $room->guest_capacity = $request->capacity;
+        $room->room_status = $request->status;
+        $room->save();
+        return redirect()->back()->with('message', 'Room updated Successfully');
     }
 
     /**
@@ -91,6 +102,8 @@ class RoomController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $room = Room::find($id);
+
+        return $this->generateResponse($room->delete());
     }
 }

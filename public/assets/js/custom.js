@@ -211,3 +211,36 @@ function callAjax(url, dataset, callbackfun, async_type = false) {
         });
     
   }
+
+
+
+
+  function room_edit(id)
+  {
+        console.log(id);
+        $.ajax({
+            url: "/room/" + id + "/edit",
+            type: "GET",
+            data: { room: id },
+            success: function (data) {
+                console.log(data);
+                $("#room_form_heading").text("Edit Room");
+                $("#room_form_button").text("Update");
+                $("#room_method").val("PUT");
+                $("#room_form").attr("action", "/room/" + data.id);
+                //input value insert 
+                $("#floor_number").val(data.floor_number);
+                $("#room_number").val(data.room_number);
+                $('#category').val(data.category.id).change();
+                $("#remarks").val(data.extra_remark);
+                $("#capacity").val(data.guest_capacity);
+                $("#status").val(data.room_status).change();
+
+               
+            
+               
+                
+            },
+        });
+    
+  }

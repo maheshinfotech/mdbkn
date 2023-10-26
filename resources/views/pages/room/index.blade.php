@@ -6,6 +6,12 @@
 
 @extends('layouts.backend')
 @section('content')
+    @if (Session::has('message'))
+        <div class="alert alert-success w-25 text-center mx-auto" role="alert" id="alert1">
+            {{ Session::get('message') }}
+        </div>
+    @endif
+
     <!-- container starts -->
     <div class="container-fluid my-5">
         <!-- card starts -->
@@ -36,23 +42,33 @@
                             </tr>
                         </thead>
                         <tbody class="text-capitalize">
-                            <tr>
-                                <td class="text-start">2</td>
-                                <td>201</td>
-                                <td>12-11-2023</td>
-                                <td>4</td>
-                                <td class="text-success fw-bold">Active</span></td>
-                                <td>this is demo description</td>
-                                <td class="text-end">
-                                    <a class="btn btn-sm">
-                                        <span class=" fa fa-pen"></span>
-                                    </a>
-                                    <a class="btn btn-sm">
-                                        <span class=" fa fa-trash"></span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
+                            @foreach ($rooms as $room)
+                                <tr>
+                                    <td class="text-start">{{ $room->floor_number }}</td>
+                                    <td>{{ $room->room_number }}</td>
+                                    <td>{{ $room->booked_date }}</td>
+                                    <td>{{ $room->guest_capacity }}</td>
+                                    @if ($room->room_status)
+                                        <td class="text-success fw-bold">Active {{ $room->room_status }}</span></td>
+                                    @else
+                                        <td class="text-danger fw-bold">Inactive{{ $room->room_status }}</span></td>
+                                    @endif
+
+                                    <td>{{ $room->extra_remark }}</td>
+                                    <td class="text-end">
+                                        <a class="btn btn-sm">
+                                            <span class=" fa fa-pen" onclick="room_edit({{ $room->id }})"
+                                                data-bs-toggle="modal" data-bs-target="#roomModal"></span>
+                                        </a>
+                                        <a class="btn btn-sm delete-record" data-id="{{ $room->id }}" data-module="room"
+                                            data-name="{{ $room->id }}">
+                                            <span class=" fa fa-trash"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                            {{-- <tr>
                                 <td class="text-start">2</td>
                                 <td>201</td>
                                 <td>12-11-2023</td>
@@ -84,7 +100,7 @@
                                         <span class=" fa fa-trash"></span>
                                     </a>
                                 </td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                     </table>
                 </div>
@@ -100,7 +116,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <h3 class="text-purple text-center mb-4 mt-0">Add Room Details</h3>
+                        <h3 class="text-purple text-center mb-4 mt-0" id="room_form_heading">Add Room Details</h3>
                         <form action="/room" method="post" id="room_form">
                             @csrf
                             <input type="hidden" id="room_method" name="_method">
@@ -151,7 +167,7 @@
                     </div>
                     <div class="mt-3 mb-5 text-center">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-purple">Save</button>
+                        <button type="submit" class="btn btn-purple" id="room_from_button">Save</button>
                     </div>
                     </form>
 
