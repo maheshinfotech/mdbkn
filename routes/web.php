@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RoomCategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -90,6 +91,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/bookings/{id}', 'show')->name('show-booking');
 
         });
+        Route::resource('/category', RoomCategoryController::class);
 
         Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
