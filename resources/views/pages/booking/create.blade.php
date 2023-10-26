@@ -95,6 +95,11 @@
                                         <label class=" fw-bold mb-1 ">Age:</label>
                                         <input type="number" class="form-control" name="age" id="age" />
                                     </div>
+                                     <!-- col start -->
+                                     <div class="col-md-2 mb-3">
+                                        <label class=" fw-bold mb-1">Mobile No:</label>
+                                        <input type="number" class="form-control" name="mobile" id="mobile" required />
+                                    </div>
                                     <!-- col start -->
                                     <div class="col-md-3 mb-3">
                                         <label class="d-flex align-items-center fw-bold mb-1"> Guest Address:</label>
@@ -106,11 +111,7 @@
                                         <label class="fw-bold mb-1">Tehsil:</label>
                                         <input type="text" class="form-control" id="tehsil" name="tehsil" />
                                     </div>
-                                     <!-- col start -->
-                                     <div class="col-md-2 mb-3">
-                                        <label class=" fw-bold mb-1 ">City:</label>
-                                        <input type="text" class="form-control" name="city" id="city" />
-                                    </div>
+
 
 
 
@@ -130,6 +131,11 @@
 
                                 <!--begin::Input group-->
                                 <div class="row justify-content-center">
+                                     <!-- col start -->
+                                     <div class="col-md-2 mb-3">
+                                        <label class=" fw-bold mb-1 ">City:</label>
+                                        <input type="text" class="form-control" name="city" id="city" />
+                                    </div>
                                       <!-- col start -->
                                       <div class="col-md-2 mb-3">
                                         <label class=" fw-bold mb-1">State:</label>
@@ -163,11 +169,7 @@
                                         <input type="text" class="form-control" name="doctor" id="doctor" />
                                     </div>
 
-                                    <!-- col start -->
-                                    <div class="col-md-2 mb-3">
-                                        <label class=" fw-bold mb-1">Mobile No:</label>
-                                        <input type="number" class="form-control" name="mobile" id="mobile" required />
-                                    </div>
+
 
 
                                     <!-- col start -->
@@ -177,6 +179,7 @@
                                             <option value="" selected>Choose...</option>
                                             <option value="ct">Ct</option>
                                             <option value="rt">Rt</option>
+                                            <option value="other">Other</option>
                                         </select>
                                         {{-- <input type="text" class="form-control" id="wardtype" name="wardtype" required /> --}}
                                     </div>
@@ -327,7 +330,7 @@ function select_category(){
 
         });
 
-$("#alert1")
+    $("#alert1")
     .fadeTo(2000, 2000)
     .slideUp(500, function () {
         $("#alert1").slideUp(500);

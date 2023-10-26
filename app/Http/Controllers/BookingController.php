@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Carbon\Carbon;
 use App\Models\Room;
+use App\Models\Setting;
 use  App\Models\Booking;
 use App\Models\BookingLogs;
 use Illuminate\Support\Str;
@@ -70,8 +72,24 @@ if ($request->hasFile('idproof')) {
 $booking->tehsil=$request->tehsil;
 $booking->relation_patient=$request->relation;
 $booking->ward_type=$request->wardtype;
+// rent ==================
+$roomcat = RoomCategory::where('id', $request->category)->first();
+    if($request->wardtype=="ct" || $request->wardtype=="rt"){
+        $booking->base_rent = $roomcat->patient_rent;
+    }else{
+        $booking->base_rent = $roomcat->normal_rent;
+    }
+// =======================
 $booking->is_parking_provided=$request->parking;
 $booking->extra_remark=$request->remark;
+// ===settings table =========
+$setting = Setting::latest()->first();
+if($setting){
+    $booking->base_check_in_time = $setting->check_in_time;
+    $booking->base_check_out_time = $setting->check_out_time;
+    $booking->base_grace_period = $setting->grace_period;
+}
+// ===========
 $booking->save();
 // booking record save block end
 // ==================add guest code=============================
@@ -91,7 +109,8 @@ if($booking->save()){
 // =======================================================================
 
 
-return redirect()->back()->with('message', 'Booking added successfully');
+// return redirect()->back()->with('message', 'Booking added successfully');
+return redirect()->route('index-booking')->with('message', 'Booking added successfully');
 // return view('pages.booking.create');
 
 
@@ -108,5 +127,54 @@ return redirect()->back()->with('message', 'Booking added successfully');
         // dd($booking);
 
         return view('pages.booking.show',compact('booking'));
+    }
+    public function Bookingcheckout($id) {
+
+        $booking= Booking::with('room')->find($id);
+        return view('pages.booking.checkout',compact('booking'));
+
+    }
+    public function checkoutCal(Request $request) {
+        $payble_rent=0;
+        $estimateDays=0;
+       $bookings = Booking::with(['room'])->find($request->booking_id);
+       if($bookings){
+        $basetimein = strtotime($bookings->base_check_in_time) + 60*60*2;
+        $basetimeout = strtotime($bookings->base_check_out_time) + 60*60*2;
+        $timeinwithgraceperiod = date('H:i', $basetimein);
+        $timeoutwithgraceperiod = date('H:i', $basetimeout);
+         $start_datetime = $bookings->getRawOriginal('check_in_time');
+         $start_datetimeone = date('Y-m-d',strtotime($start_datetime));
+         $end_datetime = date('Y-m-d',strtotime($request->out_time));
+         $checkouttime = date('H:i',strtotime($request->out_time));
+        //  $interval = $start_datetimeone->diff($end_datetime);
+         $date1 = new DateTime($start_datetime);
+         $date2 = new DateTime($request->out_time);
+         $interval = $date1->diff($date2);
+        // $datetime_diff_Obj = date_diff(date_create($request->out_time), date_create($start_datetime));
+    if (date('Y-m-d',strtotime($start_datetime))==date('Y-m-d',strtotime($request->out_time))) {
+        $payble_rent =  $bookings->base_rent;
+        $estimateDays = 1;
+     }else{
+        if ($timeoutwithgraceperiod < $checkouttime) {
+            $estimateDays = $interval->days +1;
+            $payble_rent = $bookings->base_rent * $estimateDays;
+        }
+        if($timeoutwithgraceperiod > $checkouttime){
+            $estimateDays = $interval->days;
+            $payble_rent = $bookings->base_rent * $estimateDays;
+        }
+     }
+    // echo $datetime_diff_Obj->h; // hours
+    // echo $datetime_diff_Obj->i ;// minutes
+    // echo $datetime_diff_Obj->s; // seconds
+       }
+       return response()->json([
+        'payble_rent'=>  $payble_rent,
+        'estimateDays'=>$estimateDays,
+
+
+       ]);
+
     }
 }

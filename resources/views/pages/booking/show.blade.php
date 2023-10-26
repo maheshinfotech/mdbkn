@@ -53,6 +53,10 @@
                     <span class=" fs-5">Age</span>
                     <span class="text-muted d-block">{{ $booking->age }}</span>
                 </div>
+                <div class="col-3">
+                    <span class=" fs-5">Mobile No.</span>
+                    <span class="text-muted d-block">{{ $booking->mobile_number }}</span>
+                </div>
                   <div class="col-3">
                       <span class=" fs-5">Guest Address</span>
                       <span class="text-muted d-block">{{ $booking->guest_address }}</span>
@@ -89,10 +93,7 @@
                   </div>
 
 
-                  <div class="col-3">
-                      <span class=" fs-5">Mobile No.</span>
-                      <span class="text-muted d-block">{{ $booking->mobile_number }}</span>
-                  </div>
+
                   <div class="col-3">
                       <span class=" fs-5">Doctor Name</span>
                       <span class="text-muted d-block">{{ $booking->docter_name }}</span>

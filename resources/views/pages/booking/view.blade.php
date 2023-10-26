@@ -46,7 +46,11 @@
                               <td>{{ $booking->docter_name }}</td>
                               <td>{{ $booking->mobile_number }}</td>
                               <td>{{ $booking->payable_rent }}</td>
+
                               <td class="text-end">
+                                @if ($booking->getRawOriginal('check_out_time')==null)
+                                <a href="/bookings/checkout/{{ $booking->id }}" class="btn btn-sm btn-purple">Checkout</a>
+                                @endif
                                   <a href="/bookings/{{ $booking->id }}" class="btn btn-sm btn-purple">View </a>
                               </td>
                           </tr>
