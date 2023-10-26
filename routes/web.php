@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\RoomCategoryController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\RoomCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +95,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
 
         });
         Route::resource('/category', RoomCategoryController::class);
+        Route::resource('/room', RoomController::class);
 
         Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 

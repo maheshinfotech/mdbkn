@@ -54,10 +54,12 @@ $(document).ready(function () {
             });
 
       })
-      $('.edit-record').click(function(){
-            let context =  $(this);
-            
-      });
+      // $('.edit-record').click(function(){
+      //       let context =  $(this);
+
+      // });
+      //updatte categories
+
 
       $('.update-user-credentials').click(function(){
             let context = $(this);
@@ -182,9 +184,63 @@ function callAjax(url, dataset, callbackfun, async_type = false) {
       });
   }
 
+  function edit_category(id)
+  {
+        console.log(id);
+        $.ajax({
+            url: "/category/" + id + "/edit",
+            type: "GET",
+            data: { category: id },
+            success: function (data) {
+                console.log(data);
+                $("#category_form_heading").text("Edit Category");
+                $("#categoty_form_button").text("Update");
+                $("#category_method").val("PUT");
+                $("#category_form").attr("action", "/category/" + data.data.id);
+                //input value insert
+                $("input[name=name]").val(data.data.name);
+                $("input[name=facility]").val(data.data.facility);
+                $('input[name=description]').val(data.data.description);
+                $("input[name=normalrent]").val(data.data.normal_rent);
+                $("input[name=patientrent]").val(data.data.patient_rent);
+
+
+
+
+            },
+        });
+
+  }
+
+
+
+
+  function room_edit(id)
+  {
+        console.log(id);
+        $.ajax({
+            url: "/room/" + id + "/edit",
+            type: "GET",
+            data: { room: id },
+            success: function (data) {
+                console.log(data);
+                $("#room_form_heading").text("Edit Room");
+                $("#room_form_button").text("Update");
+                $("#room_method").val("PUT");
+                $("#room_form").attr("action", "/room/" + data.id);
+                //input value insert
+                $("#floor_number").val(data.floor_number);
+                $("#room_number").val(data.room_number);
+                $('#category').val(data.category.id).change();
+                $("#remarks").val(data.extra_remark);
+                $("#capacity").val(data.guest_capacity);
+                $("#status").val(data.room_status).change();
 
 
 
 
 
-  
+            },
+        });
+
+  }
