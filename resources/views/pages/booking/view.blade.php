@@ -16,7 +16,7 @@
           <div class="card-header d-flex justify-content-between">
               <h3 class="text-purple fw-bold">Booking Records</h3>
               <div>
-                  <a href="booking_form.html" type="button" class="btn btn-purple">
+                  <a href="/bookings/create" type="button" class="btn btn-purple">
                       Add Bookings +
                   </a>
               </div>

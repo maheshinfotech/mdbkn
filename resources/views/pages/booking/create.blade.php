@@ -47,9 +47,7 @@
                                         <label class=" fs-7 fw-bold mb-1 ">Choose Room:</label>
                                         <select id="room"  class="form-select" name="room" required>
                                             <option value="" selected>Rooms...</option>
-                                            @foreach ($rooms as $room )
-                                            <option value="{{ $room->id }}">{{ $room->room_number }}</option>
-                                            @endforeach
+
                                         </select>
                                     </div>
                                     <!-- col 2 ends-->
@@ -308,11 +306,7 @@ function select_category(){
 
         });
 
-$("#alert1")
-    .fadeTo(2000, 2000)
-    .slideUp(500, function () {
-        $("#alert1").slideUp(500);
-    });
+
     </script>
 
 

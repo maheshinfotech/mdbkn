@@ -8,6 +8,12 @@
 
 @section('content')
     <x-reusables.app-header pageName="{{ $pageName }}" />
+
+    @if (Session::has('message'))
+    <div class="alert alert-success w-25 text-center mx-auto" role="alert" id="alert1">
+        {{ Session::get('message') }}
+    </div>
+@endif
     <div class="container-fluid my-5">
         <!-- card starts -->
         <div class="card">
@@ -45,8 +51,18 @@
                                     <td>{{ $category->description }}</td>
                                     <td>{{ $category->normal_rent }}</td>
                                     <td>{{ $category->patient_rent }}</td>
-                                    <td class="text-end">
+                                    {{-- <td class="text-end">
                                         <x-reusables.action-buttons :id="$category->id" module="category" :name="$category->name" />
+                                    </td> --}}
+                                    <td class="text-end">
+                                        <a class="btn btn-sm" onclick="edit_category({{ $category->id }})"
+                                            data-bs-toggle="modal" data-bs-target="#categoryModal">
+                                            <span class=" fa fa-pen"></span>
+                                        </a>
+                                        <a class="btn btn-sm delete-record" data-id="{{ $category->id }}"
+                                            data-module="category" data-name="{{ $category->name }}">
+                                            <span class=" fa fa-trash"></span>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -98,8 +114,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <h3 class="text-purple text-center mb-3 mt-0">Add Room Category</h3>
-                        <form action="/category" method="post">
+                        <h3 class="text-purple text-center mb-3 mt-0" id="category_form_heading">Add Room Category</h3>
+                        <form action="/category" method="post" id="category_form">
+                            <input type="hidden" name="_method" value="" id="category_method">
                             @csrf
                             <div class="row">
                                 <!-- col start -->
@@ -133,7 +150,7 @@
                     </div>
                     <div class="mt-3 mb-5 text-center">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-purple">Save</button>
+                        <button type="submit" class="btn btn-purple" id="category_form_button">Save</button>
                     </div>
                     </form>
 
@@ -142,4 +159,22 @@
         </div>
         <!-- Modal -->
     </div>
+
+
+
+
+    <script>
+        //   message div animation
+
+    $("#alert1")
+        .fadeTo(2000, 2000)
+        .slideUp(500, function () {
+            $("#alert1").slideUp(500);
+        });
+
+    //  message  div  animation
+    </script>
+
+
+
 @endsection

@@ -25,14 +25,21 @@ class BookingController extends Controller
 
     {
 
+
+
         if($request->ajax()){
-            $rooms=Room::where('category_id',$request->id)->get();
+            // $rooms=Room::where('category_id',$request->id)->where('is_booked','!=',1)->get();
+            $rooms=Room::where('category_id',$request->id)->where(function ($query){
+                $query->whereNull('is_booked')->Orwhere('is_booked','!=',1);
+            })->where(function ($query){
+                $query->whereNull('room_status')->Orwhere('room_status','!=',0);
+            })->get();
             return response()->json($rooms);
         }
         $category = RoomCategory::all();
-        $rooms =Room::whereNull('is_booked')->orWhere('is_booked','!=',1)->get();
+
         // dd($rooms);
-        return view('pages.booking.create', compact('category','rooms'));
+        return view('pages.booking.create', compact('category'));
     }
 
     public function store(Request $request)
@@ -70,8 +77,17 @@ $booking->relation_patient=$request->relation;
 $booking->ward_type=$request->wardtype;
 $booking->is_parking_provided=$request->parking;
 $booking->extra_remark=$request->remark;
-$booking->save();
+
+if ($booking->save()){
 // booking record save block end
+$room=Room::find($request->room);
+$room->is_booked=1;
+$room->save();
+// room booking status
+}
+
+
+
 
 
 

@@ -64,9 +64,12 @@ class RoomCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $data = RoomCategory::findOrFail($request->category);
+            return response()->json(['data' => $data]);
+        }
     }
 
     /**
@@ -76,9 +79,16 @@ class RoomCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, RoomCategory $category)
     {
-        //
+        $category = RoomCategory::findOrFail($category->id);
+        $category->name = $request->name;
+        $category->facility = $request->facility;
+        $category->description = $request->description;
+        $category->normal_rent = $request->normalrent;
+        $category->patient_rent = $request->patientrent;
+        $this->generateResponse($category->update());
+        return redirect()->route('category.index')->with('message', 'Data Updated Successfully!');
     }
 
     /**
