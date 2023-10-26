@@ -48,10 +48,12 @@
                                     <td>{{ $room->room_number }}</td>
                                     <td>{{ $room->booked_date }}</td>
                                     <td>{{ $room->guest_capacity }}</td>
-                                    @if ($room->room_status)
-                                        <td class="text-success fw-bold">Active {{ $room->room_status }}</span></td>
+                                    @if ($room->room_status==1 || is_null($room->room_status))
+                                    <td class="text-success fw-bold">Active </span></td>
+
+
                                     @else
-                                        <td class="text-danger fw-bold">Inactive{{ $room->room_status }}</span></td>
+                                    <td class="text-danger fw-bold">Inactive</span></td>
                                     @endif
 
                                     <td>{{ $room->extra_remark }}</td>
@@ -177,4 +179,17 @@
         <!-- Modal -->
     </div>
     <!-- container ends -->
+
+<script>
+    //   message div animation
+
+$("#alert1")
+    .fadeTo(2000, 2000)
+    .slideUp(500, function () {
+        $("#alert1").slideUp(500);
+    });
+
+//  message  div  animation
+</script>
+
 @endsection

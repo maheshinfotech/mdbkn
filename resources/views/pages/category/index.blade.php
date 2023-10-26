@@ -8,6 +8,12 @@
 
 @section('content')
     <x-reusables.app-header pageName="{{ $pageName }}" />
+
+    @if (Session::has('message'))
+    <div class="alert alert-success w-25 text-center mx-auto" role="alert" id="alert1">
+        {{ Session::get('message') }}
+    </div>
+@endif
     <div class="container-fluid my-5">
         <!-- card starts -->
         <div class="card">
@@ -153,4 +159,22 @@
         </div>
         <!-- Modal -->
     </div>
+
+
+
+
+    <script>
+        //   message div animation
+
+    $("#alert1")
+        .fadeTo(2000, 2000)
+        .slideUp(500, function () {
+            $("#alert1").slideUp(500);
+        });
+
+    //  message  div  animation
+    </script>
+
+
+
 @endsection
