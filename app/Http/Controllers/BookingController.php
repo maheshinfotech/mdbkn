@@ -139,41 +139,42 @@ return redirect()->route('index-booking')->with('message', 'Booking added succes
         $estimateDays=0;
        $bookings = Booking::with(['room'])->find($request->booking_id);
        if($bookings){
-        $basetimein = strtotime($bookings->base_check_in_time) + 60*60*2;
-        $basetimeout = strtotime($bookings->base_check_out_time) + 60*60*2;
-        $timeinwithgraceperiod = date('H:i', $basetimein);
-        $timeoutwithgraceperiod = date('H:i', $basetimeout);
-         $start_datetime = $bookings->getRawOriginal('check_in_time');
-         $start_datetimeone = date('Y-m-d',strtotime($start_datetime));
-         $end_datetime = date('Y-m-d',strtotime($request->out_time));
-         $checkouttime = date('H:i',strtotime($request->out_time));
-        //  $interval = $start_datetimeone->diff($end_datetime);
-         $date1 = new DateTime($start_datetime);
-         $date2 = new DateTime($request->out_time);
-         $interval = $date1->diff($date2);
-        // $datetime_diff_Obj = date_diff(date_create($request->out_time), date_create($start_datetime));
-    if (date('Y-m-d',strtotime($start_datetime))==date('Y-m-d',strtotime($request->out_time))) {
-        $payble_rent =  $bookings->base_rent;
-        $estimateDays = 1;
-     }else{
-        if ($timeoutwithgraceperiod < $checkouttime) {
-            $estimateDays = $interval->days +1;
-            $payble_rent = $bookings->base_rent * $estimateDays;
+            $basetimein = strtotime($bookings->base_check_in_time) + 60*60*2;
+            $basetimeout = strtotime($bookings->base_check_out_time) + 60*60*2;
+            $timeinwithgraceperiod = date('H:i', $basetimein);
+            $timeoutwithgraceperiod = date('H:i', $basetimeout);
+            $start_datetime = $bookings->getRawOriginal('check_in_time');
+            $start_datetimeone = date('Y-m-d',strtotime($start_datetime));
+            $end_datetime = date('Y-m-d',strtotime($request->out_time));
+            $checkouttime = date('H:i',strtotime($request->out_time));
+            $date1 = new DateTime($start_datetime);
+            $date2 = new DateTime($request->out_time);
+            $startTimeStamp = strtotime($date1->format('d-m-Y'));
+            $endTimeStamp = strtotime($date2->format('d-m-Y'));
+            $timeDiff = abs($endTimeStamp - $startTimeStamp);
+            //  $days = $timeDiff / (60 * 60 * 24);
+            $numberDays = $timeDiff/86400;
+            $numberDays = intval($numberDays);
+        if ($date1->format('d-m-Y')==$date2->format('d-m-Y')) {
+            $payble_rent =  $bookings->base_rent;
+            $estimateDays = 1;
+        }else{
+                if ($checkouttime >= $timeoutwithgraceperiod) {
+                    $estimateDays = $numberDays +1;
+                    $payble_rent = $bookings->base_rent * $estimateDays;
+                }else{
+                    $estimateDays = $numberDays;
+                    $payble_rent = $bookings->base_rent * $estimateDays;
+                }
         }
-        if($timeoutwithgraceperiod > $checkouttime){
-            $estimateDays = $interval->days;
-            $payble_rent = $bookings->base_rent * $estimateDays;
+        if (condition) {
+            # code...
         }
-     }
-    // echo $datetime_diff_Obj->h; // hours
-    // echo $datetime_diff_Obj->i ;// minutes
-    // echo $datetime_diff_Obj->s; // seconds
+
        }
        return response()->json([
         'payble_rent'=>  $payble_rent,
         'estimateDays'=>$estimateDays,
-
-
        ]);
 
     }

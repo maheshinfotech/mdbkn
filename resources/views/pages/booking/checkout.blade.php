@@ -115,8 +115,8 @@
             data: { out_time ,booking_id},
                     success: function (data) {
 
-        $('#estimatedDays').val(data.estimateDays);
-        $('#paybleRent').val(data.payble_rent);
+                    $('#estimatedDays').val(data.estimateDays);
+                    $('#paybleRent').val(data.payble_rent);
 
 
                     }
