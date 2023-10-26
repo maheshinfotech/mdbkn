@@ -41,7 +41,7 @@ class RoomCategoryController extends Controller
         $category->name = $request->name;
         $category->facility = $request->facility;
         $category->description = $request->description;
-        $category->normal_rent = $request->normalrentme;
+        $category->normal_rent = $request->normalrent;
         $category->patient_rent = $request->patientrent;
         $category->save();
         return redirect()->back()->with('message', 'Data Added Successfully');

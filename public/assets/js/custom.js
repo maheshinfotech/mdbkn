@@ -70,7 +70,7 @@ $(document).ready(function () {
             .toggleClass("show");
     });
 
-    $("select").select2();
+    // $("select").select2();
 
     $(".datepicker").datepicker();
 
@@ -182,7 +182,7 @@ function edit_category(id) {
         success: function (data) {
             console.log(data);
             $("#category_form_heading").text("Edit Category");
-            $("#categoty_form_button").text("Update");
+            $("#category_form_button").text("Update");
             $("#category_method").val("PUT");
             $("#category_form").attr("action", "/category/" + data.data.id);
             //input value insert
@@ -202,9 +202,9 @@ function room_edit(id) {
         type: "GET",
         data: { room: id },
         success: function (data) {
-            console.log(data);
+            // console.log(data);
             $("#room_form_heading").text("Edit Room");
-            $("#room_form_button").text("Update");
+            $("#room_from_button").text("Update");
             $("#room_method").val("PUT");
             $("#room_form").attr("action", "/room/" + data.id);
             //input value insert

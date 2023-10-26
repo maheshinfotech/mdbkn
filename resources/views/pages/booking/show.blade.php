@@ -10,11 +10,11 @@
     <x-reusables.app-header pageName="{{ $pageName }}" />
     <div class="content  mx-0 w-100">
         <!-- container starts -->
-    <div class="container-fluid my-5">
+    <div class="container-fluid px-0">
         <!-- card starts -->
         <div class="card">
           <div class="card-header bg-light">
-            <h3 class="text-purple fw-bold">Booking Details</h3>
+            <h3 class="text-purple fw-bold mb-0">Booking Details</h3>
           </div>
           <!--card body starts -->
           <div class="card-body">
@@ -147,4 +147,14 @@
        <!-- container ends -->
 
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- DataTables Bootstrap JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <!-- DataTables RowReorder JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.js"
+        integrity="sha512-bZAXvpVfp1+9AUHQzekEZaXclsgSlAeEnMJ6LfFAvjqYUVZfcuVXeQoN5LhD7Uw0Jy4NCY9q3kbdEXbwhZUmUQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
 @endsection

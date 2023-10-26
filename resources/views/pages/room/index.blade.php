@@ -13,13 +13,13 @@
     @endif
 
     <!-- container starts -->
-    <div class="container-fluid my-5">
+    <div class="container-fluid my-5 px-5">
         <!-- card starts -->
         <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <h3 class="text-purple fw-bold">Room Records</h3>
+            <div class="card-header bg-light d-flex justify-content-between">
+                <h3 class="text-purple mb-0 fw-bold">Room Records</h3>
                 <div>
-                    <button type="button" class="btn btn-purple" data-bs-toggle="modal" data-bs-target="#roomModal">
+                    <button type="button" class="btn btn-purple" onclick="emptyRoomForm()" data-bs-toggle="modal" data-bs-target="#roomModal">
                         Add Rooms +
                     </button>
                 </div>
@@ -29,12 +29,13 @@
                 <div class="table-responsive">
                     <table class="table table-striped align-middle py-3 text-center" id="room_table"
                         style="width:100%;white-space:nowrap;" data-paging="true" data-searching="true"
-                        data-ordering="false" data-info="false">
+                        data-ordering="true" data-info="true">
                         <thead>
                             <tr>
                                 <th class="text-start">Floor Number</th>
                                 <th class="text-center">Room Number</th>
                                 <th class="text-center">Booked Date</th>
+                                <th class="text-center">Is Booked</th>
                                 <th class="text-center">Guest Capacity</th>
                                 <th class="text-center">Room Status</th>
                                 <th class="text-center">Remarks</th>
@@ -46,7 +47,16 @@
                                 <tr>
                                     <td class="text-start">{{ $room->floor_number }}</td>
                                     <td>{{ $room->room_number }}</td>
-                                    <td>{{ $room->booked_date }}</td>
+                                    <td>
+                                        @if ($room->booked_date)
+                                            {{ date('d/m/Y',strtotime($room->booked_date)) }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span>
+                                            @if ($room->is_booked==1) Yes @else No @endif
+                                        </span>
+                                    </td>
                                     <td>{{ $room->guest_capacity }}</td>
                                     @if ($room->room_status==1 || is_null($room->room_status))
                                     <td class="text-success fw-bold">Active </span></td>
@@ -148,13 +158,13 @@
                                 </div>
                                 <div class="col-md-6 col-12 mb-3">
                                     <label class=" fw-bold mb-1 ">Extra Remarks:</label>
-                                    <input type="text" class="form-control" name="remarks" id="remarks" required />
+                                    <input type="text" class="form-control" name="remarks" id="remarks"  />
                                 </div>
 
                                 <!-- col start -->
                                 <div class="col-md-6 col-12 mb-3">
                                     <label class=" fw-bold mb-1 ">Guest Capacity:</label>
-                                    <input type="text" class="form-control" name="capacity" id="capacity" required />
+                                    <input type="text" class="form-control" name="capacity" id="capacity"  />
                                 </div>
                                 <!-- col start -->
                                 <div class="col-md-6 col-12 mb-3">
@@ -179,7 +189,16 @@
         <!-- Modal -->
     </div>
     <!-- container ends -->
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- DataTables Bootstrap JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <!-- DataTables RowReorder JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.js"
+        integrity="sha512-bZAXvpVfp1+9AUHQzekEZaXclsgSlAeEnMJ6LfFAvjqYUVZfcuVXeQoN5LhD7Uw0Jy4NCY9q3kbdEXbwhZUmUQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
 <script>
     //   message div animation
 
@@ -191,5 +210,36 @@ $("#alert1")
 
 //  message  div  animation
 </script>
+<script>
+    $(document).ready(function() {
+    var table = $('#room_table').DataTable( {
+        lengthChange: false,
+        buttons: [
+            {
+                extend: 'collection',
+                text: 'Export',
+                buttons: [
+                    'pdf',
+                    'excel'
+                ]
+            }
+        ],
+        language: {
+        searchPlaceholder: "Search"
+    }
+    } );
 
+    table.buttons().container()
+        .appendTo( ' .col-md-6:eq(0)' );
+    } );
+
+      // ==========empty form =============
+      function emptyRoomForm() {
+          $('#room_form').trigger('reset');
+          $("#room_form_heading").text("Add Room Details");
+          $("#room_from_button").text("Save");
+          $("#room_method").val("");
+          $("#room_form").attr("action", "/room");
+    }
+</script>
 @endsection

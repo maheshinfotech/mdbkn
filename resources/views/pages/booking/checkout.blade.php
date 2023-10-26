@@ -14,17 +14,17 @@
     </div>
     @endif
     <!-- container starts -->
-    <div class="container-fluid my-5">
+    <div class="container-fluid mt-5 px-5">
       <!-- card starts -->
       <div class="card">
         <div class="card-header bg-light">
-          <h3 class="text-purple fw-bold">Add Checkout Details</h3>
+          <h3 class="text-purple fw-bold mb-0">Add Checkout Details</h3>
         </div>
         <!--card body starts -->
         <div class="card-body">
           <!--form starts -->
-          <form action="" method="post">
-
+          <form action="/checkout" method="post">
+            @csrf
             <!--begin::Input group-->
             <div class="row">
               <!-- col start -->
@@ -55,13 +55,13 @@
               <!-- col start -->
               <div class="col-md-4 mb-3">
                 <label class=" fw-bold mb-1">Check-Out Date:</label>
-                <input type="hidden" name="booking_id" id="booking_id_checkout" value="{{$booking->id}}">
-                <input type="datetime-local" class="form-control" name="" id="check_out_timedet" />
+                <input type="hidden" name="booking_id" id="booking_id_checkout" value="{{$booking->id}}" >
+                <input type="datetime-local" class="form-control" name="check_out_time" id="check_out_timedet" required/>
               </div>
               <!-- col start -->
               <div class="col-md-4 mb-3">
                   <label class="fw-bold mb-1">Total Days:</label>
-                  <input type="text" class="form-control" id="estimatedDays" name="" />
+                  <input type="text" class="form-control" id="estimatedDays" name="estimatedays" />
               </div>
                <!-- col start -->
                <div class="col-md-4 mb-3">
@@ -71,27 +71,38 @@
               <!-- col start -->
               <div class="col-md-4 mb-3">
                 <label class="fw-bold mb-1">Total Rent:</label>
-                <input type="text" class="form-control" id="paybleRent" name="" />
+                <input type="text" class="form-control" id="paybleRent" name="totalrent" />
               </div>
                 <!-- col start -->
                 <div class="col-md-4 mb-3">
                     <label class="fw-bold mb-1">Paid Rent:</label>
-                    <input type="text" class="form-control" id="" name="" />
+                    <input type="text" class="form-control" id="" name="paidrent" required/>
                 </div>
             </div>
             <!--end::Input group-->
+            <div class="text-center my-4">
+                <button class="btn btn-lg btn-purple" type="submit">Save Details</button>
+              </div>
           </form>
           <!--form ends -->
 
-          <div class="text-center my-4">
-            <button class="btn btn-lg btn-purple" type="submit">Save Details</button>
-          </div>
+
         </div>
         <!--card body ends -->
       </div>
       <!-- card ends -->
     </div>
      <!-- container ends -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- DataTables Bootstrap JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <!-- DataTables RowReorder JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.js"
+        integrity="sha512-bZAXvpVfp1+9AUHQzekEZaXclsgSlAeEnMJ6LfFAvjqYUVZfcuVXeQoN5LhD7Uw0Jy4NCY9q3kbdEXbwhZUmUQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
      <script>
         $('#check_out_timedet').on('change',function(){
              //value start
@@ -114,11 +125,9 @@
             type: "GET",
             data: { out_time ,booking_id},
                     success: function (data) {
-
+                    //   console.log(data.basetimein);
                     $('#estimatedDays').val(data.estimateDays);
                     $('#paybleRent').val(data.payble_rent);
-
-
                     }
             })
         })

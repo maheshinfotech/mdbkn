@@ -1,5 +1,5 @@
 @php
-    $pageName = 'booking';
+    $pageName = 'Room Category';
     // $tableHead = ['Full Name', 'Machine Name', 'Reading Number', 'Fuel in Liters'];
     // $tableHeadSecond = ['Full Name', 'Machine Name', 'Working Hours'];
 @endphp
@@ -14,13 +14,13 @@
         {{ Session::get('message') }}
     </div>
 @endif
-    <div class="container-fluid my-5">
+    <div class="container-fluid mt-5 px-5">
         <!-- card starts -->
         <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <h3 class="text-purple fw-bold">Room Category</h3>
+            <div class="card-header bg-light d-flex justify-content-between">
+                <h3 class="text-purple fw-bold mb-0">Room Category</h3>
                 <div>
-                    <button type="button" class="btn btn-purple" data-bs-toggle="modal" data-bs-target="#categoryModal">
+                    <button type="button" class="btn btn-purple" onclick="emptyCategoryForm()" data-bs-toggle="modal" data-bs-target="#categoryModal">
                         Add Category +
                     </button>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="table-responsive">
                     <table class="table table-striped align-middle py-3 text-center" id="category_table"
                         style="width:100%;white-space:nowrap;" data-paging="true" data-searching="true"
-                        data-ordering="false" data-info="false">
+                        data-ordering="true" data-info="true">
                         <thead>
                             <tr>
                                 {{-- <th class="text-start">Room Number</th> --}}
@@ -66,39 +66,6 @@
                                     </td>
                                 </tr>
                             @endforeach
-
-                            {{-- <tr>
-                                <td class="text-start"> number</td>
-                                <td> Name</td>
-                                <td>facility</td>
-                                <td>this is demo description</td>
-                                <td>1000</td>
-                                <td>500</td>
-                                <td class="text-end">
-                                    <a class="btn btn-sm">
-                                        <span class=" fa fa-pen"></span>
-                                    </a>
-                                    <a class="btn btn-sm">
-                                        <span class=" fa fa-trash"></span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-start"> number</td>
-                                <td> Name</td>
-                                <td>facility</td>
-                                <td>this is demo description</td>
-                                <td>1000</td>
-                                <td>500</td>
-                                <td class="text-end">
-                                    <a class="btn btn-sm">
-                                        <span class=" fa fa-pen"></span>
-                                    </a>
-                                    <a class="btn btn-sm">
-                                        <span class=" fa fa-trash"></span>
-                                    </a>
-                                </td>
-                            </tr> --}}
                         </tbody>
                     </table>
                 </div>
@@ -127,13 +94,12 @@
                                 <!-- col start -->
                                 <div class="col-12 mb-3">
                                     <label class=" fw-bold mb-1 ">Facility:</label>
-                                    <input type="text" class="form-control" name="facility" id="facility" required />
+                                    <input type="text" class="form-control" name="facility" id="facility"  />
                                 </div>
                                 <!-- col start -->
                                 <div class="col-12 mb-3">
                                     <label class=" fw-bold mb-1 ">Description:</label>
-                                    <input type="text" class="form-control" name="description" id="description"
-                                        required />
+                                    <input type="text" class="form-control" name="description" id="description"  />
                                 </div>
                                 <!-- col start -->
                                 <div class="col-12 mb-3">
@@ -159,8 +125,15 @@
         </div>
         <!-- Modal -->
     </div>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- DataTables Bootstrap JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <!-- DataTables RowReorder JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.js"
+        integrity="sha512-bZAXvpVfp1+9AUHQzekEZaXclsgSlAeEnMJ6LfFAvjqYUVZfcuVXeQoN5LhD7Uw0Jy4NCY9q3kbdEXbwhZUmUQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
     <script>
@@ -174,7 +147,37 @@
 
     //  message  div  animation
     </script>
+<script>
+    $(document).ready(function() {
+    var table = $('#category_table').DataTable( {
+        lengthChange: false,
+        buttons: [
+            {
+                extend: 'collection',
+                text: 'Export',
+                buttons: [
+                    'pdf',
+                    'excel'
+                ]
+            }
+        ],
+        language: {
+        searchPlaceholder: "Search"
+    }
+    } );
+
+    table.buttons().container()
+        .appendTo( ' .col-md-6:eq(0)' );
+    } );
 
 
-
+    // ==========empty form =============
+    function emptyCategoryForm() {
+          $('#category_form').trigger('reset');
+          $("#category_form_heading").text("Add Room Category");
+          $("#category_form_button").text("Save");
+          $("#category_method").val("");
+          $("#category_form").attr("action", "/category");
+    }
+</script>
 @endsection

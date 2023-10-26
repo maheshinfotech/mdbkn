@@ -14,14 +14,11 @@
     </div>
     @endif
     <div class="content  mx-0 w-100">
-        <div class="block block-rounded">
-            <div class="block-content block-content-full">
-                <h1>Create Booking</h1>
-                <div class="container-fluid my-5">
+                <div class="container-fluid px-0">
                     <!-- card starts -->
                     <div class="card">
                         <div class="card-header bg-light">
-                            <h3 class="text-purple fw-bold">Add Bookings</h3>
+                            <h3 class="text-purple fw-bold mb-0">Add Bookings</h3>
                         </div>
                         <!--card body starts -->
                         <div class="card-body">
@@ -34,7 +31,7 @@
                                     <div class="col-lg-6 col-12">
                                         <label class=" fs-7 fw-bold mb-1 ">Choose Category:</label>
                                         <select id="category" class="form-select" name="category" required onchange="select_category()">
-                                            <option selected  value="">Category...</option>
+                                            <option   value="" disabled selected>Category...</option>
                                             @foreach ($category as $cat)
                                                 <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                             @endforeach
@@ -46,7 +43,7 @@
                                     <div class="col-lg-6 col-12">
                                         <label class=" fs-7 fw-bold mb-1 ">Choose Room:</label>
                                         <select id="room"  class="form-select" name="room" required>
-                                            <option value="" selected>Rooms...</option>
+                                            <option value="" disabled selected>Rooms...</option>
 
                                         </select>
                                     </div>
@@ -57,6 +54,11 @@
 
                                 <!--begin::Input group-->
                                 <div class="row">
+                                     <!-- col start -->
+                                     <div class="col-md-2 mb-3">
+                                        <label class=" fw-bold mb-1">Mobile No:</label>
+                                        <input type="tel" class="form-control" name="mobile" id="mobile"  pattern="[6-9]{1}[0-9]{9}" maxLength="10"  onkeyup="this.value = this.value.replace(/[^0-9-]/g, '');" required />
+                                    </div>
                                     <!-- col start -->
                                     <div class="col-md-3 mb-3">
                                         <label class=" fw-bold mb-1 ">Guest Name:</label>
@@ -72,19 +74,20 @@
                                         <label class="fw-bold mb-1 ">Guest Father Name:</label>
                                         <input type="text" class="form-control" name="guest_father" id="guest_father" />
                                     </div>
-                                      <!-- col start -->
-                                      <div class="col-md-3 mb-3">
-                                        <label class=" fw-bold mb-1 ">Patient Name:</label>
-                                        <input type="text" class="form-control" name="patient_name" id="patient_name" required />
-                                    </div>
+
 
                                 </div>
                                 <!--end::Input group-->
 
                                 <!--begin::Input group-->
                                 <div class="row">
+                                     <!-- col start -->
+                                     <div class="col-md-3 mb-3">
+                                        <label class=" fw-bold mb-1 ">Patient Name:</label>
+                                        <input type="text" class="form-control" name="patient_name" id="patient_name" required />
+                                    </div>
                                     <!-- col start -->
-                                    <div class="col-md-3 mb-3">
+                                    <div class="col-md-2 mb-3">
                                         <label class="d-flex align-items-center fw-bold mb-1"> Guest Caste:</label>
                                         <input type="text" class="form-control" name="caste" id="caste" />
                                     </div>
@@ -93,11 +96,7 @@
                                         <label class=" fw-bold mb-1 ">Age:</label>
                                         <input type="number" class="form-control" name="age" id="age" />
                                     </div>
-                                     <!-- col start -->
-                                     <div class="col-md-2 mb-3">
-                                        <label class=" fw-bold mb-1">Mobile No:</label>
-                                        <input type="number" class="form-control" name="mobile" id="mobile" required />
-                                    </div>
+
                                     <!-- col start -->
                                     <div class="col-md-3 mb-3">
                                         <label class="d-flex align-items-center fw-bold mb-1"> Guest Address:</label>
@@ -155,9 +154,14 @@
                                         <input type="time" class="form-control" name="checkin" id="checkin" required />
                                     </div>
                                        <!-- col start -->
+                                       <input type="hidden" name="imageidprf" id="imageidprf" value="">
                                        <div class="col-md-2 mb-3">
                                         <label class="fw-bold mb-1">(Guest)ID-Proof:</label>
                                         <input type="file" class="form-control" id="idproof" name="idproof" />
+                                        <a target="_blank" href="" id="showpreviousid">
+
+                                            <img src="" id="id_numberphoto" style="height:50px;width:80px; display:none">
+                                         </a>
                                     </div>
 
 
@@ -223,8 +227,8 @@
                             <!--begin repeater-->
                             <div class="repeater mt-4">
                                 <!--heading start-->
-                                <div class="card-header d-flex justify-content-between p-0">
-                                    <h3 class="text-purple fw-bold">Add Guest</h3>
+                                <div class="card-header d-flex justify-content-between align-items-center p-2">
+                                    <h3 class="text-purple fw-bold mb-0">Add Guest</h3>
                                     <div>
                                         <input class="btn btn-purple px-4" data-repeater-create type="button"
                                             value="Add" />
@@ -240,7 +244,7 @@
                                             <!-- col start -->
                                             <div class="col-md-2 mb-3">
                                                 <label class=" fw-bold mb-1 ">Guest Name:</label>
-                                                <input type="text" class="form-control" name="guestname" required
+                                                <input type="text" class="form-control" name="guestname"
                                                     id="" />
                                             </div>
                                             <!-- col start -->
@@ -280,14 +284,12 @@
                             </div>
                         </div>
                         <!--card body ends -->
-                    </form>
-                    <!--form ends -->
+                        </form>
+                        <!--form ends -->
                     </div>
                     <!-- card ends -->
                 </div>
                 <!-- container ends -->
-            </div>
-        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- DataTables JS -->
@@ -297,32 +299,30 @@
     <!-- DataTables RowReorder JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.js"
         integrity="sha512-bZAXvpVfp1+9AUHQzekEZaXclsgSlAeEnMJ6LfFAvjqYUVZfcuVXeQoN5LhD7Uw0Jy4NCY9q3kbdEXbwhZUmUQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
 
     <script>
+        function select_category(){
+            var id =$('#category').val();
+            $.ajax({
+                url:'/bookings/create',
+                data:{id:id},
+                type:'get',
+                success:function(response){
+                    var html=`<option value="" selected>Rooms...</option>`;
+                    // console.log(response);
+                    $('#room').html('');
 
-function select_category(){
-    var id =$('#category').val();
-    $.ajax({
-        url:'/bookings/create',
-        data:{id:id},
-        type:'get',
-        success:function(response){
-            var html=`<option value="" selected>Rooms...</option>`;
-            console.log(response);
-            $('#room').html('');
-
-            for(let i=0;i<response.length;i++){
-                html+=`<option value="${response[i].id}"> ${response[i].room_number}</option>`;
-            }
-            $('#room').html(html);
+                    for(let i=0;i<response.length;i++){
+                        html+=`<option value="${response[i].id}"> ${response[i].room_number}</option>`;
+                    }
+                    $('#room').html(html);
 
 
+                }
+            });
         }
-    });
-}
-
-
 
         $('.repeater').repeater({
 
@@ -333,9 +333,60 @@ function select_category(){
     .slideUp(500, function () {
         $("#alert1").slideUp(500);
     });
+
+    // =============== get prefilled details on mobile no. =================
+        $('#mobile').on('keyup',function(){
+            var numb = $('#mobile').val();
+            var sizeofno = $('#mobile').val().length;
+            // console.log(sizeofno);
+            if (sizeofno==10) {
+                $.ajax({
+                    url:'/getguestpreviousdetails',
+                    data:{numb:numb},
+                    type:'get',
+                    success:function(data){
+                        // console.log(data.guestpredetail);
+                        var resp = data.guestpredetail;
+                        if (resp) {
+                            $('#name').val(resp.guest_name);
+                            $('#guest_father').val(resp.guest_father_name);
+                            $('#caste').val(resp.guest_cast);
+                            $('#age').val(resp.age);
+                            $('#guest_address').val(resp.guest_address);
+                            $('#tehsil').val(resp.tehsil);
+                            $('#city').val(resp.city);
+                            $('#state').val(resp.state);
+                            if (resp.id_number) {
+                                document.getElementById("id_numberphoto").style.display = 'block';
+                                var img ='/storage/' + resp.id_number;
+                                $("#id_numberphoto").attr('src',img);
+                            }else{
+                                    document.getElementById("id_numberphoto").style.display = 'none';
+                            }
+                            $('#showpreviousid').attr('href',img);
+                            $("#imageidprf").val(resp.id);
+
+                        }else{
+                            $('#name').val('');
+                            $('#guest_father').val('');
+                            $('#caste').val('');
+                            $('#age').val('');
+                            $('#guest_address').val('');
+                            $('#tehsil').val('');
+                            $('#city').val('');
+                            $('#state').val('');
+                            document.getElementById("id_numberphoto").style.display = 'none';
+                            $("#id_numberphoto").attr('src','');
+                            $('#showpreviousid').attr('href','');
+                            $("#imageidprf").val('');
+                        }
+
+                        // idproof
+                    }
+                })
+            }
+
+        })
+        // ==============================
     </script>
-
-
-
-
 @endsection

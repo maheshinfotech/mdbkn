@@ -50,25 +50,23 @@
     <!-- Alternatively, you can also include a specific color theme after the main stylesheet to alter the default color theme of the template -->
     {{-- @vite(['resources/sass/main.scss', 'resources/sass/oneui/themes/amethyst.scss', 'resources/js/oneui/app.js']) --}}
     <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
-
     <script>
         const base = "{!! url(config('app.admin_prefix')) !!}";
     </script>
-
-    <!-- Page JS Plugins -->
-
+    {{-- datatables cdn start --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+    {{-- datatables cdn end --}}
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
@@ -142,63 +140,30 @@
             <!-- END Side Content -->
         </aside>
         <!-- END Side Overlay -->
-
-        <!-- Sidebar -->
-        <!--
-        Sidebar Mini Mode - Display Helper classes
-
-        Adding 'smini-hide' class to an element will make it invisible (opacity: 0) when the sidebar is in mini mode
-        Adding 'smini-show' class to an element will make it visible (opacity: 1) when the sidebar is in mini mode
-            If you would like to disable the transition animation, make sure to also add the 'no-transition' class to your element
-
-        Adding 'smini-hidden' to an element will hide it when the sidebar is in mini mode
-        Adding 'smini-visible' to an element will show it (display: inline-block) only when the sidebar is in mini mode
-        Adding 'smini-visible-block' to an element will show it (display: block) only when the sidebar is in mini mode
-    -->
-        <nav id="sidebar" aria-label="Main Navigation">
+        <nav id="sidebar" aria-label="Main Navigation" >
             <!-- Side Header -->
-            <div class="content-header d-flex justify-content-center bg-white ">
+            <div class="content-header d-flex justify-content-center " style="background-color: rgba(50, 53, 93, 0.9); color:white;">
                 <!-- Logo -->
                 <a class="font-semibold text-dual mt-4" href="{{ url(config('app.admin_prefix')) }}">
                     <span class="smini-visible">
                         <i class="fa fa-circle-notch text-primary"></i>
                     </span>
                     <!-- <span class="smini-hide fs-5 tracking-wider">{{ config('app.app_name') }}</span> -->
-                    <span class="smini-hide fs-5 tracking-wider">
-                        <img class="" src="{{ asset('media/logo.png') }}" alt="Header Avatar"
-                            style="width: 100px;height:95px">
+                    <span class="text-center fw-bolder">
+                        {{-- <img class="" src="{{ asset('media/logo.png') }}" alt="Header Avatar"
+                            style="width: 100px;height:80px"> --}}
+                            <h6 class="text-white">Maheshwari Dharamshala</h6>
                     </span>
-
                 </a>
                 <!-- END Logo -->
-
-                <!-- Extra -->
-                <div>
-                    <!-- Dark Mode -->
-                    <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                    <!-- END Dark Mode -->
-
-                    <!-- Options -->
-
-                    <!-- END Options -->
-
-                    <!-- Close Sidebar, Visible only on mobile screens -->
-                    <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                    <a class="d-lg-none btn btn-sm btn-alt-secondary ms-1" data-toggle="layout"
-                        data-action="sidebar_close" href="javascript:void(0)">
-                        <i class="fa fa-fw fa-times"></i>
-                    </a>
-                    <!-- END Close Sidebar -->
-                </div>
-                <!-- END Extra -->
             </div>
             <!-- END Side Header -->
 
             <!-- Sidebar Scrolling -->
-            <div class="js-sidebar-scroll  ">
+            <div class="js-sidebar-scroll" style="background-color: rgba(50, 53, 93, 0.9); color:white;">
                 <!-- Side Navigation -->
                 <div class="content-side ">
-                    <ul class="nav-main ">
+                    <ul class="nav-main">
 
                         @foreach ($parentMenus as $parentMenu)
                             @php
@@ -221,7 +186,7 @@
 
                             @endphp
 
-                            <li class="nav-main-item {{ $parentMenuOpen }} {{ $otherClass }}">
+                            <li class="nav-main-item text-capitalize {{ $parentMenuOpen }} {{ $otherClass }}" >
                                 <a class=" nav-main-link {{ in_array(config('app.admin_prefix') . $parentMenu['menu_href'], [$routePrefix, $parentRoute]) ? 'active' : '' }} {{ $otherSubClass }}"
                                     href="{{ $parentMenu['menu_href'] ? url(config('app.admin_prefix') . $parentMenu['menu_href']) : '#' }}"
                                     {!! $otherAttributes !!}>
@@ -264,7 +229,7 @@
         <!-- Header -->
         <header id="page-header">
             <!-- Header Content -->
-            <div class="content-header w-100">
+            <div class="content-header w-100" style="background-color: rgba(50, 53, 93, 0.9); color:white;">
                 <!-- Left Section -->
                 <div class="d-flex align-items-center">
                     <!-- Toggle Sidebar -->
@@ -274,35 +239,6 @@
                         <i class="fa fa-fw fa-bars"></i>
                     </button>
                     <!-- END Toggle Sidebar -->
-
-                    <!-- Toggle Mini Sidebar -->
-                    <!-- Layout API, functionality initialized in Template._uiApiLayout()-->
-
-                    {{-- <button type="button" class="btn btn-sm btn-alt-secondary me-2 d-none d-lg-inline-block" data-toggle="layout" data-action="sidebar_mini_toggle">
-            <i class="fa fa-fw fa-ellipsis-v"></i>
-          </button> --}}
-
-                    <!-- END Toggle Mini Sidebar -->
-
-                    <!-- Open Search Section (visible on smaller screens) -->
-                    <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                    <button type="button" class="btn btn-sm btn-alt-secondary d-md-none" data-toggle="layout"
-                        data-action="header_search_on">
-                        <i class="fa fa-fw fa-search"></i>
-                    </button>
-                    <!-- END Open Search Section -->
-
-                    <!-- Search Form (visible on larger screens) -->
-                    {{-- <form class="d-none d-md-inline-block" action="/dashboard" method="POST">
-            @csrf
-            <div class="input-group input-group-sm">
-              <input type="text" class="form-control form-control-alt" placeholder="Search.." id="page-header-search-input2" name="page-header-search-input2">
-              <span class="input-group-text border-0">
-                <i class="fa fa-fw fa-search"></i>
-              </span>
-            </div>
-          </form> --}}
-                    <!-- END Search Form -->
                 </div>
                 <!-- END Left Section -->
 
@@ -358,26 +294,7 @@
                 </div>
                 <!-- END Right Section -->
             </div>
-            <!-- END Header Content -->
-
-            <!-- Header Search -->
-            {{-- <div id="page-header-search" class="overlay-header bg-body-extra-light">
-        <div class="content-header">
-          <form class="w-100" action="/dashboard" method="POST">
-            @csrf
-            <div class="input-group">
-              <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-              <button type="button" class="btn btn-alt-danger" data-toggle="layout" data-action="header_search_off">
-                <i class="fa fa-fw fa-times-circle"></i>
-              </button>
-              <input type="text" class="form-control" placeholder="Search or hit ESC.." id="page-header-search-input" name="page-header-search-input">
-            </div>
-          </form>
-        </div>
-      </div> --}}
-            <!-- END Header Search -->
-
-            <!-- Header Loader -->
+            <!-- Header content -->
             <!-- Please check out the Loaders page under Components category to see examples of showing/hiding it -->
             <div id="page-header-loader" class="overlay-header bg-body-extra-light">
                 <div class="content-header">
@@ -397,12 +314,9 @@
     </div>
 
     <script src="{{ asset('theme/js/oneui.app.min.js') }}"></script>
-
     <!-- Page JS Code -->
     <script src="{{ url('theme/js/pages/be_tables_datatables.min.js') }}"></script>
-
     @php
-
         $flash = request()
             ->session()
             ->get('flash_data');
@@ -429,17 +343,10 @@
                 'message' => $message,
             ];
         }
-
     @endphp
-
     <script>
         let show_alert = JSON.parse('{!! isset($flashData) ? json_encode($flashData) : json_encode([]) !!}');
     </script>
-
-
-
-    {{-- <script>One.helpersOnLoad(['js-flatpickr', 'jq-datepicker', 'jq-maxlength', 'jq-select2', 'jq-masked-inputs', 'jq-rangeslider']);</script> --}}
     <!-- END Page Container -->
 </body>
-
 </html>
