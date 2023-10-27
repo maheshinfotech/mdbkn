@@ -214,7 +214,7 @@
                                     <!-- col start -->
                                     <div class="col-md-2 mb-3">
                                         <label class="fw-bold mb-1">Advance Payment:</label>
-                                        <input type="text" class="form-control" id="advance" name="advance" />
+                                        <input type="number" class="form-control" id="advance" name="advance" />
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label class="fw-bold mb-1">Extra Remark:</label>
