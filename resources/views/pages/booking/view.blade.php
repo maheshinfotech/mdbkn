@@ -37,20 +37,19 @@
                               <th class="text-center">In/Out Time</th>
                               <th class="text-center">Doctor Name</th>
                               <th class="text-center">Mobile No.</th>
-                              <th class="text-center">Paid Rent</th>
+                              <th class="text-center">Total Paid Amount</th>
                               <th class="text-end">Action</th>
                           </tr>
                       </thead>
                       <tbody class="text-capitalize">
                         @foreach ($bookings as $booking)
-
                           <tr>
                               <td class="text-start">{{$booking->guest_name}}</td>
                               <td>{{ $booking->patient_name }}</td>
                               <td>{{ $booking->check_in_time }}/{{ $booking->check_out_time }}</td>
                               <td>{{ $booking->docter_name }}</td>
                               <td>{{ $booking->mobile_number }}</td>
-                              <td>{{ $booking->payable_rent }}</td>
+                              <td>{{ $booking->paid_rent + $booking->advance_payment}}</td>
 
                               <td class="text-end">
                                 @if ($booking->getRawOriginal('check_out_time')==null)

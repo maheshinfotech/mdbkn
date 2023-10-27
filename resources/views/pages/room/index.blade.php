@@ -34,6 +34,7 @@
                             <tr>
                                 <th class="text-start">Floor Number</th>
                                 <th class="text-center">Room Number</th>
+                                <th class="text-center">Room Category</th>
                                 <th class="text-center">Booked Date</th>
                                 <th class="text-center">Is Booked</th>
                                 <th class="text-center">Guest Capacity</th>
@@ -47,6 +48,12 @@
                                 <tr>
                                     <td class="text-start">{{ $room->floor_number }}</td>
                                     <td>{{ $room->room_number }}</td>
+                                    <td>
+                                        @if ($room->category)
+                                        {{ $room->category->name }}
+                                        @endif
+
+                                    </td>
                                     <td>
                                         @if ($room->booked_date)
                                             {{ date('d/m/Y',strtotime($room->booked_date)) }}
