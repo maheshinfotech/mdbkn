@@ -140,7 +140,7 @@
             <!-- END Side Content -->
         </aside>
         <!-- END Side Overlay -->
-        <nav id="sidebar" aria-label="Main Navigation" >
+        <nav id="sidebar" class="" aria-label="Main Navigation" >
             <!-- Side Header -->
             <div class="content-header d-flex justify-content-center " style="background-color: rgba(50, 53, 93, 0.9); color:white;">
                 <!-- Logo -->
@@ -234,8 +234,7 @@
                 <div class="d-flex align-items-center">
                     <!-- Toggle Sidebar -->
                     <!-- Layout API, functionality initialized in Template._uiApiLayout()-->
-                    <button type="button" class="btn btn-sm btn-alt-secondary me-2 d-lg-none" data-toggle="layout"
-                        data-action="sidebar_toggle">
+                    <button type="button" class="btn btn-sm btn-alt-secondary me-2 d-lg-none" >
                         <i class="fa fa-fw fa-bars"></i>
                     </button>
                     <!-- END Toggle Sidebar -->
