@@ -48,11 +48,7 @@ $(document).ready(function () {
             }
         });
     });
-    // $('.edit-record').click(function(){
-    //       let context =  $(this);
-
-    // });
-    //updatte categories
+    
 
     $(".update-user-credentials").click(function () {
         let context = $(this);
@@ -115,51 +111,24 @@ $(document).ready(function () {
         });
     }
 
-    $(".open-qr-modal").click(function (event) {
-        let context = $(this);
-        $(".qr-modal-body").html(context.html());
-        $(".machinery-modal-title").text(context.data("machine"));
-    });
 
-    $(".print-qr").click(function (event) {
-        var prtContent = $(".qr-modal-body").clone();
+    $('.toggle-user-type').click(function(){
+        
+        let patient = $('.patient:checked').val();
+        let is_admit = $('.is_admit:checked').val();
+        
+        $('ward').removeProp("checked");
+        console.log(patient + ' ' + is_admit);
 
-        prtContent.find("svg").css({ height: "300px", width: "300px" });
-
-        console.log(prtContent);
-
-        var WinPrint = window.open(
-            "",
-            "",
-            "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
-        );
-
-        WinPrint.document.write(prtContent.html());
-
-        // WinPrint.document.close();
-
-        WinPrint.focus();
-
-        WinPrint.print();
-
-        // WinPrint.close();
-    });
-
-    $(".triggger-role").change(function () {
-        console.log("Hello World how are you");
-
-        let context = $(this);
-
-        let type = $(this).find(":selected").attr("is_manager");
-
-        if (type == "1") {
-            $(".machine-box").hide();
-        } else {
-            $(".machine-box").show();
+        if(patient == 'cancer' && is_admit == '1'){
+            $('.cancer-purpose').show();
+        }else{
+            $('.cancer-purpose').hide();
         }
+
     });
 
-    $(".triggger-role").trigger("change");
+
 });
 function callAjax(url, dataset, callbackfun, async_type = false) {
     $.ajax({
