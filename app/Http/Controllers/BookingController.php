@@ -44,7 +44,7 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         // Gate::authorize('create', 'booking');
-        // dd($request->all());
+        dd($request->all());
 
         // booking record save block start
         $booking =new Booking;
@@ -57,7 +57,11 @@ class BookingController extends Controller
         $booking->patient_ward_no=$request->ward_no;
         $booking->patient_bed_no=$request->bedno;
         $booking->advance_payment=$request->advance;
-        $booking->check_in_time= date('Y-m-d').' '.$request->checkin;
+        $booking->gender=$request->gender;
+        $booking->hospital_id=$request->hospital_id;
+
+        // $booking->check_in_time= date('Y-m-d').' '.$request->checkin;
+        $booking->check_in_time = $request->checkin;
         $booking->age=$request->age;
         $booking->city=$request->city;
         $booking->state=$request->state;
@@ -145,8 +149,8 @@ class BookingController extends Controller
         Gate::authorize('update', 'booking');
         // dd($request->all());
         $checkoutdet = Booking::find($request->booking_id);
-        $checkoutdet->check_out_time =$request->check_out_time;
-        $checkoutdet->estimated_total_days =$request->estimatedays;
+        $checkoutdet->check_out_time = $request->check_out_time;
+        $checkoutdet->estimated_total_days = $request->estimatedays;
         $checkoutdet->payable_rent = $request->totalrent;
         $checkoutdet->paid_rent = $request->paidrent;
         $checkoutdet->save();
