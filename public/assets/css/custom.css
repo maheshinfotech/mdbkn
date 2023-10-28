@@ -1,11 +1,26 @@
 .class-inner-padding{
     padding: 13px!important;
 }
+body{
+    background-color: aliceblue;
+}
+.nav-main-submenu .nav-main-link.active, .nav-main-submenu .nav-main-link:focus,
+.nav-main-submenu  ,.nav-main-link.active {
+    /* color : rgba(50, 53, 93, 0.9); */
+    color:tan;
+    font-weight: bold;
+}
+.nav-main-submenu .nav-main-submenu .nav-main-link:focus,
+.nav-main-submenu .nav-main-link:hover {
+    color : rgba(50, 53, 93, 0.9);
+}
 
-.nav-main-submenu .nav-main-link.active, .nav-main-submenu .nav-main-link:focus, .nav-main-submenu .nav-main-link:hover ,.nav-main-link.active {
-
-    /* color : red */
-    color : #ee1a26
+.nav-main-submenu , .nav-main-submenu .nav-main-link:focus,
+.nav-main-submenu ,.nav-main-link {
+    color : white;
+}
+.nav-main-link{
+    font-size: medium !important;
 }
 
 .qr-modal-body svg{
@@ -13,8 +28,7 @@
     width: 300px;
 }
 
-/* new css */
-.text-purple{
+  .text-purple{
     color: rgba(50, 53, 93, 0.9);
   }
   .btn-purple{
@@ -25,3 +39,36 @@
     background-color: rgba(50, 53, 93, 0.9);
     color: white;
   }
+  /*datatables color css*/
+  .active>.page-link, .page-link.active {
+        background-color: rgba(50, 53, 93, 0.9);
+        border-color: rgba(50, 53, 93, 0.9);
+        color: white;
+    }
+    .page-link {
+        color: black;
+    }
+  .dataTables_filter  label{
+        color: white;
+    }
+    .form-control{
+        height: 40px;
+    }
+    .dt-button:hover{
+        background-color: rgba(50, 53, 93, 0.9);
+        color: white;
+    }
+/*ends here*/
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+

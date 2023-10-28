@@ -24,7 +24,8 @@
     <link rel="icon" type="image/png" sizes="192x192" href="{{asset('media/logo.jpg')}}">
     <link rel="apple-touch -icon" sizes="180x180" href="{{asset('media/logo.jpg')}}">
     <link rel="stylesheet" id="css-main" href="{{asset('theme/css/oneui.min.css')}}">
-    
+    <link rel="stylesheet" id="" href="{{ asset('assets/css/custom.css')}}">
+
   </head>
 
   <body>
@@ -39,24 +40,21 @@
             <div class="row justify-content-center push">
               <div class="col-md-8 col-lg-6 col-xl-4">
                 <!-- Sign In Block -->
-                <div class="block block-rounded mb-0">
-                  <div class="block-header block-header-default">
-                    <h3 class="block-title text-center">{{ config('app.app_name') }}</h3>
-                    <div class="block-options">
-                     
-                    </div>
+                <div class="block block-rounded  mb-0">
+                  <div class="block-header block-header-default d-flex justify-content-center py-3 bg-light">
+                    <h3 class="mb-0 text-purple">{{ config('app.app_name') }}</h3>
                   </div>
 
                   <div class="block-content">
                         <div class="p-sm-3 px-lg-4 px-xxl-5 py-lg-3">
-                              
+
                                     <x-reusables.badge-alerts/>
 
                                     <!-- <h1 class="h2 mb-1">{{config('app.app_name')}}</h1> -->
-                              
-                                    <p class="fw-medium text-muted text-center">
+
+                                    {{-- <p class="fw-medium text-muted text-center">
                                     <img class="" src="{{ asset('media/logo.png') }}" alt="Header Avatar" style="width: 100px;height:95px">
-                                    </p>
+                                    </p> --}}
 
                                     @yield('content')
 

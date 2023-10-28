@@ -1,4 +1,4 @@
-<div class="bg-body-light">
+{{-- <div class="bg-body-light">
     <!-- <div class="content content-full py-2"> -->
     <div class="row content-full py-2 mx-4">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
@@ -18,4 +18,4 @@
             @endif
         </div>
     </div>
-</div>
+</div> --}}

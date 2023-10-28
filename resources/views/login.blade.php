@@ -1,4 +1,5 @@
 @extends('layouts.baselayout' , ['title' => 'SIGN IN'])
+
 @section('content')
     <form class="js-validation-signin"  method="POST">
       @csrf
@@ -15,9 +16,9 @@
         </div>
         <span class="text-danger mx-1">{{session('error')}}</span>
       </div>
-      <div class="row mb-4">
+      <div class="row mb-4 justify-content-center">
         <div class="col-md-6 col-xl-5">
-          <button type="submit" class="btn w-100 btn-alt-primary">
+          <button type="submit" class="btn w-100 btn-purple">
             <i class="fa fa-fw fa-sign-in-alt me-1 opacity-50"></i> Sign In
           </button>
         </div>
