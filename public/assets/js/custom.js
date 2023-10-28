@@ -130,6 +130,7 @@ $(document).ready(function () {
 
 
 });
+
 function callAjax(url, dataset, callbackfun, async_type = false) {
     $.ajax({
         type: "POST",

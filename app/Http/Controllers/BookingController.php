@@ -18,7 +18,6 @@ class BookingController extends Controller
 {
     public function index()
     {
-        // Gate::authorize('view', 'booking');
         $bookings= Booking::latest('id')->get();
         // dd($bookings);
 
@@ -43,10 +42,6 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-        // Gate::authorize('create', 'booking');
-        dd($request->all());
-
-        // booking record save block start
         $booking =new Booking;
         $booking->room_id=$request->room;
         $booking->guest_name=$request->guest_name;
@@ -65,20 +60,21 @@ class BookingController extends Controller
         $booking->age=$request->age;
         $booking->city=$request->city;
         $booking->state=$request->state;
-        $booking->docter_name=$request->docter;
+        $booking->docter_name=$request->doctor;
         $booking->mobile_number=$request->mobile;
+
         // id proof saved ===========
         if ($request->imageidprf) {
             $bookdet=Booking::find($request->imageidprf);
-        if ($request->hasFile('idproof')) {
-            $file = $request->file('idproof');
-            $imageName = 'Id_Proof_files/' . Str::random(40) . '.' . strtolower($file->getClientOriginalExtension());
-            $filePath = $file->storeAs('public/', $imageName);
-            $booking->id_number=$imageName;
-        }else{
-                $booking->id_number=$bookdet->id_number;
+            if ($request->hasFile('idproof')) {
+                $file = $request->file('idproof');
+                $imageName = 'Id_Proof_files/' . Str::random(40) . '.' . strtolower($file->getClientOriginalExtension());
+                $filePath = $file->storeAs('public/', $imageName);
+                $booking->id_number=$imageName;
+            }else{
+                    $booking->id_number=$bookdet->id_number;
 
-        }
+            }
         }else{
             if ($request->hasFile('idproof')) {
                 $file = $request->file('idproof');
@@ -88,9 +84,11 @@ class BookingController extends Controller
             }
         }
         // ===============================
-        $booking->tehsil=$request->tehsil;
-        $booking->relation_patient=$request->relation;
-        $booking->ward_type=$request->wardtype;
+        $booking->tehsil            =   $request->tehsil;
+        $booking->relation_patient  =   $request->relation;
+        $booking->ward_type         =   $request->wardtype;
+        $booking->is_admitted       =   $request->is_admit ? 1 : 0;
+        $booking->patient_type      =   $request->patient;
         // rent ==================
         $roomcat = RoomCategory::where('id', $request->category)->first();
             if($request->wardtype=="ct" || $request->wardtype=="rt"){
@@ -141,7 +139,6 @@ class BookingController extends Controller
         return redirect()->route('index-booking')->with('message', 'Booking added successfully');
         // return view('pages.booking.create');
 
-
     }
 
     public function checkout(Request $request)
@@ -161,7 +158,6 @@ class BookingController extends Controller
             $room->booked_date = null;
             $room->update();
         }
-
 
     return redirect()->route('index-booking')->with('message', 'Checked Out Details Saved Successfully');
 
@@ -235,7 +231,6 @@ class BookingController extends Controller
 
     }
 
-
     public function getguestpreviousdetails(Request $request) {
         $guestpredetail = Booking::where('mobile_number',$request->numb)->latest()->first();
 
@@ -244,7 +239,6 @@ class BookingController extends Controller
                 'guestpredetail'=>$guestpredetail
                 ]
             );
-
 
      }
 }

@@ -56,7 +56,10 @@ class HospitalSeeder extends Seeder
             ],
             [
                 'name' =>'Rehabilitation center PBM HOSPITAL',
-            ]
+            ],
+            [
+                'name' =>'Others',
+            ],
             ]);
     }
 }

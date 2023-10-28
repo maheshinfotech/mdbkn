@@ -34,7 +34,8 @@
                           <tr>
                               <th class="text-start">Guest Name</th>
                               <th class="text-center">Patient Name</th>
-                              <th class="text-center">In/Out Time</th>
+                              <th class="text-center">Check In Time</th>
+                              <th class="text-center">Check Out Time</th>
                               <th class="text-center">Doctor Name</th>
                               <th class="text-center">Mobile No.</th>
                               <th class="text-center">Total Paid Amount</th>
@@ -46,7 +47,8 @@
                           <tr>
                               <td class="text-start">{{$booking->guest_name}}</td>
                               <td>{{ $booking->patient_name }}</td>
-                              <td>{{ $booking->check_in_time }}/{{ $booking->check_out_time }}</td>
+                              <td>{{ $booking->check_in_time ? : '--'}}</td>
+                              <td>{{ $booking->check_out_time ? : '--' }}</td>
                               <td>{{ $booking->docter_name }}</td>
                               <td>{{ $booking->mobile_number }}</td>
                               <td>{{ $booking->paid_rent + $booking->advance_payment}}</td>
