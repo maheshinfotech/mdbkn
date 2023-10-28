@@ -1,5 +1,5 @@
 @php
-    $pageName = 'booking';
+    $pageName = 'bookings';
     $tableHead = ['Full Name', 'Machine Name', 'Reading Number', 'Fuel in Liters'];
     $tableHeadSecond = ['Full Name', 'Machine Name', 'Working Hours'];
 @endphp
@@ -7,7 +7,7 @@
 @extends('layouts.backend')
 
 @section('content')
-    <x-reusables.app-header pageName="{{ $pageName }}" />
+    <x-reusables.app-header pageName="{{ $pageName }}" createButton={{true}} />
     <div class="content  mx-0 w-100">
         <div class="block block-rounded">
             <div class="block-content block-content-full">

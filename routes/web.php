@@ -90,8 +90,8 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::post('/bookings', 'store')->name('store-booking');
             Route::post('/checkout', 'checkout')->name('checkout-booking');
         });
-        Route::resource('/category', RoomCategoryController::class);
-        Route::resource('/room', RoomController::class);
+        Route::resource('/categories', RoomCategoryController::class);
+        Route::resource('/rooms', RoomController::class);
 
         Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
