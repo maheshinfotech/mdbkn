@@ -28,5 +28,8 @@ public function getCheckOutTimeAttribute($value){
 public function room(){
     return $this->belongsTo(Room::class)->with('category');
 }
-
+public function rooms()
+{
+    return $this->belongsTo(Room::class, 'room_id');
+}
 }
