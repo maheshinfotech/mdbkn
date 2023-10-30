@@ -50,7 +50,7 @@
             @foreach ($advances as $advance)
                 <tr>
                     <td>{{ $advance->amount }}</td>
-                    <td>{{ $advance->received_date }}</td>
+                    <td>{{ date('d-M-y', strtotime($advance->received_date))}}</td>
                 </tr>
 
                 @php
@@ -59,6 +59,5 @@
             @endforeach
         </tbody>
     </table>
-{{--  --}}
     <p>Total Amount: {{ $totalAmount }}</p>
 @endif

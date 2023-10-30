@@ -52,11 +52,8 @@
                               <td>{{ $booking->docter_name }}</td>
                               <td>{{ $booking->mobile_number }}</td>
                               <td>{{ $booking->paid_rent + $booking->advance_payment}}</td>
-                              <td class="text-center">
-                          <a href="{{ route('advance.create', ['booking_id' => $booking->id]) }}" class="btn btn-sm btn-purple open-modal"><i class="fa-solid fa-plus"></i></a>
-                            </td>
                               <td class="text-end">
-
+                                <a href="{{ route('advance.create', ['booking_id' => $booking->id])}}" class="btn btn-sm btn-purple open-modal"><i class="fa-solid fa-plus"></i></a>
                                 @if ($booking->getRawOriginal('check_out_time')==null)
                                 <a href="/bookings/checkout/{{ $booking->id }}" class="btn btn-sm btn-purple">Checkout</a>
                                 @endif
