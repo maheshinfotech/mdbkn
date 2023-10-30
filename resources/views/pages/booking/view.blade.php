@@ -52,13 +52,17 @@
                               <td>{{ $booking->docter_name }}</td>
                               <td>{{ $booking->mobile_number }}</td>
                               <td>{{ $booking->paid_rent + $booking->advance_payment}}</td>
-
+                              <td class="text-center">
+                          <a href="{{ route('advance.create', ['booking_id' => $booking->id]) }}" class="btn btn-sm btn-purple open-modal"><i class="fa-solid fa-plus"></i></a>
+                            </td>
                               <td class="text-end">
+
                                 @if ($booking->getRawOriginal('check_out_time')==null)
                                 <a href="/bookings/checkout/{{ $booking->id }}" class="btn btn-sm btn-purple">Checkout</a>
                                 @endif
                                   <a href="/bookings/{{ $booking->id }}" class="btn btn-sm btn-purple">View </a>
                               </td>
+
                           </tr>
                           @endforeach
                       </tbody>
@@ -71,6 +75,14 @@
       </div>
        <!-- container ends -->
     </div>
+    <div class="modal fade" id="advanceModal" tabindex="-1" role="dialog" aria-labelledby="advanceModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+          </div>
+        </div>
+      </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -104,7 +116,18 @@
             $("#alert1").slideUp(500);
         });
 
-    //  message  div  animation
+
+    $('.open-modal').on('click', function (e) {
+      e.preventDefault();
+
+      var url = $(this).attr('href');
+
+      $('#advanceModal .modal-content').load(url, function () {
+        $('#advanceModal').modal('show');
+      });
+    });
     </script>
+
+
 
 @endsection

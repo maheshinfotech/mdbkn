@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomCategoryController;
+use App\Http\Controllers\AdvanceController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,12 @@ use App\Http\Controllers\RoomCategoryController;
 */
 
 // Example Routes
+
+//Route::post('/advances/store', [AdvanceController::class,'store'])->name('advances.store');
+
+Route::get('/advance/create/{booking_id}', [AdvanceController::class , 'create'])->name('advance.create');
+Route::post('/advance/store', [AdvanceController::class,'store'])->name('advance.store');
+Route::get('/advance/show/{booking_id}', [AdvanceController::class .'show'])->name('advance.show');
 
 Route::prefix(config('app.admin_prefix'))->group(function () {
 
@@ -119,6 +127,8 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/reset-password/{id}', 'resetPasswordView');
 
             Route::post('/reset-password/{id}', 'resetPassword');
+
+
         });
     });
 });
