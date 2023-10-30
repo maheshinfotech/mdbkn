@@ -61,3 +61,32 @@
         </div>
     </div>
 </div>
+
+
+@if ($advances->count() > 0)
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Amount</th>
+                <th>Received Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $totalAmount = 0
+            @endphp
+
+            @foreach ($advances as $advance)
+                <tr>
+                    <td>{{ $advance->amount }}</td>
+                    <td>{{ date('d-M-y', strtotime($advance->received_date))}}</td>
+                </tr>
+
+                @php
+                    $totalAmount += $advance->amount;
+                @endphp
+            @endforeach
+        </tbody>
+    </table>
+    <p>Total Amount: {{ $totalAmount }}</p>
+@endif
