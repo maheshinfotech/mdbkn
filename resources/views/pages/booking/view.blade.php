@@ -29,7 +29,9 @@
           <!--card body starts -->
           <div class="card-body">
               <div class="table-responsive">
-                  <table class="table table-striped align-middle py-3 text-center" id="booking_table" style="width:100%;white-space:nowrap;" data-paging="true" data-searching="true" data-ordering="false" data-info="false">
+                  <table class="table table-striped align-middle py-3 text-center" id="booking_table" style="width:100%;white-space:nowrap;"
+                  data-paging="true" data-searching="true" data-ordering="false" data-info="false"
+                  >
                       <thead>
                           <tr>
                               <th class="text-start">Guest Name</th>
@@ -52,17 +54,13 @@
                               <td>{{ $booking->docter_name }}</td>
                               <td>{{ $booking->mobile_number }}</td>
                               <td>{{ $booking->paid_rent + $booking->advance_payment}}</td>
-                              <td class="text-center">
-                          <a href="{{ route('advance.create', ['booking_id' => $booking->id]) }}" class="btn btn-sm btn-purple open-modal"><i class="fa-solid fa-plus"></i></a>
-                            </td>
                               <td class="text-end">
-
+                                <a href="{{ route('advance.create', ['booking_id' => $booking->id]) }}" class="btn btn-sm btn-purple open-modal"><i class="fa-solid fa-plus"></i></a>
                                 @if ($booking->getRawOriginal('check_out_time')==null)
                                 <a href="/bookings/checkout/{{ $booking->id }}" class="btn btn-sm btn-purple">Checkout</a>
                                 @endif
                                   <a href="/bookings/{{ $booking->id }}" class="btn btn-sm btn-purple">View </a>
                               </td>
-
                           </tr>
                           @endforeach
                       </tbody>

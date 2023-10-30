@@ -26,12 +26,12 @@
                         <div class="row my-4 justify-content-center ">
 
                             <div class="col-lg-3 col-12 text-center">
-                                <label class=" fs-7 fw-bold mb-1 mr-4">
+                                <label class=" fs-7 fw-bold mb-1 me-4">
                                     <input type="radio" class="toggle-user-type patient" checked name="patient"
                                         value="non-cancer">
                                     Non Cancer Patient
                                 </label>
-                                <label class=" fs-7 fw-bold mb-1 mr-4">
+                                <label class=" fs-7 fw-bold mb-1">
                                     <input type="radio" class="toggle-user-type patient" name="patient"
                                         value="cancer">
                                     Cancer Patient
@@ -43,12 +43,12 @@
                             </div>
 
                             <div class="col-lg-3 col-12 text-center">
-                                <label class=" fs-7 fw-bold mb-1 mr-4">
+                                <label class=" fs-7 fw-bold mb-1 me-4">
                                     <input type="radio" class="toggle-user-type is_admit"  name="is_admit"
                                         value="1">
                                     Admitted
                                 </label>
-                                <label class=" fs-7 fw-bold mb-1 mr-4">
+                                <label class=" fs-7 fw-bold mb-1">
                                     <input type="radio" class="toggle-user-type is_admit" checked name="is_admit"
                                         value="0">
                                     Non-Admitted
@@ -58,19 +58,19 @@
                                 <div class="vr" style="opacity:0.5"></div>
                             </div>
                             <div class="col-lg-3 col-12 text-center">
-                                <label class=" fs-7 fw-bold mb-1  mr-4 cancer-purpose ">
+                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose ">
                                     <input type="radio" name="ward"  value="ct" class="ward">
                                     CT
                                 </label>
-                                <label class=" fs-7 fw-bold mb-1  mr-4 cancer-purpose">
+                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose">
                                     <input type="radio" name="ward"  value="rt" class="ward">
                                     RT
                                 </label>
-                                <label class=" fs-7 fw-bold mb-1 mr-4">
+                                <label class=" fs-7 fw-bold mb-1 me-3">
                                     <input type="radio" name="ward"  value="report" class="ward">
                                     Tests
                                 </label>
-                                <label class=" fs-7 fw-bold mb-1 mr-4">
+                                <label class=" fs-7 fw-bold mb-1">
                                     <input type="radio" name="ward" checked value="other" class="ward">
                                     Other
                                 </label>
@@ -226,7 +226,7 @@
                             <!-- col start -->
                             <div class="col-md-2 ">
                                 <label class="fw-bold mb-1 ">Hospital (Department)<span class="text-danger">*</span></label>
-                                <select class="form-select" name="hospital_id" id="" required>
+                                <select class="form-select" name="hospital_id" id="hospitalname" required>
                                     <option value="">choose..</option>
                                     @foreach (\DB::table('hospitals')->get() as $hosname)
                                         <option value="{{ $hosname->id }}">{{ $hosname->name }}
@@ -384,66 +384,7 @@
                 $("#alert1").slideUp(500);
             });
 
-        // =============== get prefilled details on mobile no. =================
-        $('#mobile').on('keyup', function() {
-            var numb = $('#mobile').val();
-            var sizeofno = $('#mobile').val().length;
-            // console.log(sizeofno);
-            if (sizeofno == 10) {
-                $.ajax({
-                    url: '/getguestpreviousdetails',
-                    data: {
-                        numb: numb
-                    },
-                    type: 'get',
-                    success: function(data) {
-                        // console.log(data.guestpredetail);
-                        var resp = data.guestpredetail;
-                        if (resp) {
-                            $('#name').val(resp.guest_name);id_numberphoto
-                            $('#guest_father').val(resp.guest_father_name);
-                            $('#caste').val(resp.guest_cast);
-                            $('#age').val(resp.age);
-                            $('#guest_address').val(resp.guest_address);
-                            $('#tehsil').val(resp.tehsil);
-                            $('#city').val(resp.city);
-                            $('#state').val(resp.state);
-                            if (resp.id_number) {
-                                document.getElementById("id_numberphoto").style.display = 'block';
-                                var img = '/storage/' + resp.id_number;
-                                $("#id_numberphoto").attr('src', img);
-                                if(resp.id_number){
-                                    $('#idproof').removeAttr("required");
-                                }
-                            } else {
-                                document.getElementById("id_numberphoto").style.display = 'none';
-                                $('#idproof').addAttr("required");
-                            }
-                            $('#showpreviousid').attr('href', img);
-                            $("#imageidprf").val(resp.id);
 
-                        } else {
-                            $('#name').val('');
-                            $('#guest_father').val('');
-                            $('#caste').val('');
-                            $('#age').val('');
-                            $('#guest_address').val('');
-                            $('#tehsil').val('');
-                            $('#city').val('');
-                            $('#state').val('');
-                            document.getElementById("id_numberphoto").style.display = 'none';
-                            $("#id_numberphoto").attr('src', '');
-                            $('#showpreviousid').attr('href', '');
-                            $("#imageidprf").val('');
-                        }
-
-                        // idproof
-                    }
-                })
-            }
-
-        })
-        // ==============================
 
         // =====================state city dropdown api=========================
         var auth_token;
@@ -536,5 +477,76 @@
             });
         }
         // ===================================
+
+            // =============== get prefilled details on mobile no. =================
+            $('#mobile').on('keyup', function() {
+            var numb = $('#mobile').val();
+            var sizeofno = $('#mobile').val().length;
+            // console.log(sizeofno);
+            if (sizeofno == 10) {
+                $.ajax({
+                    url: '/getguestpreviousdetails',
+                    data: {
+                        numb: numb
+                    },
+                    type: 'get',
+                    success: function(data) {
+                        // console.log(data.guestpredetail);
+                        var resp = data.guestpredetail;
+                        if (resp) {
+                            $('#name').val(resp.guest_name);id_numberphoto
+                            $('#guest_father').val(resp.guest_father_name);
+                            $('#caste').val(resp.guest_cast);
+                            $('#age').val(resp.age);
+                            $('#guest_address').val(resp.guest_address);
+                            $('#tehsil').val(resp.tehsil);
+                            // $('#city').val(resp.city);
+                            $('#state').val(resp.state);
+                                get_city(resp.city);
+                            if (resp.id_number) {
+                                document.getElementById("id_numberphoto").style.display = 'block';
+                                var img = '/storage/' + resp.id_number;
+                                $("#id_numberphoto").attr('src', img);
+                                $('#idproof').removeAttr("required");
+                            } else {
+                                document.getElementById("id_numberphoto").style.display = 'none';
+                                $('#idproof').attr("required");
+                            }
+                            $('#showpreviousid').attr('href', img);
+                            $("#imageidprf").val(resp.id);
+                            $("#patient_name").val(resp.patient_name);
+                            $("#hospitalname").val(resp.hospital_id);
+                            $("#relation").val(resp.relation_patient);
+                            $("#wardno").val(resp.patient_ward_no);
+                            $("#doctor").val(resp.docter_name);
+
+                        } else {
+                            $('#name').val('');
+                            $('#guest_father').val('');
+                            $('#caste').val('');
+                            $('#age').val('');
+                            $('#guest_address').val('');
+                            $('#tehsil').val('');
+                            $('#city').val('');
+                            $('#state').val('');
+                            document.getElementById("id_numberphoto").style.display = 'none';
+                            $("#id_numberphoto").attr('src', '');
+                            $('#showpreviousid').attr('href', '');
+                            $("#imageidprf").val('');
+                            $('#idproof').attr("required");
+                            $("#patient_name").val('');
+                            $("#hospitalname").val('');
+                            $("#relation").val('');
+                            $("#wardno").val('');
+                            $("#doctor").val('');
+                        }
+
+                        // idproof
+                    }
+                })
+            }
+
+        })
+        // ==============================
     </script>
 @endsection

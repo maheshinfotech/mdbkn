@@ -131,13 +131,59 @@
                   </div>
               </div>
               <!--end::Details content-->
-                  <div class="row justify-content-center my-5">
-                      <div class="col-6 text-center">
+
+                  <div class="row justify-content-center my-5 fw-bold text-capitalize">
+
+                    <div class="col-4">
                           <a target="_blank" href="{{ asset('').'storage/'.$booking->id_number }}">
                               <img src="{{ asset('').'storage/'.$booking->id_number }}" width="400" height="400" class=" mb-3 img-thumbnail" alt="Photo1">
                           </a>
-                          <div class="">ID Proof</div>
+                          <div class="text-center">ID Proof</div>
                       </div>
+                      <div class="col-8">
+                        <div class="row text-center">
+
+                            <h3 class="text-purple fw-bolder">Other Guest Details</h3>
+                            <table class="table table-bordered align-middle py-3 text-center">
+                                <thead class="bg-light">
+                                    <tr>
+                                    <th>Guest Name</th>
+                                    <th>Guest Age</th>
+                                    <th>Guest Relation</th>
+                                    <th>Remarks</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @if ($booking->bookinglogs)
+                                    @foreach ($booking->bookinglogs as $logs)
+                                    <tr>
+                                        <td>{{$logs->guest_name}}</td>
+                                        <td>{{$logs->guest_age}}</td>
+                                        <td>{{$logs->guest_relation}}</td>
+                                        <td>{{$logs->guest_remarks}}</td>
+                                    </tr>
+                                    @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
+                            {{-- <div class="col-3">
+                                <span class=" fs-5">Guest Name</span>
+                                <span class="text-muted d-block">{{ $booking->base_rent }}</span>
+                            </div>
+                            <div class="col-3">
+                                <span class=" fs-5">Guest Age</span>
+                                <span class="text-muted d-block">{{ $booking->paid_rent }}</span>
+                            </div>
+                            <div class="col-3">
+                                <span class=" fs-5">Guest Relation</span>
+                                <span class="text-muted d-block">{{ $booking->is_parking_provided?'Yes':'No' }}</span>
+                            </div>
+                            <div class="col-3">
+                                <span class=" fs-5">Remarks</span>
+                                <span class="text-muted d-block">{{ $booking->advance_payment }}</span>
+                            </div> --}}
+                        </div>
+                    </div>
                   </div>
           </div>
           <!--card body ends -->

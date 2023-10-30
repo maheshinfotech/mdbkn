@@ -36,6 +36,7 @@ class BookingController extends Controller
         }
         $category = RoomCategory::all();
 
+
         // dd($rooms);
         return view('pages.booking.create', compact('category'));
     }
@@ -165,8 +166,9 @@ class BookingController extends Controller
 
     public function show($id){
 
-        $booking= Booking::with('room')->find($id);
+        $booking= Booking::with(['room','bookinglogs'])->find($id);
         // dd($booking);
+
 
         return view('pages.booking.show',compact('booking'));
     }
