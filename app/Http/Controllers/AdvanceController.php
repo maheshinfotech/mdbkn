@@ -60,6 +60,6 @@ class AdvanceController extends Controller
         $advance->save();
 
 
-        return redirect('/bookings')->with('message', 'Your success message goes here');
+        return redirect('/bookings')->with('message', 'Your Advance received successfully');
     }
 }
