@@ -1,4 +1,4 @@
-<div class="content px-3 py-0 w-100">
+<div class="content px-3 py-0 w-100" id="print_advance">
     <div class="container-fluid mt-2">
         <div class="modal-header border border-0 px-0">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -6,7 +6,11 @@
         <div class="card mb-5">
             <div class="card-header bg-light d-flex justify-content-between align-items-center">
                 <h3 class="text-purple fw-bold mb-0">Add Advance</h3>
+                <div>
+                    <button class="btn btn-sm btn-purple print d-print-none" ><i class="fa fa-print"></i></button>
+                </div>
             </div>
+
             @if (Session::has('message'))
                 <div class="alert alert-success w-25 text-center mx-auto" role="alert" id="alert1">
                     {{ Session::get('message') }}
@@ -16,7 +20,7 @@
                 <div class="text-center text-purple text-capitalize">
                     <h5>Guest Name: {{ $guest_name }} ({{ $room_number }})</h5>
                 </div>
-                <form method="POST" action="{{ route('advance.store') }}">
+                <form method="POST" action="{{ route('advance.store') }}" class="d-print-none">
                     @csrf
                     <input type="hidden" name="booking_id" value="{{ $booking_id }}">
 
@@ -29,7 +33,7 @@
                         <input type="date" class="form-control" id="received_date" name="received_date" required>
                     </div>
                     <div class="text-center my-4">
-                        <button type="submit" class="btn btn-purple">Add Advance</button>
+                        <button type="submit" class="btn btn-purple ">Add Advance</button>
                     </div>
 
                 </form>
@@ -64,6 +68,17 @@
         </div>
     </div>
 </div>
+
+<script>
+    //print code
+    $(document).on("click", ".print", function () {
+        const modalBody = $(".modal-body").detach();
+        // const content = $(".content").detach();
+        $(".card-body").append(modalBody);
+        window.print();
+});
+
+</script>
 
 
 

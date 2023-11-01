@@ -13,7 +13,9 @@
     <div class="content  mx-0 w-100">
         <div class="container-fluid px-0">
             <!-- card starts -->
-            <div class="card">
+        <a href="/bookings" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
+
+            <div class="card my-3">
                 <div class="card-header bg-light">
                     <h3 class="text-purple fw-bold mb-0">Add Booking</h3>
                 </div>
@@ -83,7 +85,7 @@
                         <div class="row mb-4 align-items-center">
 
                             <!-- col 0 starts  -->
-                            
+
                             <div class="col-lg-3 col-12">
                                 <label class="fs-7 fw-bold mb-1">Check-in Time<span class="text-danger">*</span></label>
                                 <input type="datetime-local" class="form-control" name="checkin" value="{{ now()->format('Y-m-d\TH:i') }}" required />
@@ -515,7 +517,7 @@
                                 $('#idproof').removeAttr("required");
                             } else {
                                 document.getElementById("id_numberphoto").style.display = 'none';
-                                $('#idproof').attr("required");
+                                $('#idproof').attr("required","required");
                             }
                             $('#showpreviousid').attr('href', img);
                             $("#imageidprf").val(resp.id);
@@ -538,7 +540,7 @@
                             $("#id_numberphoto").attr('src', '');
                             $('#showpreviousid').attr('href', '');
                             $("#imageidprf").val('');
-                            $('#idproof').attr("required");
+                            $('#idproof').attr("required","required");
                             $("#patient_name").val('');
                             $("#hospitalname").val('');
                             $("#relation").val('');

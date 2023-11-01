@@ -17,7 +17,7 @@
         <!-- container starts -->
         <div class="container-fluid mt-5">
             <!-- card starts -->
-            <div class="card">
+            <div class="card d-print-none">
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
                     <h3 class="text-purple fw-bold mb-0">Booking Records</h3>
                     <div>
@@ -53,14 +53,32 @@
                                         <td>{{ $booking->check_out_time ?: '--' }}</td>
                                         <td>{{ $booking->docter_name }}</td>
                                         <td>{{ $booking->mobile_number }}</td>
-                                        <td>{{ $booking->paid_rent + $booking->advance_payment }}</td>
+                                        <td>
+                                            {{-- {{ $booking->paid_rent + $booking->advance_payment }} --}}
+                                            @if ($booking->advance)
+                                                @php
+                                                    $Amt = 0;
+                                                    $totalAmt = 0;
+                                                    foreach ($booking->advance as  $adv) {
+                                                        $Amt += $adv->amount;
+                                                    }
+                                                    if ($booking->advance_refund>0) {
+                                                        $totalAmt = $Amt - $booking->advance_refund;
+                                                    }else{
+                                                        $totalAmt = $Amt + $booking->paid_rent;
+                                                    }
+                                                @endphp
+                                                {{$totalAmt}}
+                                            @endif
+                                        </td>
                                         <td class="text-end">
+
+                                            @if ($booking->getRawOriginal('check_out_time') == null)
                                             <a href="{{ route('advance.create', ['booking_id' => $booking->id]) }}"
                                                 class="btn btn-sm btn-purple open-modal" data-bs-toggle="tooltip"
                                                 data-bs-placement="bottom" data-bs-title="Advance">
                                                 <i class="fa-solid fa-plus"></i>
                                             </a>
-                                            @if ($booking->getRawOriginal('check_out_time') == null)
                                                 <a href="/bookings/checkout/{{ $booking->id }}"
                                                     class="btn btn-sm btn-purple" data-bs-toggle="tooltip"
                                                     data-bs-placement="bottom" data-bs-title="Checkout"> <i

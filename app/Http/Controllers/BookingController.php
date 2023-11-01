@@ -138,7 +138,7 @@ class BookingController extends Controller
             // booking record save block end
             $room=Room::find($request->room);
             $room->is_booked=1;
-            $room->booked_date =Carbon::parse($request->checkin)->format('Y-m-d');
+            $room->booked_date = Carbon::parse($request->checkin)->format('Y-m-d');
             $room->save();
 
 
@@ -171,7 +171,14 @@ class BookingController extends Controller
         $checkoutdet->check_out_time = $request->check_out_time;
         $checkoutdet->estimated_total_days = $request->estimatedays;
         $checkoutdet->payable_rent = $request->totalrent;
-        $checkoutdet->paid_rent = $request->paidrent;
+        $amount = $request->totalrent - $request->advancepayment;
+        // dd($amount);
+        if ($amount >= 0) {
+            $checkoutdet->paid_rent = $request->paidrent ? $request->paidrent : 0;
+        }else{
+            $checkoutdet->advance_refund = $request->paidrent ? $request->paidrent : 0;
+            $checkoutdet->paid_rent = 0;
+        }
         $checkoutdet->save();
         //    ======room isbooked code ================
         if ($checkoutdet->save()) {
@@ -187,7 +194,7 @@ class BookingController extends Controller
 
     public function show($id){
 
-        $booking= Booking::with(['room','bookinglogs'])->find($id);
+        $booking= Booking::with(['room','bookinglogs','advance'])->find($id);
         // dd($booking);
 
 
@@ -195,8 +202,16 @@ class BookingController extends Controller
     }
     public function Bookingcheckout($id) {
 
-        $booking= Booking::with('room')->find($id);
-        return view('pages.booking.checkout',compact('booking'));
+        $booking = Booking::with(['room','advance'])->find($id);
+        $advanceAmt = 0;
+        if ($booking && $booking->advance) {
+            foreach ($booking->advance as $value) {
+                $advanceAmt += $value->amount;
+            }
+        }
+
+
+        return view('pages.booking.checkout',compact('booking','advanceAmt'));
 
     }
     public function checkoutCal(Request $request) {

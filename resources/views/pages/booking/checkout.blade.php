@@ -14,9 +14,10 @@
     </div>
     @endif
     <!-- container starts -->
-    <div class="container-fluid mt-5 px-5">
+    <div class="container-fluid mt-3 px-5">
+        <a href="/bookings" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
       <!-- card starts -->
-      <div class="card">
+      <div class="card my-3">
         <div class="card-header bg-light">
           <h3 class="text-purple fw-bold mb-0">Add Checkout Details</h3>
         </div>
@@ -66,7 +67,7 @@
                <!-- col start -->
                <div class="col-md-4 mb-3">
                 <label class="fw-bold mb-1">Advance Payment:</label>
-                <input type="text" class="form-control" id="" name="" value="{{$booking->advance_payment}}"/>
+                <input type="text" class="form-control" id="" name="advancepayment" value="{{$advanceAmt}}" />
               </div>
               <!-- col start -->
               <div class="col-md-4 mb-3">
