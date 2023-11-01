@@ -30,14 +30,20 @@ class Booking extends Model
     // }
     // return "--";
     // }
-    public function room(){
-        return $this->belongsTo(Room::class)->with('category');
-    }
-    public function rooms()
-    {
-        return $this->belongsTo(Room::class, 'room_id');
-    }
+
     public function bookinglogs() {
         return $this->hasMany(BookingLogs::class);
     }
+public function room(){
+    return $this->belongsTo(Room::class)->with('category');
+}
+// public function rooms()
+// {
+//     return $this->belongsTo(Room::class, 'room_id');
+// }
+
+// public function advances()
+// {
+//     return $this->hasMany(Advance::class);
+// }
 }

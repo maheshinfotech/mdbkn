@@ -83,13 +83,12 @@
                         <div class="row mb-4 align-items-center">
 
                             <!-- col 0 starts  -->
+                            
                             <div class="col-lg-3 col-12">
-
-                                <label class=" fs-7 fw-bold mb-1 ">Checkin Time<span class="text-danger">*</span></label>
-                                <input type="datetime-local" class="form-control" value="{{ date('Y-m-d H:i') }}"
-                                    name="checkin"  required />
-
+                                <label class="fs-7 fw-bold mb-1">Check-in Time<span class="text-danger">*</span></label>
+                                <input type="datetime-local" class="form-control" name="checkin" value="{{ now()->format('Y-m-d\TH:i') }}" required />
                             </div>
+
                             <!-- col 0 ends  -->
 
                             <!-- col 1 starts  -->
@@ -368,7 +367,7 @@
                 type: 'get',
                 success: function(response) {
                     var html = `<option value="" selected>Rooms...</option>`;
-                    // console.log(response);
+                     console.log(response);
                     $('#room').html('');
 
                     for (let i = 0; i < response.length; i++) {

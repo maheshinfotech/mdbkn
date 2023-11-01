@@ -56,7 +56,7 @@
                                     </td>
                                     <td>
                                         @if ($room->booked_date)
-                                            {{ date('d/m/Y',strtotime($room->booked_date)) }}
+                                            {{ date('d-M-y', strtotime($room->booked_date)) }}
                                         @endif
                                     </td>
                                     <td>
