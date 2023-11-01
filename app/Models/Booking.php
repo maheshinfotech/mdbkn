@@ -37,4 +37,9 @@ public function rooms()
 {
     return $this->belongsTo(Room::class, 'room_id');
 }
+
+// public function advances()
+// {
+//     return $this->hasMany(Advance::class);
+// }
 }

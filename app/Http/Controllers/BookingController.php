@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use DateTime;
 use Carbon\Carbon;
 use App\Models\Room;
+use App\Models\Advance;
 use App\Models\Setting;
 use  App\Models\Booking;
 use App\Models\BookingLogs;
 use Illuminate\Support\Str;
 use App\Models\RoomCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
@@ -63,6 +66,9 @@ class BookingController extends Controller
         $booking->docter_name=$request->doctor;
         $booking->mobile_number=$request->mobile;
 
+
+
+
         // id proof saved ===========
         if ($request->imageidprf) {
             $bookdet=Booking::find($request->imageidprf);
@@ -107,9 +113,12 @@ class BookingController extends Controller
             $booking->base_grace_period = $setting->grace_period;
         }
         // ===========
-        $booking->save();
+        // $booking->save();
         // booking record save block end
         // ==================add guest code=============================
+
+
+        //  if booking data save then this block execute
         if($booking->save()){
             if ($request->guestlists) {
                 foreach($request->guestlists as $guests){
@@ -124,17 +133,29 @@ class BookingController extends Controller
                     }
                 }
             }
-            }
-            // =======================================================================
 
-            if ($booking->save()){
             // booking record save block end
             $room=Room::find($request->room);
             $room->is_booked=1;
-            $room->booked_date = date('Y-m-d');
+            $room->booked_date =Carbon::parse($request->checkin)->format('Y-m-d');
             $room->save();
-            // room booking status
+
+
+            $advance = new Advance;
+        //dd($request->all());
+        $advance->booking_id = $booking->id;
+        $advance->amount = $booking->advance_payment;
+        Log::info($request->checkin);
+        $advance->received_date = Carbon::parse($request->checkin)->format('Y-m-d');
+        $advance->save();
+
             }
+
+        //  if booking data save then this block execute
+
+            // =======================================================================
+
+
         // return redirect()->back()->with('message', 'Booking added successfully');
         return redirect()->route('index-booking')->with('message', 'Booking added successfully');
         // return view('pages.booking.create');
@@ -242,3 +263,4 @@ class BookingController extends Controller
 
      }
 }
+

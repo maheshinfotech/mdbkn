@@ -1,7 +1,8 @@
 <div class="content px-3 py-0 w-100">
     <div class="container-fluid mt-5">
         <div class="card">
-            <h6 style="width: 10cm">Guest Name: {{ $guest_name }} Room Number: {{ $room_number }}</h6>
+
+            <h6  style="width: 10cm">Guest Name: {{ $guest_name }} &nbsp; Room Number: {{ $room_number }}</h6>
 
 
             <div class="card-header bg-light d-flex justify-content-between align-items-center">
@@ -37,7 +38,7 @@
 @if ($advances->count() > 0)
     <table class="table">
         <thead>
-            <tr>
+            <tr >
                 <th>Amount</th>
                 <th>Received Date</th>
             </tr>
@@ -50,7 +51,8 @@
             @foreach ($advances as $advance)
                 <tr>
                     <td>{{ $advance->amount }}</td>
-                    <td>{{ date('d-M-y', strtotime($advance->received_date))}}</td>
+                    <td >{{ date('d-M-y', strtotime($advance->received_date))}}</td>
+                    {{-- <td>{{ date('d/m/Y',strtotime($room->booked_date))}}</td> --}}
                 </tr>
 
                 @php
@@ -59,5 +61,5 @@
             @endforeach
         </tbody>
     </table>
-    <p>Total Amount: {{ $totalAmount }}</p>
+    <p class="text-muted d-block">Total Amount: {{ $totalAmount }}</p>
 @endif
