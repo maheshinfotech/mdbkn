@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use App\Models\Room;
 use App\Models\Advance;
 use App\Models\Setting;
-use  App\Models\Booking;
+use App\Models\Booking;
 use App\Models\BookingLogs;
 use Illuminate\Support\Str;
 use App\Models\RoomCategory;
@@ -39,6 +39,7 @@ class BookingController extends Controller
         }
         $category = RoomCategory::all();
 
+
         // dd($rooms);
         return view('pages.booking.create', compact('category'));
     }
@@ -53,6 +54,8 @@ class BookingController extends Controller
         $booking->guest_address=$request->guest_address;
         $booking->patient_name=$request->patient_name;
         $booking->patient_ward_no=$request->ward_no;
+        $booking->pbm_room_no=$request->pbm_room_no;
+
         $booking->patient_bed_no=$request->bedno;
         $booking->advance_payment=$request->advance;
         $booking->gender=$request->gender;
@@ -65,8 +68,6 @@ class BookingController extends Controller
         $booking->state=$request->state;
         $booking->docter_name=$request->doctor;
         $booking->mobile_number=$request->mobile;
-
-
 
 
         // id proof saved ===========
@@ -137,17 +138,17 @@ class BookingController extends Controller
             // booking record save block end
             $room=Room::find($request->room);
             $room->is_booked=1;
-            $room->booked_date =Carbon::parse($request->checkin)->format('Y-m-d');
+            $room->booked_date = Carbon::parse($request->checkin)->format('Y-m-d');
             $room->save();
 
         
             $advance = new Advance;
-        //dd($request->all());
-        $advance->booking_id = $booking->id;
-        $advance->amount = $booking->advance_payment;
-        Log::info($request->checkin);
-        $advance->received_date = Carbon::parse($request->checkin)->format('Y-m-d');
-        $advance->save();
+            //dd($request->all());
+            $advance->booking_id = $booking->id;
+            $advance->amount = $booking->advance_payment;
+            Log::info($request->checkin);
+            $advance->received_date = Carbon::parse($request->checkin)->format('Y-m-d');
+            $advance->save();
 
             }
 
@@ -170,7 +171,14 @@ class BookingController extends Controller
         $checkoutdet->check_out_time = $request->check_out_time;
         $checkoutdet->estimated_total_days = $request->estimatedays;
         $checkoutdet->payable_rent = $request->totalrent;
-        $checkoutdet->paid_rent = $request->paidrent;
+        $amount = $request->totalrent - $request->advancepayment;
+        // dd($amount);
+        if ($amount >= 0) {
+            $checkoutdet->paid_rent = $request->paidrent ? $request->paidrent : 0;
+        }else{
+            $checkoutdet->advance_refund = $request->paidrent ? $request->paidrent : 0;
+            $checkoutdet->paid_rent = 0;
+        }
         $checkoutdet->save();
         //    ======room isbooked code ================
         if ($checkoutdet->save()) {
@@ -186,15 +194,24 @@ class BookingController extends Controller
 
     public function show($id){
 
-        $booking= Booking::with('room')->find($id);
+        $booking= Booking::with(['room','bookinglogs','advance'])->find($id);
         // dd($booking);
+
 
         return view('pages.booking.show',compact('booking'));
     }
     public function Bookingcheckout($id) {
 
-        $booking= Booking::with('room')->find($id);
-        return view('pages.booking.checkout',compact('booking'));
+        $booking = Booking::with(['room','advance'])->find($id);
+        $advanceAmt = 0;
+        if ($booking && $booking->advance) {
+            foreach ($booking->advance as $value) {
+                $advanceAmt += $value->amount;
+            }
+        }
+
+
+        return view('pages.booking.checkout',compact('booking','advanceAmt'));
 
     }
     public function checkoutCal(Request $request) {
