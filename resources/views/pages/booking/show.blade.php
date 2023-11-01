@@ -33,7 +33,7 @@
                   <div class="col-3">
                       <span class=" fs-5">Guest Name</span>
                       <span class="text-muted d-block">{{ $booking->guest_name }}</span>
-                      <span class="text-muted d-block">500 (Per Unit)</span>
+                      {{-- <span class="text-muted d-block">500 (Per Unit)</span> --}}
                   </div>
                   <div class="col-3">
                     <span class=" fs-5">Relation (Patient)</span>
