@@ -48,7 +48,7 @@ $(document).ready(function () {
             }
         });
     });
-    
+
 
     $(".update-user-credentials").click(function () {
         let context = $(this);
@@ -113,18 +113,24 @@ $(document).ready(function () {
 
 
     $('.toggle-user-type').click(function(){
-        
+
         let patient = $('.patient:checked').val();
         let is_admit = $('.is_admit:checked').val();
-        
+
         $('ward').removeProp("checked");
         console.log(patient + ' ' + is_admit);
 
-        if(patient == 'cancer' && is_admit == '1'){
-            $('.cancer-purpose').show();
+        // if(patient == 'cancer' && is_admit == '1'){
+        //     $('.cancer-purpose').show();
+        // }else{
+        //     $('.cancer-purpose').hide();
+        // }
+          if(patient == 'cancer' && is_admit == '1'){
+            $('.pbmroomno').show();
         }else{
-            $('.cancer-purpose').hide();
+            $('.pbmroomno').hide();
         }
+
 
     });
 

@@ -51,6 +51,8 @@ class BookingController extends Controller
         $booking->guest_address=$request->guest_address;
         $booking->patient_name=$request->patient_name;
         $booking->patient_ward_no=$request->ward_no;
+        $booking->pbm_room_no=$request->pbm_room_no;
+
         $booking->patient_bed_no=$request->bedno;
         $booking->advance_payment=$request->advance;
         $booking->gender=$request->gender;
@@ -63,6 +65,7 @@ class BookingController extends Controller
         $booking->state=$request->state;
         $booking->docter_name=$request->doctor;
         $booking->mobile_number=$request->mobile;
+
 
         // id proof saved ===========
         if ($request->imageidprf) {

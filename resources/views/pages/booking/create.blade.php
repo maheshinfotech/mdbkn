@@ -185,14 +185,19 @@
                                 </select>
                             </div>
                             <!-- col start -->
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="fw-bold mb-1">Tehsil:</label>
                                 <input type="text" class="form-control" id="tehsil" name="tehsil" />
                             </div>
                             <!-- col start -->
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="d-flex align-items-center fw-bold mb-1"> Guest Address<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="guest_address" name="guest_address" />
+                            </div>
+                              <!-- col start -->
+                              <div class="col-md-2 ">
+                                <label class="fw-bold mb-1">Relation (Patient)<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="relation" name="relation" required/>
                             </div>
                         </div>
                         <!--end::Input group-->
@@ -234,20 +239,21 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <!-- col start -->
-                            <div class="col-md-2 ">
-                                <label class="fw-bold mb-1">Relation (Patient)<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="relation" name="relation" required/>
-                            </div>
+
                             <!-- col start -->
                             <div class="col-md-2 ">
                                 <label class=" fw-bold mb-1 ">Patient Ward No:</label>
-                                <input type="text" class="form-control" name="ward_no" id="wardno" required />
+                                <input type="text" class="form-control" name="ward_no" id="wardno"  />
+                            </div>
+                            <!-- col start -->
+                            <div class="col-md-2 pbmroomno" style="display:none">
+                                <label class=" fw-bold mb-1 ">Patient Room No:</label>
+                                <input type="text" class="form-control" name="pbm_room_no" id="pbm_room_no"  />
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 ">
                                 <label class=" fw-bold mb-1 ">Patient Bed No:</label>
-                                <input type="text" class="form-control" name="bedno" id="bedno" required />
+                                <input type="text" class="form-control" name="bedno" id="bedno"  />
                             </div>
 
                             <!-- col start -->

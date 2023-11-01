@@ -1,5 +1,8 @@
 <div class="content px-3 py-0 w-100">
-    <div class="container-fluid mt-5">
+    <div class="container-fluid mt-2">
+        <div class="modal-header border border-0 px-0">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
         <div class="card mb-5">
             <div class="card-header bg-light d-flex justify-content-between align-items-center">
                 <h3 class="text-purple fw-bold mb-0">Add Advance</h3>
@@ -63,7 +66,7 @@
 </div>
 
 
-@if ($advances->count() > 0)
+{{-- @if ($advances->count() > 0)
     <table class="table">
         <thead>
             <tr>
@@ -89,4 +92,4 @@
         </tbody>
     </table>
     <p>Total Amount: {{ $totalAmount }}</p>
-@endif
+@endif --}}
