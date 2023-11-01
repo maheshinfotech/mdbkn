@@ -140,7 +140,7 @@ class BookingController extends Controller
             $room->booked_date =Carbon::parse($request->checkin)->format('Y-m-d');
             $room->save();
 
-
+        
             $advance = new Advance;
         //dd($request->all());
         $advance->booking_id = $booking->id;
