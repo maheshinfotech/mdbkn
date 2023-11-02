@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomCategoryController;
 use App\Http\Controllers\AdvanceController;
+use App\Http\Controllers\BookingController;
 
 
 
@@ -107,6 +108,9 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/bookings/checkout/{id}', 'Bookingcheckout')->name('booking-checkout');
             Route::get('/checkoutcalculation', 'checkoutCal')->name('checkoutcalculation');
             Route::get('/getguestpreviousdetails', 'getguestpreviousdetails')->name('getguestpreviousdetails');
+            Route::get('/booking/index', [BookingController::class,'showBookings'])->name('bookings.index');
+
+
         });
         Route::resource('/category', RoomCategoryController::class);
         Route::resource('/room', RoomController::class);
