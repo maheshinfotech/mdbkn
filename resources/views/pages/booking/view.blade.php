@@ -7,6 +7,8 @@
 @extends('layouts.backend')
 
 @section('content')
+{{-- <a href="booking/index">Go to Booking List</a>
+<table class="table"> --}}
     <x-reusables.app-header pageName="{{ $pageName }}" />
     @if (Session::has('message'))
         <div class="alert alert-success w-25 text-center mx-auto" role="alert" id="alert1">
@@ -41,6 +43,7 @@
                                     <th class="text-center">Doctor Name</th>
                                     <th class="text-center">Mobile No.</th>
                                     <th class="text-center">Total Paid Amt</th>
+                                    <th class ="text-center">Room NUmber</th>
                                     <th class="text-end">Action</th>
                                 </tr>
                             </thead>
@@ -49,8 +52,14 @@
                                     <tr>
                                         <td class="text-start">{{ $booking->guest_name }}</td>
                                         <td>{{ $booking->patient_name }}</td>
-                                        <td>{{ $booking->check_in_time ?: '--' }}</td>
-                                        <td>{{ $booking->check_out_time ?: '--' }}</td>
+                                     <td>{{ date('d-M-y h:i A',strtotime($booking->getRawOriginal('check_in_time'))) }}</td>
+                                        <td>
+                                            @if($booking->getRawOriginal('check_out_time'))
+                                                {{ date('d-M-y h:i A', strtotime($booking->getRawOriginal('check_out_time'))) }}
+                                            @else
+                                              --
+                                            @endif
+                                        </td>
                                         <td>{{ $booking->docter_name }}</td>
                                         <td>{{ $booking->mobile_number }}</td>
                                         <td>
@@ -71,6 +80,7 @@
                                                 {{$totalAmt}}
                                             @endif
                                         </td>
+                                            <td>{{ $booking->room->room_number }}</td>
                                         <td class="text-end">
 
                                             @if ($booking->getRawOriginal('check_out_time') == null)

@@ -279,5 +279,18 @@ class BookingController extends Controller
             );
 
      }
+     
+     public function showBookings()
+     {
+         $bookings = Booking::with('room')
+             ->whereNull('check_out_time')
+             ->get();
+     
+         return view('pages.booking.index', compact('bookings'));
+     }
+     
+     
+
+     
 }
 
