@@ -6,6 +6,7 @@ use App\Http\Controllers\RoomCategoryController;
 use App\Http\Controllers\AdvanceController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,7 +25,12 @@ use App\Http\Controllers\AdvanceController;
 Route::get('/advance/create/{booking_id}', [AdvanceController::class , 'create'])->name('advance.create');
 Route::post('/advance/store', [AdvanceController::class,'store'])->name('advance.store');
 // Route::get('/advance/show/{booking_id}', [AdvanceController::class .'show'])->name('advance.show');
+// Route::get('migrate', function(){
+//     // \Illuminate\Support\Facades\Artisan::call('migrate');
+//     // dd(new Artisan);
+//     exec('composer update my-package');
 
+// });
 Route::prefix(config('app.admin_prefix'))->group(function () {
 
     Route::middleware(['auth', 'shareview'])->group(function () {
@@ -101,8 +107,6 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/bookings/checkout/{id}', 'Bookingcheckout')->name('booking-checkout');
             Route::get('/checkoutcalculation', 'checkoutCal')->name('checkoutcalculation');
             Route::get('/getguestpreviousdetails', 'getguestpreviousdetails')->name('getguestpreviousdetails');
-
-
         });
         Route::resource('/category', RoomCategoryController::class);
         Route::resource('/room', RoomController::class);
