@@ -109,6 +109,9 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
         });
         Route::resource('/category', RoomCategoryController::class);
         Route::resource('/room', RoomController::class);
+        // Route::get('/room/unbooked', [RoomController::class, 'unbookedRooms']);
+
+        Route::get('/Available-rooms', [RoomController::class ,'AvailableRooms'])->name('Available-rooms');
 
         Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 

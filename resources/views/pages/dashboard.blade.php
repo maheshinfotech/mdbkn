@@ -18,7 +18,7 @@
     <div class="row mx-3 mt-3">
         <div class="col-xl-4">
             <!--begin::Statistics Widget 5-->
-            <a href="#" class="card hoverable card-xl-stretch" style="background-color:tan">
+            <a href="/booking/index" class="card hoverable card-xl-stretch" style="background-color:tan">
                 <!--begin::Body-->
                 <div class="card-body">
                     <span class="svg-icon text-white svg-icon-3x ms-n1">
@@ -38,7 +38,7 @@
         </div>
         <div class="col-xl-4">
             <!--begin::Statistics Widget 5-->
-            <a href="#" class="card hoverable card-xl-stretch" style="background-color: #a7c2cc">
+            <a href="{{ route('Available-rooms')}}" class="card hoverable card-xl-stretch" style="background-color: #a7c2cc">
                 <!--begin::Body-->
                 <div class="card-body">
                     <span class="svg-icon text-white svg-icon-3x ms-n1">

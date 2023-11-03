@@ -105,5 +105,19 @@ class RoomController extends Controller
         $room = Room::find($id);
 
         return $this->generateResponse($room->delete());
+    }public function AvailableRooms()
+    {
+        $category = RoomCategory::all();
+        $rooms = Room::with('category')
+            ->whereNull('is_booked')
+            ->orWhere('is_booked', false)
+            ->orderBy('room_number')
+            ->get();
+            // dd($rooms);
+
+        return view('pages.room.Available', compact('category', 'rooms'));
     }
+
+
+
 }

@@ -21,11 +21,26 @@ class BookingController extends Controller
 {
     public function index()
     {
-        $bookings= Booking::latest('id')->get();
-        // dd($bookings);
+        $bookings = Booking::orderBy('check_out_time', 'asc')
+            ->orderBy('id', 'desc')
+            ->get();
 
-        return view('pages.booking.view',compact('bookings'));
+        return view('pages.booking.view', compact('bookings'));
     }
+//     public function index()
+// {
+//     // Retrieve bookings where check_out_time is null first, and then retrieve the rest.
+//     $bookings = Booking::latest('id')
+//         ->whereNull('check_out_time')
+//         ->union(
+//             Booking::latest('id')
+//                 ->whereNotNull('check_out_time')
+//         )
+//         ->get();
+
+//     return view('pages.booking.view', compact('bookings'));
+// }
+
     public function create(Request $request)
     {
         if($request->ajax()){
@@ -98,7 +113,9 @@ class BookingController extends Controller
         $booking->patient_type      =   $request->patient;
         // rent ==================
         $roomcat = RoomCategory::where('id', $request->category)->first();
-            if($request->wardtype=="ct" || $request->wardtype=="rt"){
+
+        // dd($roomcat,$request->all());
+            if($request->ward=="ct" || $request->ward=="rt"){
                 $booking->base_rent = $roomcat->patient_rent;
             }else{
                 $booking->base_rent = $roomcat->normal_rent;
@@ -141,7 +158,7 @@ class BookingController extends Controller
             $room->booked_date = Carbon::parse($request->checkin)->format('Y-m-d');
             $room->save();
 
-        
+
             $advance = new Advance;
             //dd($request->all());
             $advance->booking_id = $booking->id;
@@ -279,18 +296,18 @@ class BookingController extends Controller
             );
 
      }
-     
+
      public function showBookings()
      {
          $bookings = Booking::with('room')
              ->whereNull('check_out_time')
              ->get();
-     
+
          return view('pages.booking.index', compact('bookings'));
      }
-     
-     
 
-     
+
+
+
 }
 
