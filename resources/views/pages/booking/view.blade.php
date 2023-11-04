@@ -34,16 +34,18 @@
                         <table class="table table-striped align-middle py-3 text-center" id="booking_table"
                             style="width:100%;white-space:nowrap;" data-paging="true" data-searching="true"
                             data-ordering="false" data-info="false">
-                            <thead>
+                            <thead class="align-middle">
                                 <tr>
                                     <th class="text-start">Guest Name</th>
                                     <th class="text-center">Patient Name</th>
+                                    <th class ="text-center">Room Details </th>
                                     <th class="text-center">Check-In Time</th>
                                     <th class="text-center">Check-Out Time</th>
                                     <th class="text-center">Doctor Name</th>
                                     <th class="text-center">Mobile No.</th>
                                     <th class="text-center">Total Paid Amt</th>
-                                    <th class ="text-center">Room NUmber</th>
+
+                                    {{-- <th class ="text-center">Normal Rent <br>Patient Rent</th> --}}
                                     <th class="text-end">Action</th>
                                 </tr>
                             </thead>
@@ -52,7 +54,12 @@
                                     <tr>
                                         <td class="text-start">{{ $booking->guest_name }}</td>
                                         <td>{{ $booking->patient_name }}</td>
+                                        <td>{{$booking->room->room_number }}
+                                            <span class="badge badge-primary bg-primary ">{{$booking->room->category->name}}</span>
+                                            <span class="d-block">{{$booking->base_rent}} /-</span>
+                                        </td>
                                      <td>{{ date('d-M-y h:i A',strtotime($booking->getRawOriginal('check_in_time'))) }}</td>
+
                                         <td>
                                             @if($booking->getRawOriginal('check_out_time'))
                                                 {{ date('d-M-y h:i A', strtotime($booking->getRawOriginal('check_out_time'))) }}
@@ -80,7 +87,8 @@
                                                 {{$totalAmt}}
                                             @endif
                                         </td>
-                                            <td>{{ $booking->room->room_number }}</td>
+
+
                                         <td class="text-end">
 
                                             @if ($booking->getRawOriginal('check_out_time') == null)
