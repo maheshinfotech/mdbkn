@@ -13,7 +13,7 @@
     <div class="content  mx-0 w-100">
         <div class="container-fluid px-0">
             <!-- card starts -->
-        <a href="/bookings" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
+            <a href="/bookings" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
 
             <div class="card my-3">
                 <div class="card-header bg-light">
@@ -34,8 +34,7 @@
                                     Non Cancer Patient
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1">
-                                    <input type="radio" class="toggle-user-type patient" name="patient"
-                                        value="cancer">
+                                    <input type="radio" class="toggle-user-type patient" name="patient" value="cancer">
                                     Cancer Patient
                                 </label>
                             </div>
@@ -46,8 +45,7 @@
 
                             <div class="col-lg-3 col-12 text-center">
                                 <label class=" fs-7 fw-bold mb-1 me-4">
-                                    <input type="radio" class="toggle-user-type is_admit"  name="is_admit"
-                                        value="1">
+                                    <input type="radio" class="toggle-user-type is_admit" name="is_admit" value="1">
                                     Admitted
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1">
@@ -61,15 +59,15 @@
                             </div>
                             <div class="col-lg-3 col-12 text-center">
                                 <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose ">
-                                    <input type="radio" name="ward"  value="ct" class="ward">
+                                    <input type="radio" name="ward" value="ct" class="ward">
                                     CT
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose">
-                                    <input type="radio" name="ward"  value="rt" class="ward">
+                                    <input type="radio" name="ward" value="rt" class="ward">
                                     RT
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1 me-3">
-                                    <input type="radio" name="ward"  value="report" class="ward">
+                                    <input type="radio" name="ward" value="report" class="ward">
                                     Tests
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1">
@@ -88,7 +86,8 @@
 
                             <div class="col-lg-3 col-12">
                                 <label class="fs-7 fw-bold mb-1">Check-in Time<span class="text-danger">*</span></label>
-                                <input type="datetime-local" class="form-control" name="checkin" value="{{ now()->format('Y-m-d\TH:i') }}" required />
+                                <input type="datetime-local" class="form-control" name="checkin"
+                                    value="{{ now()->format('Y-m-d\TH:i') }}" required />
                             </div>
 
                             <!-- col 0 ends  -->
@@ -154,7 +153,8 @@
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 ">
-                                <label class="d-flex align-items-center fw-bold mb-1"> Guest Caste<span class="text-danger">*</span></label>
+                                <label class="d-flex align-items-center fw-bold mb-1"> Guest Caste<span
+                                        class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="caste" id="caste" />
                             </div>
 
@@ -192,13 +192,14 @@
                             </div>
                             <!-- col start -->
                             <div class="col-md-2">
-                                <label class="d-flex align-items-center fw-bold mb-1"> Guest Address<span class="text-danger">*</span></label>
+                                <label class="d-flex align-items-center fw-bold mb-1"> Guest Address<span
+                                        class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="guest_address" name="guest_address" />
                             </div>
-                              <!-- col start -->
-                              <div class="col-md-2 ">
+                            <!-- col start -->
+                            <div class="col-md-2 ">
                                 <label class="fw-bold mb-1">Relation (Patient)<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="relation" name="relation" required/>
+                                <input type="text" class="form-control" id="relation" name="relation" required />
                             </div>
                         </div>
                         <!--end::Input group-->
@@ -226,14 +227,15 @@
                             <!-- col start -->
                             <div class="col-md-2 ">
                                 <label class=" fw-bold mb-1 ">Patient Name<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="patient_name" required id="patient_name"
-                                    required />
+                                <input type="text" class="form-control" name="patient_name" required
+                                    id="patient_name" required />
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 ">
-                                <label class="fw-bold mb-1 ">Hospital (Department)<span class="text-danger">*</span></label>
+                                <label class="fw-bold mb-1 ">Hospital (Department)<span
+                                        class="text-danger">*</span></label>
                                 <select class="form-select" name="hospital_id" id="hospitalname" required>
-                                    <option value="">choose..</option>
+                                    <option value="">Choose..</option>
                                     @foreach (\DB::table('hospitals')->get() as $hosname)
                                         <option value="{{ $hosname->id }}">{{ $hosname->name }}
                                         </option>
@@ -244,17 +246,17 @@
                             <!-- col start -->
                             <div class="col-md-2 ">
                                 <label class=" fw-bold mb-1 ">Patient Ward No:</label>
-                                <input type="text" class="form-control" name="ward_no" id="wardno"  />
+                                <input type="text" class="form-control" name="ward_no" id="wardno" />
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 pbmroomno" style="display:none">
                                 <label class=" fw-bold mb-1 ">Patient Room No:</label>
-                                <input type="text" class="form-control" name="pbm_room_no" id="pbm_room_no"  />
+                                <input type="text" class="form-control" name="pbm_room_no" id="pbm_room_no" />
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 ">
                                 <label class=" fw-bold mb-1 ">Patient Bed No:</label>
-                                <input type="text" class="form-control" name="bedno" id="bedno"  />
+                                <input type="text" class="form-control" name="bedno" id="bedno" />
                             </div>
 
                             <!-- col start -->
@@ -275,6 +277,27 @@
                                 <textarea name="remark" id="" class="form-control h-auto" rows="4"></textarea>
 
                             </div>
+
+                        </div>
+
+                        <div class="row text-center mb-4">
+                            <div class="col-md-12">
+
+                                <label for="is_parking" class="is_parking_div">
+                                    <input type="checkbox" id="is_parking" class="is_parking" name="is_parking"
+                                        value="1" /> Vehicle Parking
+                                </label>
+
+                                <label for="" class="mx-3">
+                                    <input type="text" placeholder="Vehicle Number" required disabled name="vehicle_number"
+                                        class="form-control parking_number">
+                                </label>
+
+                                <label for="" class="mx-3">
+                                    <input type="text" placeholder="Extra Notes" required disabled name="parking_notes"
+                                        class="form-control parking_number">
+                                </label>
+                            </div>
                         </div>
                         <!--end::Input group-->
 
@@ -282,7 +305,9 @@
                         <div class="repeater mt-4">
                             <!--heading start-->
                             <div class="card-header d-flex justify-content-between align-items-center p-2">
+
                                 <h3 class="text-purple fw-bold mb-0">Add Guest</h3>
+
                                 <div>
                                     <input class="btn btn-purple px-4" data-repeater-create type="button"
                                         value="Add" />
@@ -361,6 +386,7 @@
     <script>
         function select_category() {
             var id = $('#category').val();
+            
             $.ajax({
                 url: '/bookings/create',
                 data: {
@@ -369,7 +395,7 @@
                 type: 'get',
                 success: function(response) {
                     var html = `<option value="" selected>Rooms...</option>`;
-                     console.log(response);
+                    console.log(response);
                     $('#room').html('');
 
                     for (let i = 0; i < response.length; i++) {
@@ -390,8 +416,6 @@
             .slideUp(500, function() {
                 $("#alert1").slideUp(500);
             });
-
-
 
         // =====================state city dropdown api=========================
         var auth_token;
@@ -485,8 +509,8 @@
         }
         // ===================================
 
-            // =============== get prefilled details on mobile no. =================
-            $('#mobile').on('keyup', function() {
+        // =============== get prefilled details on mobile no. =================
+        $('#mobile').on('keyup', function() {
             var numb = $('#mobile').val();
             var sizeofno = $('#mobile').val().length;
             // console.log(sizeofno);
@@ -501,7 +525,8 @@
                         // console.log(data.guestpredetail);
                         var resp = data.guestpredetail;
                         if (resp) {
-                            $('#name').val(resp.guest_name);id_numberphoto
+                            $('#name').val(resp.guest_name);
+                            id_numberphoto
                             $('#guest_father').val(resp.guest_father_name);
                             $('#caste').val(resp.guest_cast);
                             $('#age').val(resp.age);
@@ -509,7 +534,7 @@
                             $('#tehsil').val(resp.tehsil);
                             // $('#city').val(resp.city);
                             $('#state').val(resp.state);
-                                get_city(resp.city);
+                            get_city(resp.city);
                             if (resp.id_number) {
                                 document.getElementById("id_numberphoto").style.display = 'block';
                                 var img = '/storage/' + resp.id_number;
@@ -517,7 +542,7 @@
                                 $('#idproof').removeAttr("required");
                             } else {
                                 document.getElementById("id_numberphoto").style.display = 'none';
-                                $('#idproof').attr("required","required");
+                                $('#idproof').attr("required", "required");
                             }
                             $('#showpreviousid').attr('href', img);
                             $("#imageidprf").val(resp.id);
@@ -540,7 +565,7 @@
                             $("#id_numberphoto").attr('src', '');
                             $('#showpreviousid').attr('href', '');
                             $("#imageidprf").val('');
-                            $('#idproof').attr("required","required");
+                            $('#idproof').attr("required", "required");
                             $("#patient_name").val('');
                             $("#hospitalname").val('');
                             $("#relation").val('');
@@ -554,6 +579,25 @@
             }
 
         })
-        // ==============================
+
+        // =======Action==========
+
+        $('.is_parking').change(function(){
+
+            
+            if($('.is_parking').is(':checked')){
+                
+                console.log("hello world");
+                $('.parking_number').removeAttr("disabled");
+                
+            }else{
+                
+                console.log("bye world");
+                $('.parking_number').attr("disabled" , true );
+
+            }
+
+        })
+
     </script>
 @endsection
