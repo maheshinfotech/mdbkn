@@ -108,7 +108,7 @@ class BookingController extends Controller
         // ===============================
         $booking->tehsil            =   $request->tehsil;
         $booking->relation_patient  =   $request->relation;
-        $booking->ward_type         =   $request->wardtype;
+        $booking->ward_type         =   $request->ward;
         $booking->is_admitted       =   $request->is_admit ? 1 : 0;
         $booking->patient_type      =   $request->patient;
         // rent ==================

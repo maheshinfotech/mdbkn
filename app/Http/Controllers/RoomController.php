@@ -38,7 +38,7 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $room = new Room;
         $room->floor_number = $request->floor;
         $room->room_number = $request->room_no;
@@ -105,7 +105,8 @@ class RoomController extends Controller
         $room = Room::find($id);
 
         return $this->generateResponse($room->delete());
-    }public function AvailableRooms()
+    }
+    public function AvailableRooms()
     {
         $category = RoomCategory::all();
         $rooms = Room::with('category')

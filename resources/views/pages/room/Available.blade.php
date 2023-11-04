@@ -1,13 +1,10 @@
 
-    <h1>Unbooked Rooms</h1>
+    {{-- <h1>Unbooked Rooms</h1>
 
     <table>
 
 
-    </table>
-
-
-
+    </table> --}}
     @php
     $pageName = 'bookings';
     $tableHead = ['Full Name', 'Machine Name', 'Reading Number', 'Fuel in Liters'];
