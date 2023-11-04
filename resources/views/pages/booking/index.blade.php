@@ -51,7 +51,7 @@
                                 <td>{{ $booking->guest_address }}</td>
                                 <td>{{ $booking->mobile_number }}</td>
                                 <td>
-                                    {{-- @if ($booking->getRawOriginal('check_out_time') == null)
+                                    @if ($booking->getRawOriginal('check_out_time') == null)
                                     <a href="{{ route('advance.create', ['booking_id' => $booking->id]) }}"
                                         class="btn btn-sm btn-purple open-modal" data-bs-toggle="tooltip"
                                         data-bs-placement="bottom" data-bs-title="Advance">
@@ -61,7 +61,7 @@
                                             class="btn btn-sm btn-purple" data-bs-toggle="tooltip"
                                             data-bs-placement="bottom" data-bs-title="Checkout"> <i
                                                 class="fa-solid fa-sign-out"></i></a>
-                                    @endif --}}
+                                    @endif
                                     <a href="/bookings/{{ $booking->id }}" class="btn btn-sm btn-purple"
                                         data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View">
                                         <i class="fa-solid fa-eye"></i>
