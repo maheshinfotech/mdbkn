@@ -39,11 +39,12 @@ class DashboardController extends Controller
         $running_booking_count=Booking::whereNull('check_out_time')->get()->count();
         // running booking count is here
 
-
+        $room_booked_count= Room::where('is_booked','=',1)->get()->count();
+        // dd($room_booked_count);
         // dd($running_booking_count);
         // dd($room_available);
         return view('pages.dashboard',compact('room_available_count',
-            'today_booking_count','running_booking_count'
+            'today_booking_count','running_booking_count','room_booked_count'
         ));
     }
 }

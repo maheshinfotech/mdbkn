@@ -97,6 +97,10 @@
                                                 data-bs-placement="bottom" data-bs-title="Advance">
                                                 <i class="fa-solid fa-plus"></i>
                                             </a>
+                                            <a href="/bookings/edit/{{ $booking->id }}"
+                                                class="btn btn-sm btn-purple" data-bs-toggle="tooltip"
+                                                data-bs-placement="bottom" data-bs-title="Edit"> <i
+                                                    class="fa-solid fa-pen"></i></a>
                                                 <a href="/bookings/checkout/{{ $booking->id }}"
                                                     class="btn btn-sm btn-purple" data-bs-toggle="tooltip"
                                                     data-bs-placement="bottom" data-bs-title="Checkout"> <i

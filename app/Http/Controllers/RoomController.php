@@ -119,6 +119,10 @@ class RoomController extends Controller
         return view('pages.room.Available', compact('category', 'rooms'));
     }
 
+    public function bookedRooms() {
+        $room_booked = Room::where('is_booked',1)->get();
+        return view('pages.room.room-booked', compact('room_booked'));
+    }
 
 
 }

@@ -307,7 +307,166 @@ class BookingController extends Controller
      }
 
 
+            public function edit(Request $request ,$id) {
+                $editbooking =Booking::with(['room','bookinglogs','advance'])->find($id);
+                $room = Room::find($editbooking->room_id)->toArray();
+                 // onchange category edit ============
 
+                if ($request->ajax()) {
+                    if ($request->cate_id==$room['category_id']) {
+                        $rooms=Room::where('category_id',$request->cate_id)->where(function ($query){
+                            $query->whereNull('is_booked')->Orwhere('is_booked','!=',1);
+                        })->where(function ($query){
+                            $query->whereNull('room_status')->Orwhere('room_status','!=',0);
+                        })->get()->toArray();
+                        array_push($rooms,$room);
+                        return response()->json($rooms);
+                    }else{
+                        $rooms=Room::where('category_id',$request->cate_id)->where(function ($query){
+                            $query->whereNull('is_booked')->Orwhere('is_booked','!=',1);
+                        })->where(function ($query){
+                            $query->whereNull('room_status')->Orwhere('room_status','!=',0);
+                        })->get()->toArray();
+
+                        return response()->json($rooms);
+                    }
+
+                }
+                $category = RoomCategory::all();
+
+                $rooms=Room::where('category_id',$editbooking->room->category_id)->where(function ($query){
+                    $query->whereNull('is_booked')->Orwhere('is_booked','!=',1);
+                })->where(function ($query){
+                    $query->whereNull('room_status')->Orwhere('room_status','!=',0);
+                })->select('id','room_number')->get()->toArray();
+                array_push($rooms,$room);
+            return view('pages.booking.edit', compact('editbooking','category','rooms'));
+
+            }
+
+
+            public function update(Request $request,$id) {
+            //    dd($request->all());
+            $bookingedit = Booking::with('bookinglogs')->find($id);
+            $bookingedit->room_id=$request->room;
+            $bookingedit->guest_name=$request->guest_name;
+            $bookingedit->guest_father_name=$request->guest_father;
+            $bookingedit->guest_cast=$request->caste;
+            $bookingedit->guest_address=$request->guest_address;
+            $bookingedit->patient_name=$request->patient_name;
+            $bookingedit->patient_ward_no=$request->ward_no;
+            $bookingedit->pbm_room_no=$request->pbm_room_no;
+
+            $bookingedit->patient_bed_no=$request->bedno;
+
+            $bookingedit->gender=$request->gender;
+            $bookingedit->hospital_id=$request->hospital_id;
+            $bookingedit->check_in_time = $request->checkin;
+            $bookingedit->age=$request->age;
+            $bookingedit->city=$request->city;
+            $bookingedit->state=$request->state;
+            $bookingedit->docter_name=$request->doctor;
+            $bookingedit->mobile_number=$request->mobile;
+            // id proof saved ===========
+                if ($request->hasFile('idproof')) {
+                    $file = $request->file('idproof');
+                    $imageName = 'Id_Proof_files/' . Str::random(40) . '.' . strtolower($file->getClientOriginalExtension());
+                    $filePath = $file->storeAs('public/', $imageName);
+                    $bookingedit->id_number=$imageName;
+                }else{
+                    $bookingedit->id_number=$bookingedit->id_number;
+                }
+            // ===============================
+            $bookingedit->tehsil            =   $request->tehsil;
+            $bookingedit->relation_patient  =   $request->relation;
+            $bookingedit->ward_type         =   $request->ward;
+            $bookingedit->is_admitted       =   $request->is_admit ? 1 : 0;
+            $bookingedit->patient_type      =   $request->patient;
+            // rent ==================
+            $roomcat = RoomCategory::where('id', $request->category)->first();
+
+            // dd($roomcat,$request->all());
+                if($request->ward=="ct" || $request->ward=="rt"){
+                    $bookingedit->base_rent = $roomcat->patient_rent;
+                }else{
+                    $bookingedit->base_rent = $roomcat->normal_rent;
+                }
+            // =======================
+
+            $bookingedit->extra_remark=$request->remark;
+            // ===settings table =========
+            $setting = Setting::latest()->first();
+            if($setting){
+                $bookingedit->base_check_in_time = $setting->check_in_time;
+                $bookingedit->base_check_out_time = $setting->check_out_time;
+                $bookingedit->base_grace_period = $setting->grace_period;
+            }
+            // ===========
+            $bookingedit->update();
+            // booking record update block end
+            // ==================add guest code=============================
+            //  if booking data save then this block execute
+            if($bookingedit->update()){
+                // ====
+                if ($request->guestlists) {
+                    foreach($request->guestlists as $guests){
+                        // dd(count($bookingedit->bookinglogs->toArray()));
+                        // dd(count($request->guestlists));
+                        // dd(array_diff($bookingedit->bookinglogs->toArray(),$request->guestlists));
+
+                        if ($guests['guestname']!='') {
+                            $guestpre = BookingLogs::where('booking_id',$bookingedit->id)->first();
+                            if ($guestpre) {
+                                $guestpre->delete();
+                            }
+                            $guest = new BookingLogs;
+                            $guest->booking_id = $bookingedit->id;
+                            $guest->guest_name = $guests['guestname'];
+                            $guest->guest_age = $guests['guestage'];
+                            $guest->guest_relation = $guests['guestrelation'];
+                            $guest->guest_remarks = $guests['guestremarks'];
+                            $guest->save();
+                        }
+                    }
+                }else{
+                    $remove_guestpre=BookingLogs::where('booking_id',$bookingedit->id)->get();
+                    if($remove_guestpre)
+                    {
+                    foreach ($remove_guestpre as $value) {
+                        $value->delete();
+                    }
+                    }
+                }
+                // ================
+
+                // booking record save block end
+                $room=Room::find($request->room);
+                $room->is_booked=1;
+                $room->booked_date = Carbon::parse($request->checkin)->format('Y-m-d');
+                $room->update();
+                if ($request->advance) {
+                    foreach ($request->advance as $value) {
+                        // dd($value);
+
+                        $advance =  Advance::where('booking_id',$bookingedit->id)->first();
+                        //dd($request->all());
+                        $advance->booking_id = $bookingedit->id;
+                        $advance->amount = $value;
+                        // Log::info($request->checkin);
+                        $advance->received_date = Carbon::parse($request->checkin)->format('Y-m-d');
+                        $advance->update();
+                    }
+                }
+                }
+
+
+
+                // =======================================================================
+
+
+
+            return redirect()->route('index-booking')->with('message', 'Booking Updated successfully');
+            }
 
 }
 

@@ -24,7 +24,7 @@
     <div class="container-fluid mt-5">
         <div class="card d-print-none">
             <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                <h3 class="text-purple fw-bold mb-0">Available Rooms</h3>
+                <h3 class="text-purple fw-bold mb-0">Booked Rooms</h3>
                 <div></div>
             </div>
             <div class="card-body">
@@ -42,17 +42,15 @@
                             </tr>
                         </thead>
                         <tbody class="text-capitalize">
-
-                                @foreach ($rooms as $room)
-                                    <tr>
-                                        <td>{{ $room->category->name }}</td>
-                                        <td>{{ $room->floor_number }}</td>
-                                        <td>{{ $room->room_number }}</td>
-                                        <td>{{$room->category->normal_rent}}</td>
-                                         <td> {{$room->category->patient_rent}}</td>
-                                    </tr>
-                                @endforeach
-
+                            @foreach ($room_booked as $room)
+                            <tr>
+                                <td>{{ $room->category->name }}</td>
+                                <td>{{ $room->floor_number }}</td>
+                                <td>{{ $room->room_number }}</td>
+                                <td>{{$room->category->normal_rent}}</td>
+                                <td> {{$room->category->patient_rent}}</td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

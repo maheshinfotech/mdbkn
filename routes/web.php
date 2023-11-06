@@ -105,6 +105,8 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::post('/bookings', 'store')->name('store-booking');
             Route::post('/checkout', 'checkout')->name('checkout-booking');
             Route::get('/bookings/{id}', 'show')->name('show-booking');
+            Route::get('/bookings/edit/{id}', 'edit')->name('edit-booking');
+            Route::post('/bookings/update/{id}', 'update')->name('update-booking');
             Route::get('/bookings/checkout/{id}', 'Bookingcheckout')->name('booking-checkout');
             Route::get('/checkoutcalculation', 'checkoutCal')->name('checkoutcalculation');
             Route::get('/getguestpreviousdetails', 'getguestpreviousdetails')->name('getguestpreviousdetails');
@@ -117,6 +119,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
         // Route::get('/room/unbooked', [RoomController::class, 'unbookedRooms']);
 
         Route::get('/Available-rooms', [RoomController::class ,'AvailableRooms'])->name('Available-rooms');
+        Route::get('/booked-rooms', [RoomController::class ,'bookedRooms'])->name('booked-rooms');
 
         Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
