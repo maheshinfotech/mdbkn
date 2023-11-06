@@ -331,7 +331,7 @@
                         <!--end::Input group-->
 
                         <!--begin repeater-->
-                        <div class="repeater mt-4">
+                        <div class="repeater mt-4 ">
                             <!--heading start-->
                             <div class="card-header d-flex justify-content-between align-items-center p-2">
                                 <h3 class="text-purple fw-bold mb-0">Add Other Guest</h3>
@@ -341,10 +341,11 @@
                                 </div>
                             </div>
                             <!--heading end-->
-                            @if (count($editbooking->bookinglogs))
-                            @foreach ($editbooking->bookinglogs as $logs)
+
                             <!--begin repeater list-->
                             <div data-repeater-list="guestlists">
+                                @if (count($editbooking->bookinglogs))
+                                @foreach ($editbooking->bookinglogs as $logs)
                                 <!--begin repeater item-->
                                 <div data-repeater-item>
                                     <!--begin::Input group-->
@@ -352,6 +353,7 @@
                                         <!-- col start -->
                                         <div class="col-md-2 mb-3">
                                             <label class=" fw-bold mb-1 ">Guest Name:</label>
+                                            <input type="hidden" name="logs_id" value="{{$logs->id}}">
                                             <input type="text" class="form-control" name="guestname"
                                              value="{{$logs->guest_name}}"   id="" />
                                         </div>
@@ -382,55 +384,48 @@
                                     <!--end Input group-->
                                 </div>
                                 <!--end repeater item-->
+                                @endforeach
+                                @else
+                                <!--begin repeater list-->
+                                   <div data-repeater-item>
+                                       <!--begin::Input group-->
+                                       <div class="row mt-3 justify-content-center align-items-center">
+                                           <!-- col start -->
+                                           <div class="col-md-2 mb-3">
+                                               <label class=" fw-bold mb-1 ">Guest Name:</label>
+                                               <input type="text" class="form-control" name="guestname"
+                                                   id="" />
+                                           </div>
+                                           <!-- col start -->
+                                           <div class="col-md-2 mb-3">
+                                               <label class=" fw-bold mb-1 ">Guest Age:</label>
+                                               <input type="number" class="form-control" name="guestage" id="" />
+                                           </div>
+                                           <!-- col start -->
+                                           <div class="col-md-2 mb-3">
+                                               <label class=" fw-bold mb-1 ">Guest Relation:</label>
+                                               <input type="text" class="form-control" name="guestrelation"
+                                                   id="" />
+                                           </div>
+                                           <!-- col start -->
+                                           <div class="col-md-2 mb-3">
+                                               <label class="fw-bold mb-1 ">Guest Remarks:</label>
+                                               <input type="text" class="form-control" name="guestremarks"
+                                                   id="" />
+                                           </div>
+                                           <!-- col start -->
+                                           <div class="col-md-1 mb-3">
+                                               <label class=" fw-bold mb-1">Action:</label>
+                                               <input class="btn btn-sm btn-danger form-control" data-repeater-delete
+                                                   type="button" value="Delete" />
+                                           </div>
+                                       </div>
+                                       <!--end Input group-->
+                                   </div>
+                                   <!--end repeater item-->
+                               @endif
                             </div>
                             <!--end repeater list-->
-                            @endforeach
-                            @else
-                             <!--begin repeater list-->
-                             <div data-repeater-list="guestlists">
-
-                                <!--begin repeater item-->
-                                <div data-repeater-item>
-                                    <!--begin::Input group-->
-                                    <div class="row mt-3 justify-content-center align-items-center">
-                                        <!-- col start -->
-                                        <div class="col-md-2 mb-3">
-                                            <label class=" fw-bold mb-1 ">Guest Name:</label>
-                                            <input type="text" class="form-control" name="guestname"
-                                                id="" />
-                                        </div>
-                                        <!-- col start -->
-                                        <div class="col-md-2 mb-3">
-                                            <label class=" fw-bold mb-1 ">Guest Age:</label>
-                                            <input type="number" class="form-control" name="guestage" id="" />
-                                        </div>
-                                        <!-- col start -->
-                                        <div class="col-md-2 mb-3">
-                                            <label class=" fw-bold mb-1 ">Guest Relation:</label>
-                                            <input type="text" class="form-control" name="guestrelation"
-                                                id="" />
-                                        </div>
-                                        <!-- col start -->
-                                        <div class="col-md-2 mb-3">
-                                            <label class="fw-bold mb-1 ">Guest Remarks:</label>
-                                            <input type="text" class="form-control" name="guestremarks"
-                                                id="" />
-                                        </div>
-                                        <!-- col start -->
-                                        <div class="col-md-1 mb-3">
-                                            <label class=" fw-bold mb-1">Action:</label>
-                                            <input class="btn btn-sm btn-danger form-control" data-repeater-delete
-                                                type="button" value="Delete" />
-                                        </div>
-                                    </div>
-                                    <!--end Input group-->
-                                </div>
-                                <!--end repeater item-->
-                            </div>
-                            <!--end repeater list-->
-                            @endif
-
-
                         </div>
                         {{-- <div class="col-md-4 mb-3">
                             <label class="fw-bold mb-1">Extra Remark:</label>

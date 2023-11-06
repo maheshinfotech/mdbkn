@@ -407,38 +407,48 @@ class BookingController extends Controller
             // ==================add guest code=============================
             //  if booking data save then this block execute
             if($bookingedit->update()){
-                // ====
+               
+                $log = BookingLogs::where('booking_id',$id)->pluck('id')->toArray();
                 if ($request->guestlists) {
-                    foreach($request->guestlists as $guests){
-                        // dd(count($bookingedit->bookinglogs->toArray()));
-                        // dd(count($request->guestlists));
-                        // dd(array_diff($bookingedit->bookinglogs->toArray(),$request->guestlists));
+                    $log_ids = array_column($request->guestlists,'logs_id');
 
-                        if ($guests['guestname']!='') {
-                            $guestpre = BookingLogs::where('booking_id',$bookingedit->id)->first();
-                            if ($guestpre) {
-                                $guestpre->delete();
+                    $delete_log_ids= array_diff($log,$log_ids);
+                    // dd($delete_log_ids);
+                    foreach ($request->guestlists as $guests) {
+                        foreach($delete_log_ids as $lid){
+                            BookingLogs::where('id',$lid)->delete();
+                        }
+
+                        if($guests['guestname']!=''){
+                            if (isset($guests['logs_id']) && $guests['logs_id']) {
+                                $guest = BookingLogs::find($guests['logs_id']);
+
+                                    $guest->guest_name = $guests['guestname'];
+                                    $guest->guest_age = $guests['guestage'];
+                                    $guest->guest_relation = $guests['guestrelation'];
+                                    $guest->guest_remarks = $guests['guestremarks'];
+
+
+                            // Create
+                            } else {
+                                $guest = new BookingLogs();
+                                $guest->guest_name = $guests['guestname'];
+                                $guest->guest_age = $guests['guestage'];
+                                $guest->guest_relation = $guests['guestrelation'];
+                                $guest->guest_remarks = $guests['guestremarks'];
+                                $guest->booking_id = $id;
                             }
-                            $guest = new BookingLogs;
-                            $guest->booking_id = $bookingedit->id;
-                            $guest->guest_name = $guests['guestname'];
-                            $guest->guest_age = $guests['guestage'];
-                            $guest->guest_relation = $guests['guestrelation'];
-                            $guest->guest_remarks = $guests['guestremarks'];
                             $guest->save();
                         }
                     }
                 }else{
-                    $remove_guestpre=BookingLogs::where('booking_id',$bookingedit->id)->get();
-                    if($remove_guestpre)
-                    {
-                    foreach ($remove_guestpre as $value) {
-                        $value->delete();
+                  if($log){
+                    foreach($log as $loid){
+                        BookingLogs::where('id',$loid)->delete();
                     }
-                    }
+                  }
                 }
                 // ================
-
                 // booking record save block end
                 $room=Room::find($request->room);
                 $room->is_booked=1;
@@ -447,7 +457,6 @@ class BookingController extends Controller
                 if ($request->advance) {
                     foreach ($request->advance as $value) {
                         // dd($value);
-
                         $advance =  Advance::where('booking_id',$bookingedit->id)->first();
                         //dd($request->all());
                         $advance->booking_id = $bookingedit->id;
@@ -458,13 +467,7 @@ class BookingController extends Controller
                     }
                 }
                 }
-
-
-
                 // =======================================================================
-
-
-
             return redirect()->route('index-booking')->with('message', 'Booking Updated successfully');
             }
 
