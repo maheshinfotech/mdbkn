@@ -253,4 +253,7 @@ return [
     'manager_role'              =>         '2',
     'employee_role'             =>         '5',
 
+    /**Settings */
+    'parking_charge'            =>         '60',
+
 ];

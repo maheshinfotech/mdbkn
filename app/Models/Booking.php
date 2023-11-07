@@ -18,7 +18,7 @@ class Booking extends Model
     
     public function getCheckInTimeAttribute($value){
         if ($value){
-        return Carbon::parse($value)->format('h:i A');
+            return Carbon::parse($value)->format('h:i A');
         }
         return '--';
     }
@@ -26,7 +26,6 @@ class Booking extends Model
     public function getCheckOutTimeAttribute($value){
         if ($value){
             return Carbon::parse($value)->format('h:i A');
-
         }
         return "--";
     }
@@ -40,13 +39,15 @@ class Booking extends Model
     public function bookinglogs() {
         return $this->hasMany(BookingLogs::class);
     }
-public function room(){
-    return $this->belongsTo(Room::class)->with('category');
-}
-// public function rooms()
-// {
-//     return $this->belongsTo(Room::class, 'room_id');
-// }
+
+    public function room(){
+        return $this->belongsTo(Room::class)->with('category');
+    }
+    
+    // public function rooms()
+    // {
+    //     return $this->belongsTo(Room::class, 'room_id');
+    // }
 
     public function advance()
     {

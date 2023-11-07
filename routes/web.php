@@ -97,8 +97,6 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::post('/permissions', 'setPermissions')->name('set-permission');
         });
 
-
-
         Route::controller(\App\Http\Controllers\BookingController::class)->group(function () {
             Route::get('/bookings', 'index')->name('index-booking');
             Route::get('/bookings/create', 'create')->name('create-booking');
@@ -112,8 +110,14 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/getguestpreviousdetails', 'getguestpreviousdetails')->name('getguestpreviousdetails');
             Route::get('/booking/index', [BookingController::class,'showBookings'])->name('bookings.index');
 
+            /**Parking Module */
+            Route::get('/parkings', 'parkings')->name('parkings');
+            Route::post('/add-parking', 'addParking')->name('add-parking');
+            Route::post('/clear-parking', 'clearParking')->name('clear-parking');
+            Route::post('/parking-fetch-charge', 'parkingFetchCharge')->name('parking-fetch-charge');
 
         });
+
         Route::resource('/category', RoomCategoryController::class);
         Route::resource('/room', RoomController::class);
         // Route::get('/room/unbooked', [RoomController::class, 'unbookedRooms']);
@@ -141,7 +145,6 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/reset-password/{id}', 'resetPasswordView');
 
             Route::post('/reset-password/{id}', 'resetPassword');
-
 
         });
     });

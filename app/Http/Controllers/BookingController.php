@@ -9,6 +9,8 @@ use App\Models\Advance;
 use App\Models\Setting;
 use App\Models\Booking;
 use App\Models\BookingLogs;
+use App\Models\Parking;
+
 use Illuminate\Support\Str;
 use App\Models\RoomCategory;
 use Illuminate\Http\Request;
@@ -54,7 +56,6 @@ class BookingController extends Controller
         }
         $category = RoomCategory::all();
 
-
         // dd($rooms);
         return view('pages.booking.create', compact('category'));
     }
@@ -83,7 +84,6 @@ class BookingController extends Controller
         $booking->state=$request->state;
         $booking->docter_name=$request->doctor;
         $booking->mobile_number=$request->mobile;
-
 
         // id proof saved ===========
         if ($request->imageidprf) {
@@ -135,7 +135,6 @@ class BookingController extends Controller
         // booking record save block end
         // ==================add guest code=============================
 
-
         //  if booking data save then this block execute
         if($booking->save()){
             if ($request->guestlists) {
@@ -152,12 +151,29 @@ class BookingController extends Controller
                 }
             }
 
+            if(request()->is_parking){
+
+                $count = Parking::where( "vehicle_number" , request()->vehicle_name )->whereNull('parking_end')->count();
+
+                if(!$count){
+
+                    $res =  Parking::create([
+                                'active_booking'  => $booking->id ?? 0 ,
+                                'username'        => $booking->guest_name,
+                                'userphone'       => $booking->mobile_number,
+                                'vehicle_number'  => request()->vehicle_number,
+                                'remark'          => request()->parking_notes ?? '',
+                                'parking_start'   => date('Y-m-d H:i:s') ,
+                            ]);
+
+                }
+            }
+
             // booking record save block end
             $room=Room::find($request->room);
             $room->is_booked=1;
             $room->booked_date = Carbon::parse($request->checkin)->format('Y-m-d');
             $room->save();
-
 
             $advance = new Advance;
             //dd($request->all());
@@ -172,7 +188,6 @@ class BookingController extends Controller
         //  if booking data save then this block execute
 
             // =======================================================================
-
 
         // return redirect()->back()->with('message', 'Booking added successfully');
         return redirect()->route('index-booking')->with('message', 'Booking added successfully');
@@ -214,9 +229,9 @@ class BookingController extends Controller
         $booking= Booking::with(['room','bookinglogs','advance'])->find($id);
         // dd($booking);
 
-
         return view('pages.booking.show',compact('booking'));
     }
+
     public function Bookingcheckout($id) {
 
         $booking = Booking::with(['room','advance'])->find($id);
@@ -227,57 +242,57 @@ class BookingController extends Controller
             }
         }
 
-
         return view('pages.booking.checkout',compact('booking','advanceAmt'));
 
     }
+
     public function checkoutCal(Request $request) {
         $payble_rent=0;
         $estimateDays=0;
-       $bookings = Booking::with(['room'])->find($request->booking_id);
-       if($bookings){
-            $basetimein = strtotime($bookings->base_check_in_time) - 60*60*2;
-            $basetimeout = strtotime($bookings->base_check_out_time) + 60*60*2;
-            $timeinwithgraceperiod = date('H:i', $basetimein);
-            $timeoutwithgraceperiod = date('H:i', $basetimeout);
-            $start_datetime = $bookings->getRawOriginal('check_in_time');
-            $start_datetimeone = date('Y-m-d',strtotime($start_datetime));
-            $checkintime = date('H:i',strtotime($start_datetime));
-            $end_datetime = date('Y-m-d',strtotime($request->out_time));
-            $checkouttime = date('H:i',strtotime($request->out_time));
-            $date1 = new DateTime($start_datetime);
-            $date2 = new DateTime($request->out_time);
-            $startTimeStamp = strtotime($date1->format('d-m-Y'));
-            $endTimeStamp = strtotime($date2->format('d-m-Y'));
-            $timeDiff = abs($endTimeStamp - $startTimeStamp);
-            //  $days = $timeDiff / (60 * 60 * 24);
-            $numberDays = $timeDiff/86400;
-            $numberDays = intval($numberDays);
-            // =================base checkout time compare
-            if ($date1->format('d-m-Y')==$date2->format('d-m-Y')) {
-                $payble_rent =  $bookings->base_rent;
-                $estimateDays = 1;
-            }else{
-                    if ($checkouttime >= $timeoutwithgraceperiod) {
+        $bookings = Booking::with(['room'])->find($request->booking_id);
+        if($bookings){
+                $basetimein = strtotime($bookings->base_check_in_time) - 60*60*2;
+                $basetimeout = strtotime($bookings->base_check_out_time) + 60*60*2;
+                $timeinwithgraceperiod = date('H:i', $basetimein);
+                $timeoutwithgraceperiod = date('H:i', $basetimeout);
+                $start_datetime = $bookings->getRawOriginal('check_in_time');
+                $start_datetimeone = date('Y-m-d',strtotime($start_datetime));
+                $checkintime = date('H:i',strtotime($start_datetime));
+                $end_datetime = date('Y-m-d',strtotime($request->out_time));
+                $checkouttime = date('H:i',strtotime($request->out_time));
+                $date1 = new DateTime($start_datetime);
+                $date2 = new DateTime($request->out_time);
+                $startTimeStamp = strtotime($date1->format('d-m-Y'));
+                $endTimeStamp = strtotime($date2->format('d-m-Y'));
+                $timeDiff = abs($endTimeStamp - $startTimeStamp);
+                //  $days = $timeDiff / (60 * 60 * 24);
+                $numberDays = $timeDiff/86400;
+                $numberDays = intval($numberDays);
+                // =================base checkout time compare
+                if ($date1->format('d-m-Y')==$date2->format('d-m-Y')) {
+                    $payble_rent =  $bookings->base_rent;
+                    $estimateDays = 1;
+                }else{
+                        if ($checkouttime >= $timeoutwithgraceperiod) {
+                            $estimateDays = $numberDays +1;
+                            $payble_rent = $bookings->base_rent * $estimateDays;
+                        }else{
+                            $estimateDays = $numberDays;
+                            $payble_rent = $bookings->base_rent * $estimateDays;
+                        }
+                }
+                // base checkin time compare ==================
+                    if ($checkintime < $timeinwithgraceperiod) {
                         $estimateDays = $numberDays +1;
                         $payble_rent = $bookings->base_rent * $estimateDays;
-                    }else{
-                        $estimateDays = $numberDays;
+                    }
+                    // ==========================
+                    if ($checkintime < $timeinwithgraceperiod && $checkouttime >= $timeoutwithgraceperiod) {
+                        $estimateDays = $numberDays +2;
                         $payble_rent = $bookings->base_rent * $estimateDays;
                     }
-            }
-            // base checkin time compare ==================
-                if ($checkintime < $timeinwithgraceperiod) {
-                    $estimateDays = $numberDays +1;
-                    $payble_rent = $bookings->base_rent * $estimateDays;
-                }
-                // ==========================
-                if ($checkintime < $timeinwithgraceperiod && $checkouttime >= $timeoutwithgraceperiod) {
-                    $estimateDays = $numberDays +2;
-                    $payble_rent = $bookings->base_rent * $estimateDays;
-                }
 
-       }
+        }
        return response()->json([
         'payble_rent'=>  $payble_rent,
         'estimateDays'=>$estimateDays,
@@ -295,17 +310,24 @@ class BookingController extends Controller
                 ]
             );
 
-     }
+    }
 
-     public function showBookings()
-     {
-         $bookings = Booking::with('room')
-             ->whereNull('check_out_time')
-             ->get();
+    public function showBookings()
+    {
+        $bookings = Booking::with('room')
+            ->whereNull('check_out_time')
+            ->get();
 
-         return view('pages.booking.index', compact('bookings'));
-     }
+        return view('pages.booking.index', compact('bookings'));
+    }
 
+    public function parkings(){
+
+        $data['activeBooking'] = Booking::whereNull('check_out_time')->get();
+
+        $data['listingData'] = Parking::latest()->get();
+
+        return view('parkings.index' , $data);
 
             public function edit(Request $request ,$id) {
                 $editbooking =Booking::with(['room','bookinglogs','advance'])->find($id);
@@ -466,6 +488,87 @@ class BookingController extends Controller
                 // =======================================================================
             return redirect()->route('index-booking')->with('message', 'Booking Updated successfully');
             }
+    }
+
+    public function addParking(){
+
+        request()->validate([
+            'active_booking' => 'required',
+            'username'       => 'required',
+            'userphone'      => 'required',
+            'vehicle'        => 'required'
+
+        ]);
+
+        $count = Parking::where( "vehicle_number" , request()->vehicle )->whereNull('parking_end')->count();
+
+        if($count){
+
+            $this->setFlashSession( false , "this Vehicle is already Parked, Kindly Check." );
+
+            return redirect()->back();
+
+        }
+
+        $res =  Parking::create([
+
+                    'active_booking'    => request()->active_booking ?? 0 ,
+
+                    'username'          => request()->username ?? '',
+
+                    'userphone'         => request()->userphone ?? '',
+
+                    'vehicle_number'    => request()->vehicle ?? '',
+
+                    'remark'            => request()->remark ?? '',
+
+                    'parking_start'     => request()->start_date ?? date('Y-m-d H:i:s'),
+
+                ]);
+
+        $this->setFlashSession($res);
+
+        return redirect()->back();
+
+    }
+
+    public function clearParking(){
+
+        request()->validate([
+            'end_date' => 'required' ,
+            'paid_amount' => 'required' ,
+            'parking_id'  => 'required'
+        ]);
+
+        Parking::where('id' , "parking_id")->update([
+                'charges' => request()->paid_amount ,
+                'parking_end' => request()->end_date ,
+        ]);
+
+    }
+
+    public function parkingFetchCharge(){
+
+        request()->validate([
+            'end_date' => 'required' ,
+            'parking_id'  => 'required'
+        ]);
+
+        $parking = Parking::findOrFail(request()->parking_id);
+
+        $start  = Carbon::parse($parking->parking_start);
+        $end    = Carbon::parse(request()->end_date);
+
+        $difference_days = $end->diffInDays($start);
+
+        $paid = $difference_days * config('app.parking_charge');
+
+        return  $this->generateJsonResponse(true, '', [
+                                                        'paid_amount' => $paid
+                                                    ]
+                );
+
+    }
 
 }
 
