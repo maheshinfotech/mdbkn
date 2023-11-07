@@ -154,12 +154,13 @@ class BookingController extends Controller
 
             if(request()->is_parking){
 
-                $count = Parking::where( "vehicle_number" , request()->vehicle_name )->whereNull('parking_end')->count();
+                $count = Parking::where( "vehicle_number" , request()->vehicle_number )->whereNull('parking_end')->count();
 
                 if(!$count){
 
                     $res =  Parking::create([
-                                'active_booking'  => $booking->id ?? 0 ,
+                                // 'active_booking'  => $booking->id ?? 0 ,
+                                'booking_id'  => $booking->id ?? 0 ,
                                 'username'        => $booking->guest_name,
                                 'userphone'       => $booking->mobile_number,
                                 'vehicle_number'  => request()->vehicle_number,
@@ -242,8 +243,9 @@ class BookingController extends Controller
                 $advanceAmt += $value->amount;
             }
         }
+        $parkingData = Parking::where('booking_id', $id)->get();
 
-        return view('pages.booking.checkout',compact('booking','advanceAmt'));
+        return view('pages.booking.checkout',compact('booking','advanceAmt','parkingData'));
 
     }
 
@@ -322,13 +324,18 @@ class BookingController extends Controller
         return view('pages.booking.index', compact('bookings'));
     }
 
-    public function parkings(){
+    // public function parkings(){
 
+    //     $data['activeBooking'] = Booking::whereNull('check_out_time')->get();
+
+    //     $data['listingData'] = Parking::latest()->get();
+
+    //     return view('parkings.index' , $data);
+    // }
+    public function parkings() {
         $data['activeBooking'] = Booking::whereNull('check_out_time')->get();
-
-        $data['listingData'] = Parking::latest()->get();
-
-        return view('parkings.index' , $data);
+        $data['listingData'] = Parking::whereNull('parking_end')->latest()->get();
+        return view('parkings.index', $data);
     }
 
             public function edit(Request $request ,$id) {
@@ -514,7 +521,7 @@ class BookingController extends Controller
 
         $res =  Parking::create([
 
-                    'active_booking'    => request()->active_booking ?? 0 ,
+                    'booking_id'    => request()->active_booking ?? 0 ,
 
                     'username'          => request()->username ?? '',
 
@@ -537,8 +544,8 @@ class BookingController extends Controller
     public function clearParking(){
 
         request()->validate([
-            'end_date' => 'required' ,
-            'paid_amount' => 'required' ,
+            'username' => 'required' ,
+            'received_amount' => 'required' ,
             'parking_id'  => 'required'
         ]);
 
@@ -546,6 +553,8 @@ class BookingController extends Controller
                 'charges' => request()->paid_amount ,
                 'parking_end' => request()->end_date ,
         ]);
+
+        return redirect()->back();
 
     }
 

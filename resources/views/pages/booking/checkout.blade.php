@@ -79,6 +79,37 @@
                     <label class="fw-bold mb-1">Paid Rent:</label>
                     <input type="text" class="form-control" id="" name="paidrent" required/>
                 </div>
+
+            </div>
+            <div class="row">
+                <h4>Parking Data</h4>
+                @foreach ($parkingData as $parking)
+                    <div class="col-md-4 mb-3">
+                        <label class="fw-bold mb-1">Name:</label>
+                        <input type="text" class="form-control" value="{{ $parking->username }}" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="fw-bold mb-1">Phone:</label>
+                        <input type="text" class="form-control" value="{{ $parking->userphone }}" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="fw-bold mb-1">Number:</label>
+                        <input type="text" class="form-control" value="{{ $parking->vehicle_number }}" />
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="fw-bold mb-1">Parking Start:</label>
+                        <input type="datetime-local" class="form-control" name="parking_start[]" value="{{ date('Y-m-d\TH:i', strtotime($parking->parking_start)) }}" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="fw-bold mb-1">Parking End:</label>
+                        <input type="datetime-local" class="form-control" name="parking_end[]" value="" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="fw-bold mb-1">Charges:</label>
+                        <input type="text" class="form-control" name="charges[]" value="{{ $parking->charges }}" />
+                    </div>
+                @endforeach
             </div>
             <!--end::Input group-->
             <div class="text-center my-4">
