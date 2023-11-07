@@ -23,6 +23,7 @@ class BookingController extends Controller
 {
     public function index()
     {
+        // dd(config('app.parking_charge'));
         $bookings = Booking::orderBy('check_out_time', 'asc')
             ->orderBy('id', 'desc')
             ->get();
@@ -183,7 +184,7 @@ class BookingController extends Controller
             $advance->received_date = Carbon::parse($request->checkin)->format('Y-m-d');
             $advance->save();
 
-            }
+        }
 
         //  if booking data save then this block execute
 
@@ -328,6 +329,7 @@ class BookingController extends Controller
         $data['listingData'] = Parking::latest()->get();
 
         return view('parkings.index' , $data);
+    }
 
             public function edit(Request $request ,$id) {
                 $editbooking =Booking::with(['room','bookinglogs','advance'])->find($id);
@@ -488,7 +490,7 @@ class BookingController extends Controller
                 // =======================================================================
             return redirect()->route('index-booking')->with('message', 'Booking Updated successfully');
             }
-    }
+
 
     public function addParking(){
 
@@ -571,4 +573,5 @@ class BookingController extends Controller
     }
 
 }
+
 
