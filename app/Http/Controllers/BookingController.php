@@ -407,7 +407,7 @@ class BookingController extends Controller
             // ==================add guest code=============================
             //  if booking data save then this block execute
             if($bookingedit->update()){
-               
+
                 $log = BookingLogs::where('booking_id',$id)->pluck('id')->toArray();
                 if ($request->guestlists) {
                     $log_ids = array_column($request->guestlists,'logs_id');
@@ -418,17 +418,13 @@ class BookingController extends Controller
                         foreach($delete_log_ids as $lid){
                             BookingLogs::where('id',$lid)->delete();
                         }
-
                         if($guests['guestname']!=''){
                             if (isset($guests['logs_id']) && $guests['logs_id']) {
                                 $guest = BookingLogs::find($guests['logs_id']);
-
                                     $guest->guest_name = $guests['guestname'];
                                     $guest->guest_age = $guests['guestage'];
                                     $guest->guest_relation = $guests['guestrelation'];
                                     $guest->guest_remarks = $guests['guestremarks'];
-
-
                             // Create
                             } else {
                                 $guest = new BookingLogs();
