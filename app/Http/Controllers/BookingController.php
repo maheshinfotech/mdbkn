@@ -63,7 +63,7 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-        $booking =new Booking;
+        $booking = new Booking;
         $booking->room_id=$request->room;
         $booking->guest_name=$request->guest_name;
         $booking->guest_father_name=$request->guest_father;
@@ -96,7 +96,6 @@ class BookingController extends Controller
                 $booking->id_number=$imageName;
             }else{
                     $booking->id_number=$bookdet->id_number;
-
             }
         }else{
             if ($request->hasFile('idproof')) {
@@ -116,7 +115,8 @@ class BookingController extends Controller
         $roomcat = RoomCategory::where('id', $request->category)->first();
 
         // dd($roomcat,$request->all());
-            if($request->ward=="ct" || $request->ward=="rt"){
+            // if($request->ward=="ct" || $request->ward=="rt"){
+            if($request->patient=='cancer'){
                 $booking->base_rent = $roomcat->patient_rent;
             }else{
                 $booking->base_rent = $roomcat->normal_rent;
@@ -155,9 +155,7 @@ class BookingController extends Controller
             if(request()->is_parking){
 
                 $count = Parking::where( "vehicle_number" , request()->vehicle_number )->whereNull('parking_end')->count();
-
                 if(!$count){
-
                     $res =  Parking::create([
                                 // 'active_booking'  => $booking->id ?? 0 ,
                                 'booking_id'  => $booking->id ?? 0 ,
@@ -184,7 +182,6 @@ class BookingController extends Controller
             Log::info($request->checkin);
             $advance->received_date = Carbon::parse($request->checkin)->format('Y-m-d');
             $advance->save();
-
         }
 
         //  if booking data save then this block execute
@@ -417,7 +414,7 @@ class BookingController extends Controller
             $roomcat = RoomCategory::where('id', $request->category)->first();
 
             // dd($roomcat,$request->all());
-                if($request->ward=="ct" || $request->ward=="rt"){
+                if($request->patient=="cancer"){
                     $bookingedit->base_rent = $roomcat->patient_rent;
                 }else{
                     $bookingedit->base_rent = $roomcat->normal_rent;
@@ -579,6 +576,54 @@ class BookingController extends Controller
                                                     ]
                 );
 
+    }
+
+
+    public function todaycheckout() {
+        // $checkoutdet = Booking::with('advance')->where('check_out_time','!=','')->get();
+        // $todaycheckout=[];
+        // foreach ($checkoutdet as  $value) {
+        //     // dd($value->getRawOriginal('check_out_time'));
+        //     $value->check_out_time = $value->getRawOriginal('check_out_time');
+        //     if (date('Y-m-d',strtotime($value->check_out_time))==date('Y-m-d')) {
+        //         $checkout = $value;
+        //         array_push($todaycheckout,$checkout);
+        //     }
+        // }
+        $todaycheckout = Booking::with(['advance','room'])->whereDate('check_out_time', Carbon::today())->get();
+        return view('pages.booking.today_booking_checkout',compact('todaycheckout'));
+    }
+
+    public function balancedue() {
+        $bookingdue = Booking::with('advance')->whereNull('check_out_time')->get();
+        $totalrentcount=[];
+        $due=0;
+            foreach ($bookingdue as $value) {
+            //   $ttt =  $this->getdueRent($value,$totalrentcount);
+                $fdate = date('Y-m-d',(strtotime($value->getRawOriginal('check_in_time'))));
+                $tdate = Carbon::today();
+                $datetime1 = new DateTime($fdate);
+                $datetime2 = new DateTime($tdate);
+                $interval = $datetime1->diff($datetime2);
+                $days = $interval->format('%a');//now do whatever you like with $days
+                // dd($days);
+                $amount=0;
+                foreach ($value->advance as $val) {
+                    $amount += $val->amount;
+                }
+                $rent = $value->base_rent;
+                $totamt = $days * $rent ;
+                if ($totamt > $amount) {
+                    $due = $totamt - $amount;
+                    $value->due = $due;
+                    if($due>0){
+                        // $totalrent = $value->id;
+                        $totalrent = $value;
+                        array_push($totalrentcount,$totalrent);
+                    }
+                }
+        }
+        return view('pages.booking.balance-due',compact('totalrentcount'));
     }
 
 }

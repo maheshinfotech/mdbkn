@@ -102,6 +102,8 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/bookings/create', 'create')->name('create-booking');
             Route::post('/bookings', 'store')->name('store-booking');
             Route::post('/checkout', 'checkout')->name('checkout-booking');
+            Route::get('/todaycheckout', 'todaycheckout')->name('todaycheckout');
+            Route::get('/balancedue', 'balancedue')->name('balancedue');
             Route::get('/bookings/{id}', 'show')->name('show-booking');
             Route::get('/bookings/edit/{id}', 'edit')->name('edit-booking');
             Route::post('/bookings/update/{id}', 'update')->name('update-booking');
