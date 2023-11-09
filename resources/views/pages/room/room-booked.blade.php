@@ -37,8 +37,9 @@
                                 <th class="text-center">Category</th>
                                 <th class="text-center">Floor Number</th>
                                 <th class="text-center">Room Number</th>
-                                <th class="text-center">normal rent</th>
-                                <th class="text-center">patient rent</th>
+                                <th class="text-center">GuestName</th>
+                                <th class="text-center">Rent</th>
+                                <th class="text-center">BookedDeate</th>
                             </tr>
                         </thead>
                         <tbody class="text-capitalize">
@@ -47,8 +48,17 @@
                                 <td>{{ $room->category->name }}</td>
                                 <td>{{ $room->floor_number }}</td>
                                 <td>{{ $room->room_number }}</td>
-                                <td>{{$room->category->normal_rent}}</td>
-                                <td> {{$room->category->patient_rent}}</td>
+                                <td>
+                                    @if ($room->bookings->count() > 0)
+                                        @foreach ($room->bookings as $booking)
+                                            {{ $booking->guest_name }}
+                                        @endforeach
+                                    @else
+                                        No bookings for this room
+                                    @endif
+                                </td>
+                                <td>{{$booking->base_rent}}</td>
+                                <td>{{ date('d-M-y h:i A',strtotime($booking->getRawOriginal('check_in_time'))) }}</td>
                             </tr>
                             @endforeach
                         </tbody>

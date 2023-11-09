@@ -151,7 +151,7 @@
                                     data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-sm btn-primary">Save</button>
                               </div>
-                              
+
                         </form>
                   </div>
                   </div>
@@ -219,12 +219,12 @@
 
         $('.parking-end-date').change(function(){
             $.ajax({
-                  
-                  url : "{{route('parking-fetch-charge')}}" , 
-                  
+
+                  url : "{{route('parking-fetch-charge')}}" ,
+
                   data : {
-                        end_date : $('.parking-end-date').val() , 
-                        parking_id : $('.parking_id').val() , 
+                        end_date : $('.parking-end-date').val() ,
+                        parking_id : $('.parking_id').val() ,
                   },
 
                   method : "post",

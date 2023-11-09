@@ -109,6 +109,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/checkoutcalculation', 'checkoutCal')->name('checkoutcalculation');
             Route::get('/getguestpreviousdetails', 'getguestpreviousdetails')->name('getguestpreviousdetails');
             Route::get('/booking/index', [BookingController::class,'showBookings'])->name('bookings.index');
+            Route::post('/save-parking-data/{id}', 'BookingController@Bookingcheckout')->name('saveParkingData');
 
             /**Parking Module */
             Route::get('/parkings', 'parkings')->name('parkings');
@@ -124,6 +125,12 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
 
         Route::get('/Available-rooms', [RoomController::class ,'AvailableRooms'])->name('Available-rooms');
         Route::get('/booked-rooms', [RoomController::class ,'bookedRooms'])->name('booked-rooms');
+        Route::get('/rooms/initial', [RoomController::class ,'showInitialRooms'])->name('rooms.initial');
+        Route::get('/rooms/basic', [RoomController::class ,  'showBasicRooms'])->name('rooms.basic');
+        Route::get('/rooms/normal', [RoomController::class, 'showNormalRooms'])->name('rooms.normal');
+        Route::get('/rooms/premium', [RoomController::class ,'showPremiumRooms'])->name('rooms.premium');
+        Route::get('/rooms/flats', [RoomController::class ,'showflatsRooms'])->name('rooms.flats');
+        Route::get('/rooms/other', [RoomController::class ,'showotherRooms'])->name('rooms.other');
 
         Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
