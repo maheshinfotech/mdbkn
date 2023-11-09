@@ -194,34 +194,72 @@ class BookingController extends Controller
 
     }
 
+    // public function checkout(Request $request)
+    // {
+    //    // dd($request->all());
+
+    //     Gate::authorize('update', 'booking');
+    //     $checkoutdet = Booking::find($request->booking_id);
+    //     $checkoutdet->check_out_time = $request->check_out_time;
+    //     $checkoutdet->estimated_total_days = $request->estimatedays;
+    //     $checkoutdet->payable_rent = $request->totalrent;
+    //     $amount = $request->totalrent - $request->advancepayment;
+    //     // dd($amount);
+    //     if ($amount >= 0) {
+    //         $checkoutdet->paid_rent = $request->paidrent ? $request->paidrent : 0;
+    //     }else{
+    //         $checkoutdet->advance_refund = $request->paidrent ? $request->paidrent : 0;
+    //         $checkoutdet->paid_rent = 0;
+    //     }
+    //     $checkoutdet->save();
+    //     //    ======room isbooked code ================
+    //     if ($checkoutdet->save()) {
+    //         $room=Room::find($checkoutdet->room_id);
+    //         $room->is_booked=0;
+    //         $room->booked_date = null;
+    //         $room->update();
+    //     }
+
+    // return redirect()->route('index-booking')->with('message', 'Checked Out Details Saved Successfully');
+
+    // }
     public function checkout(Request $request)
-    {
-        Gate::authorize('update', 'booking');
-        // dd($request->all());
-        $checkoutdet = Booking::find($request->booking_id);
-        $checkoutdet->check_out_time = $request->check_out_time;
-        $checkoutdet->estimated_total_days = $request->estimatedays;
-        $checkoutdet->payable_rent = $request->totalrent;
-        $amount = $request->totalrent - $request->advancepayment;
-        // dd($amount);
-        if ($amount >= 0) {
-            $checkoutdet->paid_rent = $request->paidrent ? $request->paidrent : 0;
-        }else{
-            $checkoutdet->advance_refund = $request->paidrent ? $request->paidrent : 0;
-            $checkoutdet->paid_rent = 0;
-        }
-        $checkoutdet->save();
-        //    ======room isbooked code ================
-        if ($checkoutdet->save()) {
-            $room=Room::find($checkoutdet->room_id);
-            $room->is_booked=0;
-            $room->booked_date = null;
-            $room->update();
-        }
+{
+    Gate::authorize('update', 'booking');
+    $checkoutdet = Booking::find($request->booking_id);
+    $checkoutdet->check_out_time = $request->check_out_time;
+    $checkoutdet->estimated_total_days = $request->estimatedays;
+    $checkoutdet->payable_rent = $request->totalrent;
+
+    // Fetch parking data based on parking_id
+    $parking = Parking::find($request->parking_id);
+    $parking->parking_end = $request->username;
+    $parking->charges = $request->received_amount;
+    // dd($parking);
+
+    $parking->save();
+
+    $amount = $request->totalrent - $request->advancepayment;
+
+    if ($amount >= 0) {
+        $checkoutdet->paid_rent = $request->paidrent ? $request->paidrent : 0;
+    } else {
+        $checkoutdet->advance_refund = $request->paidrent ? $request->paidrent : 0;
+        $checkoutdet->paid_rent = 0;
+    }
+    $checkoutdet->save();
+
+    // ==== room isbooked code ====
+    if ($checkoutdet->save()) {
+        $room = Room::find($checkoutdet->room_id);
+        $room->is_booked = 0;
+        $room->booked_date = null;
+        $room->update();
+    }
 
     return redirect()->route('index-booking')->with('message', 'Checked Out Details Saved Successfully');
+}
 
-    }
 
     public function show($id){
 
@@ -245,8 +283,10 @@ class BookingController extends Controller
         return view('pages.booking.checkout',compact('booking','advanceAmt','parkingData'));
 
     }
+    // }
 
     public function checkoutCal(Request $request) {
+        // dd($re)
         $payble_rent=0;
         $estimateDays=0;
         $bookings = Booking::with(['room'])->find($request->booking_id);
@@ -538,22 +578,29 @@ class BookingController extends Controller
 
     }
 
-    public function clearParking(){
+    public function clearParking(Request $request){
+    request()->validate([
+        'username' => 'required',
+        'received_amount' => 'required',
+        'parking_id'  => 'required'
+    ]);
 
-        request()->validate([
-            'username' => 'required' ,
-            'received_amount' => 'required' ,
-            'parking_id'  => 'required'
-        ]);
+    $parkingId = $request->input('parking_id');
+    $receivedAmount = $request->input('received_amount');
+    $endDate = $request->input('username');
 
-        Parking::where('id' , "parking_id")->update([
-                'charges' => request()->paid_amount ,
-                'parking_end' => request()->end_date ,
-        ]);
+    $parking = Parking::find($parkingId);
+
+    if ($parking) {
+        $parking->parking_end = $endDate;
+        $parking->charges = $receivedAmount;
+        $parking->save();
 
         return redirect()->back();
+    } else {
 
     }
+}
 
     public function parkingFetchCharge(){
 

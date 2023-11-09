@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Room;
 use App\Models\RoomCategory;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RoomController extends Controller
 {
@@ -106,18 +107,59 @@ class RoomController extends Controller
 
         return $this->generateResponse($room->delete());
     }
-    public function AvailableRooms()
+    public function AvailableRooms(request $request)
     {
-        $category = RoomCategory::all();
-        $rooms = Room::with('category')
-            ->whereNull('is_booked')
-            ->orWhere('is_booked', false)
-            ->orderBy('room_number')
+        $initial = Room::with(['category'])
+            ->where('category_id', 1)
+            ->where(function($query) {
+                $query->where('is_booked', null)
+                    ->orWhere('is_booked', 0);
+            })
             ->get();
-            // dd($rooms);
 
-        return view('pages.room.Available', compact('category', 'rooms'));
+        $basic = Room::with(['category'])
+            ->where('category_id', 2)
+            ->where(function($query) {
+                $query->where('is_booked', null)
+                    ->orWhere('is_booked', 0);
+            })
+            ->get();
+
+        $normal = Room::with(['category'])
+            ->where('category_id', 3)
+            ->where(function($query) {
+                $query->where('is_booked', null)
+                    ->orWhere('is_booked', 0);
+            })
+            ->get();
+
+        $premium = Room::with(['category'])
+            ->where('category_id', 4)
+            ->where(function($query) {
+                $query->where('is_booked', null)
+                    ->orWhere('is_booked', 0);
+            })
+            ->get();
+
+        $flats = Room::with(['category'])
+            ->where('category_id', 5)
+            ->where(function($query) {
+                $query->where('is_booked', null)
+                    ->orWhere('is_booked', 0);
+            })
+            ->get();
+
+        $other = Room::with(['category'])
+            ->where('category_id', 6)
+            ->where(function($query) {
+                $query->where('is_booked', null)
+                    ->orWhere('is_booked', 0);
+            })
+            ->get();
+
+        return view('pages.room.Available', compact('initial', 'basic', 'normal', 'premium', 'flats', 'other'));
     }
+
 
     public function bookedRooms() {
         $room_booked = Room::where('is_booked',1)->get();
@@ -125,4 +167,67 @@ class RoomController extends Controller
     }
 
 
+
+public function showInitialRooms()
+{
+    $rooms = Room::where('category_id', 1)
+        ->where(function ($query) {
+            $query->where('is_booked', null)
+                  ->orWhere('is_booked', 0);
+        })
+        ->get();
+
+    return view('pages.room.initial', compact('rooms'));
 }
+
+
+
+public function showBasicRooms()
+{
+    $rooms = Room::where('category_id', 2)->where(function ($query) {
+        $query->where('is_booked', null)
+              ->orWhere('is_booked', 0);
+    })
+    ->get();
+    return view('pages.room.initial', compact('rooms'));
+}
+
+public function showNormalRooms()
+{
+    $rooms = Room::where('category_id', 3)->where(function ($query) {
+        $query->where('is_booked', null)
+              ->orWhere('is_booked', 0);
+    })
+    ->get();
+    return view('pages.room.initial', compact('rooms'));
+}
+
+public function showPremiumRooms()
+{
+    $rooms = Room::where('category_id', 4)->where(function ($query) {
+        $query->where('is_booked', null)
+              ->orWhere('is_booked', 0);
+    })
+    ->get();
+    return view('pages.room.initial', compact('rooms'));
+}
+public function showflatsRooms()
+{
+    $rooms = Room::where('category_id', 5)->where(function ($query) {
+        $query->where('is_booked', null)
+              ->orWhere('is_booked', 0);
+    })
+    ->get();
+    return view('pages.room.initial', compact('rooms'));
+}
+public function showotherRooms()
+{
+    $rooms = Room::where('category_id', 6)->where(function ($query) {
+        $query->where('is_booked', null)
+              ->orWhere('is_booked', 0);
+    })
+    ->get();
+    return view('pages.room.initial', compact('rooms'));
+}
+}
+
