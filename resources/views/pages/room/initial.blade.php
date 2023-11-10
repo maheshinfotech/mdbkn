@@ -11,6 +11,7 @@
         <table class="table table-striped align-middle py-3 text-center" id="initial_rooms_table">
             <thead>
                 <tr>
+                    <th class="text-center">Category</th>
                     <th class="text-center">Floor Number</th>
                     <th class="text-center">Room Number</th>
                     <th class="text-center">Is Booked</th>
@@ -19,6 +20,7 @@
             <tbody class="text-capitalize">
                 @foreach ($rooms as $room)
                     <tr>
+                        <td>{{$room->category->name}}</td>
                         <td>{{ $room->floor_number }}</td>
                         <td>{{ $room->room_number }}</td>
                         <td>{{ $room->is_booked ? 'Yes' : 'No' }}</td>
