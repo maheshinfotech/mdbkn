@@ -230,7 +230,7 @@
                   method : "post",
 
                   success : function(res){
-
+console.log(res.data.paid_amount);
                         $('.payable-amount').val(res.data.paid_amount);
 
                   }
