@@ -13,8 +13,16 @@
                 {{ Session::get('message') }}
             </div>
         @endif
+        <div class="d-flex flex-wrap mx-4 my-3 justify-content-between align-items-center">
+            <div class="">
+                <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
+            </div>
+            <div class="">
+                <h1 class="text-purple text-center my-3"> Room Database</h1>
+            </div>
+            <div></div>
+        </div>
 
-<h1 class="text-purple text-center my-3">Available Rooms</h1>
 <div class="row mx-3">
     @php
     $color=['tan','#a7c2cc','rgba(134, 137, 169, 0.9)','#7bb8cf','rgb(162, 207, 123)','rgb(207, 123, 192)'];
@@ -55,6 +63,7 @@
     $(document).ready(function() {
         var table = $('#booking_table').DataTable({
             lengthChange: false,
+            "pageLength":100,
             buttons: [{
                 extend: 'collection',
                 text: 'Export',

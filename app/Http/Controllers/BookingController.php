@@ -204,11 +204,14 @@ class BookingController extends Controller
 
     // Fetch parking data based on parking_id
     $parking = Parking::find($request->parking_id);
-    $parking->parking_end = $request->username;
-    $parking->charges = $request->received_amount;
+    if ($parking) {
+        $parking->parking_end = $request->username;
+        $parking->charges = $request->received_amount;
+        $parking->save();
+    }
+
     // dd($parking);
 
-    $parking->save();
 
     $amount = $request->totalrent - $request->advancepayment;
 
@@ -275,21 +278,21 @@ class BookingController extends Controller
                     $estimateDays = 1;
                 }else{
                         if ($checkouttime >= $basetimeout) {
-                            $estimateDays = $days->d +1;
+                            $estimateDays = $days->days +1;
                             $payble_rent = $bookings->base_rent * $estimateDays;
                         }else{
-                            $estimateDays = $days->d;
+                            $estimateDays = $days->days;
                             $payble_rent = $bookings->base_rent * $estimateDays;
                         }
                 }
                 // base checkin time compare ==================
                     if ($start_datetime < $basetimein) {
-                        $estimateDays = $days->d +1;
+                        $estimateDays = $days->days +1;
                         $payble_rent = $bookings->base_rent * $estimateDays;
                     }
                     // ==========================
                     if ($start_datetime < $basetimein && $checkouttime >= $basetimeout) {
-                        $estimateDays = $days->d +2;
+                        $estimateDays = $days->days +2;
                         $payble_rent = $bookings->base_rent * $estimateDays;
                     }
 
@@ -369,6 +372,10 @@ class BookingController extends Controller
             public function update(Request $request,$id) {
             //    dd($request->all());
             $bookingedit = Booking::with('bookinglogs')->find($id);
+            $rooms=Room::find($bookingedit->room);
+            $rooms->is_booked=0;
+            $rooms->booked_date = null;
+            $rooms->update();
             $bookingedit->room_id=$request->room;
             $bookingedit->guest_name=$request->guest_name;
             $bookingedit->guest_father_name=$request->guest_father;

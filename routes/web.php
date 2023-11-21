@@ -110,8 +110,8 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/bookings/checkout/{id}', 'Bookingcheckout')->name('booking-checkout');
             Route::get('/checkoutcalculation', 'checkoutCal')->name('checkoutcalculation');
             Route::get('/getguestpreviousdetails', 'getguestpreviousdetails')->name('getguestpreviousdetails');
-            Route::get('/booking/index', [BookingController::class,'showBookings'])->name('bookings.index');
-            Route::post('/save-parking-data/{id}', 'BookingController@Bookingcheckout')->name('saveParkingData');
+            Route::get('/booking/index', 'showBookings')->name('bookings.index');
+            // Route::post('/save-parking-data/{id}', 'Bookingcheckout')->name('saveParkingData');
 
             /**Parking Module */
             Route::get('/parkings', 'parkings')->name('parkings');

@@ -293,12 +293,12 @@
                                 </label>
 
                                 <label for="" class="mx-3">
-                                    <input type="text" placeholder="Vehicle Number" required disabled name="vehicle_number"
+                                    <input type="text" placeholder="Vehicle Number"  disabled name="vehicle_number"
                                         class="form-control parking_number">
                                 </label>
 
                                 <label for="" class="mx-3">
-                                    <input type="text" placeholder="Extra Notes" required disabled name="parking_notes"
+                                    <input type="text" placeholder="Extra Notes"  disabled name="parking_notes"
                                         class="form-control parking_number">
                                 </label>
                             </div>

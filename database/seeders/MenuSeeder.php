@@ -18,7 +18,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')->truncate();
 
         DB::insert(DB::raw(
-            " INSERT INTO `menus` (`id`, `menu_name`, `menu_href`, `menu_parent`, `menu_icon`, `menu_placeholder`, `menu_permissions`, `is_active`, `created_at`, `updated_at`, `deleted_at`, `is_section`, `order`) 
+            " INSERT INTO `menus` (`id`, `menu_name`, `menu_href`, `menu_parent`, `menu_icon`, `menu_placeholder`, `menu_permissions`, `is_active`, `created_at`, `updated_at`, `deleted_at`, `is_section`, `order`)
                 VALUES
                 (1, 'dashboard', 'dashboard', 0, '<i class=\"fa-solid fa-gauge-high\"></i>', 'dashboard', '1', 1, NULL, NULL, NULL, 0, 1),
                 (2, 'rooms', 'room', 0, '<i class=\"fa-solid fa-person-shelter\"></i>', 'Rooms', '1,2,3', 1, NULL, NULL, NULL, 0, 2),

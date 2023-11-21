@@ -10,13 +10,13 @@
     <x-reusables.app-header pageName="{{ $pageName }}" />
     <div class="content  mx-0 w-100">
         <div class=" text-center text-purple p-4">
-                <h1 class="mb-0">Welcome to Maheshwari Dharamshala</h1>
+                <h1 class="mb-0 dashHeading ">Welcome to Maheshwari Dharamshala</h1>
         </div>
     </div>
 
 
     <div class="row mx-3 mt-3">
-        <div class="col-xl-4">
+        <div class="col-xl-4 mb-3">
             <!--begin::Statistics Widget 5-->
             <a href="/booking/index" class="card hoverable card-xl-stretch" style="background-color:tan">
                 <!--begin::Body-->
@@ -30,13 +30,13 @@
                         </svg>
                     </span>
                     <div class="text-white fw-bolder fs-2 mb-2 mt-4">{{ $running_booking_count }}+</div>
-                    <div class="fw-bold text-white">Booking</div>
+                    <div class="fw-bold text-white">Current Bookings</div>
                 </div>
                 <!--end::Body-->
             </a>
             <!--end::Statistics Widget 5-->
         </div>
-        <div class="col-xl-4">
+        <div class="col-xl-4 mb-3">
             <!--begin::Statistics Widget 5-->
             <a href="{{ route('Available-rooms')}}" class="card hoverable card-xl-stretch" style="background-color: #a7c2cc">
                 <!--begin::Body-->
@@ -50,13 +50,13 @@
                         </svg>
                     </span>
                     <div class="text-white fw-bolder fs-2 mb-2 mt-4">{{ $room_available_count }}+</div>
-                    <div class="fw-bold text-white">Room Available</div>
+                    <div class="fw-bold text-white">Room Database</div>
                 </div>
                 <!--end::Body-->
             </a>
             <!--end::Statistics Widget 5-->
         </div>
-        <div class="col-xl-4">
+        <div class="col-xl-4 mb-3">
             <!--begin::Statistics Widget 5-->
             <a href="#" class="card hoverable card-xl-stretch" style="background-color: rgba(134, 137, 169, 0.9)">
                 <!--begin::Body-->
@@ -76,7 +76,7 @@
             </a>
             <!--end::Statistics Widget 5-->
         </div>
-        <div class="col-xl-4 mt-2">
+        <div class="col-xl-4 mb-3">
             <!--begin::Statistics Widget 5-->
             <a href="{{ route('booked-rooms')}}" class="card hoverable card-xl-stretch" style="background-color: #7bb8cf">
                 <!--begin::Body-->
@@ -96,7 +96,7 @@
             </a>
             <!--end::Statistics Widget 5-->
         </div>
-        <div class="col-xl-4 mt-2">
+        <div class="col-xl-4 mb-3">
             <!--begin::Statistics Widget 5-->
             <a href="{{ route('todaycheckout')}}" class="card hoverable card-xl-stretch" style="background-color: rgb(162, 207, 123)">
                 <!--begin::Body-->
@@ -116,7 +116,7 @@
             </a>
             <!--end::Statistics Widget 5-->
         </div>
-        <div class="col-xl-4 mt-2">
+        <div class="col-xl-4 mb-3">
             <!--begin::Statistics Widget 5-->
             <a href="{{ route('balancedue')}}" class="card hoverable card-xl-stretch" style="background-color: rgb(207, 123, 192)">
                 <!--begin::Body-->
