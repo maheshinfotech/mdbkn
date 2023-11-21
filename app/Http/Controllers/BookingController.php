@@ -10,7 +10,6 @@ use App\Models\Setting;
 use App\Models\Booking;
 use App\Models\BookingLogs;
 use App\Models\Parking;
-
 use Illuminate\Support\Str;
 use App\Models\RoomCategory;
 use Illuminate\Http\Request;
