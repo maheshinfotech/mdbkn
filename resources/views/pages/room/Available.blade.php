@@ -14,7 +14,7 @@
             </div>
         @endif
 
-<h1 class="text-purple text-center my-3">Available Rooms</h1>
+<h1 class="text-purple text-center my-3">Available Rooms ({{ $available_room_count }}/{{ $total_room_count }})</h1>
 <div class="row mx-3">
     @php
     $color=['tan','#a7c2cc','rgba(134, 137, 169, 0.9)','#7bb8cf','rgb(162, 207, 123)','rgb(207, 123, 192)'];
@@ -28,8 +28,8 @@
             <a href="#" class="card hoverable card-xl-stretch project-link  " data-project-id="{{$item->id}}"  style="background-color:{{$color[$i]}}">
             <!--begin::Body-->
             <div class="card-body ">
-                <div class="text-white fw-bolder fs-2 mb-2">{{ count($item->room) }}</div>
-                <div class="fw-bold text-white">{{$item->room_name}}</div>
+                <div class="text-white fw-bolder fs-2 mb-2">{{$item->room }}/{{ $item->total_room }}</div>
+                <div class="fw-bold text-white">{{$item->room_name}}  {{ $item->total_booking_amount }}</div>
             </div>
             <!--end::Body-->
         </a>
