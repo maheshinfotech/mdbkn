@@ -43,7 +43,7 @@
                                             <span class="d-block">{{$totb->base_rent}} /-</span>
                                         </td>
                                         <td class=text-left>
-                                            {{date('Y-m-d H:i A',strtotime($totb->getRawOriginal('check_in_time')))}}
+                                            {{date('d-M-y h:i A',strtotime($totb->getRawOriginal('check_in_time')))}}
                                         </td>
                                         <td class="text-left"> @if ($totb->advance)
                                             @php

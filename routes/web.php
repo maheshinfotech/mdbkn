@@ -25,6 +25,10 @@ use App\Http\Controllers\BookingController;
 
 Route::get('/advance/create/{booking_id}', [AdvanceController::class , 'create'])->name('advance.create');
 Route::post('/advance/store', [AdvanceController::class,'store'])->name('advance.store');
+//Route::get('/booking/more-than/{days}', [BookingController::class, 'showMoreThan']);
+Route::get('/booking/more', [BookingController::class, 'morePage'])->name('booking.more');
+
+//
 // Route::get('/advance/show/{booking_id}', [AdvanceController::class .'show'])->name('advance.show');
 // Route::get('migrate', function(){
 //     // \Illuminate\Support\Facades\Artisan::call('migrate');

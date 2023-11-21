@@ -649,6 +649,23 @@ class BookingController extends Controller
         return view('pages.booking.balance-due',compact('totalrentcount'));
     }
 
+
+    public function morePage(Request $request)
+    {
+        $bookingData = Booking::whereNull('check_out_time')->get();
+
+        foreach ($bookingData as $booking) {
+            $checkInTime = Carbon::parse($booking->check_in_time);
+            $now = Carbon::now();
+            $daysDifference = $now->diffInDays($checkInTime);
+            $booking->daysDifference = $daysDifference;
+        }
+
+        return view('pages.booking.more', compact('bookingData'));
+    }
+
+
+
 }
 
 
