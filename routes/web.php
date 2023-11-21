@@ -25,6 +25,10 @@ use App\Http\Controllers\BookingController;
 
 Route::get('/advance/create/{booking_id}', [AdvanceController::class , 'create'])->name('advance.create');
 Route::post('/advance/store', [AdvanceController::class,'store'])->name('advance.store');
+//Route::get('/booking/more-than/{days}', [BookingController::class, 'showMoreThan']);
+Route::get('/booking/more', [BookingController::class, 'morePage'])->name('booking.more');
+
+//
 // Route::get('/advance/show/{booking_id}', [AdvanceController::class .'show'])->name('advance.show');
 // Route::get('migrate', function(){
 //     // \Illuminate\Support\Facades\Artisan::call('migrate');
@@ -102,6 +106,8 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/bookings/create', 'create')->name('create-booking');
             Route::post('/bookings', 'store')->name('store-booking');
             Route::post('/checkout', 'checkout')->name('checkout-booking');
+            Route::get('/todaycheckout', 'todaycheckout')->name('todaycheckout');
+            Route::get('/balancedue', 'balancedue')->name('balancedue');
             Route::get('/bookings/{id}', 'show')->name('show-booking');
             Route::get('/bookings/edit/{id}', 'edit')->name('edit-booking');
             Route::post('/bookings/update/{id}', 'update')->name('update-booking');

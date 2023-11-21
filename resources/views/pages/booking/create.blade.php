@@ -57,18 +57,22 @@
                             <div class="col-1 text-center">
                                 <div class="vr" style="opacity:0.5"></div>
                             </div>
-                            <div class="col-lg-3 col-12 text-center">
-                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose ">
+                            <div class="col-lg-4 col-12 text-start">
+                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose " style="display: none">
                                     <input type="radio" name="ward" value="ct" class="ward">
                                     CT
                                 </label>
-                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose">
+                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose" style="display: none">
                                     <input type="radio" name="ward" value="rt" class="ward">
                                     RT
                                 </label>
+                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose" style="display: none">
+                                    <input type="radio" name="ward"  value="o ward" class="ward" >
+                                    O Ward
+                                </label>
                                 <label class=" fs-7 fw-bold mb-1 me-3">
                                     <input type="radio" name="ward" value="report" class="ward">
-                                    Tests
+                                    Tests/Reports
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1">
                                     <input type="radio" name="ward" checked value="other" class="ward">
@@ -386,7 +390,7 @@
     <script>
         function select_category() {
             var id = $('#category').val();
-            
+
             $.ajax({
                 url: '/bookings/create',
                 data: {
@@ -526,8 +530,9 @@
                         var resp = data.guestpredetail;
                         if (resp) {
                             $('#name').val(resp.guest_name);
-                            id_numberphoto
+                            // id_numberphoto
                             $('#guest_father').val(resp.guest_father_name);
+                            $('#gender').val(resp.gender);
                             $('#caste').val(resp.guest_cast);
                             $('#age').val(resp.age);
                             $('#guest_address').val(resp.guest_address);
@@ -561,6 +566,7 @@
                             $('#tehsil').val('');
                             $('#city').val('');
                             $('#state').val('');
+                            $('#gender').val('');
                             document.getElementById("id_numberphoto").style.display = 'none';
                             $("#id_numberphoto").attr('src', '');
                             $('#showpreviousid').attr('href', '');
@@ -584,14 +590,14 @@
 
         $('.is_parking').change(function(){
 
-            
+
             if($('.is_parking').is(':checked')){
-                
+
                 console.log("hello world");
                 $('.parking_number').removeAttr("disabled");
-                
+
             }else{
-                
+
                 console.log("bye world");
                 $('.parking_number').attr("disabled" , true );
 

@@ -71,26 +71,33 @@
                             <div class="col-1 text-center">
                                 <div class="vr" style="opacity:0.5"></div>
                             </div>
-                            <div class="col-lg-3 col-12 text-center">
-                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose ">
+                            <div class="col-lg-4 col-12 text-center">
+                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose " @if ($editbooking->patient_type=="cancer") @else style="display: none" @endif>
                                     <input type="radio" name="ward"  value="ct" class="ward"  @if ($editbooking->ward_type=="ct")
                                     checked
                                     @endif>
                                     CT
                                 </label>
-                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose">
+                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose" @if ($editbooking->patient_type=="cancer") @else style="display: none" @endif>
                                     <input type="radio" name="ward"  value="rt" class="ward"
                                     @if ($editbooking->ward_type=="rt")
                                     checked
                                     @endif>
                                     RT
                                 </label>
+                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose" @if ($editbooking->patient_type=="cancer") @else style="display: none" @endif>
+                                    <input type="radio" name="ward"  value="o ward" class="ward"
+                                    @if ($editbooking->ward_type=="o ward")
+                                    checked
+                                    @endif>
+                                    O Ward
+                                </label>
                                 <label class=" fs-7 fw-bold mb-1 me-3">
                                     <input type="radio" name="ward"  value="report" class="ward"
                                     @if ($editbooking->ward_type=="report")
                                     checked
                                     @endif>
-                                    Tests
+                                    Tests/Reports
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1">
                                     <input type="radio" name="ward"  value="other" class="ward"

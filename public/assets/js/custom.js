@@ -120,15 +120,17 @@ $(document).ready(function () {
         $('ward').removeProp("checked");
         console.log(patient + ' ' + is_admit);
 
-        // if(patient == 'cancer' && is_admit == '1'){
-        //     $('.cancer-purpose').show();
-        // }else{
-        //     $('.cancer-purpose').hide();
-        // }
+        if(patient == 'cancer'){
+            $('.cancer-purpose').show();
+        }else{
+            $('.cancer-purpose').hide();
+        }
           if(patient == 'cancer' && is_admit == '1'){
             $('.pbmroomno').show();
+            // $('.cancer-purpose').show();
         }else{
             $('.pbmroomno').hide();
+            // $('.cancer-purpose').hide();
         }
 
 

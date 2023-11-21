@@ -39,7 +39,7 @@
                                 <th class="text-center">Room Number</th>
                                 <th class="text-center">GuestName</th>
                                 <th class="text-center">Rent</th>
-                                <th class="text-center">BookedDeate</th>
+                                <th class="text-center">Booked Date</th>
                             </tr>
                         </thead>
                         <tbody class="text-capitalize">
