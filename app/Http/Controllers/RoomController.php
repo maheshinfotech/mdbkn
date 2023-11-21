@@ -132,9 +132,6 @@ class RoomController extends Controller
             if ($value->name=="Initial") {
                 $value->room_name = "Initial";
                 $value->total_room =   Room::where('category_id',$value->id)->get()->count();
-                $room_ids=Room::where('category_id',$value->id)->get()->map(function($query){
-                    return $query->id;
-                })->toArray();  
                 $value->room = Room::with('category')->where('category_id',$value->id)->where(function($query) {
                     $query->where('is_booked', null)
                         ->orWhere('is_booked', 0);
@@ -143,6 +140,10 @@ class RoomController extends Controller
                 // #######################################################
                 //++++++++++++  Room Category Amount Calculate Start Here
                 // #########################################################
+
+                $room_ids=Room::where('category_id',$value->id)->get()->map(function($query){
+                    return $query->id;
+                })->toArray();
                 $room_booking=Booking::whereIn('room_id',$room_ids)->whereBetween('check_in_time', [$start_year,$end_year])->get();
                 $category_room_amounts=[];
                foreach($room_booking as $booking) {
@@ -150,7 +151,7 @@ class RoomController extends Controller
                 return $query->amount;
                })->toArray();
               $total_advance= array_sum($advance);
-              $booking_net_amount= 0; 
+              $booking_net_amount= 0;
               if ($booking->advance_refund>0){
                 $booking_net_amount= $total_advance-$booking->advance_refund ;
               }else{
@@ -171,13 +172,15 @@ class RoomController extends Controller
                 $value->total_room =   Room::where('category_id',$value->id)->get()->count();
                 $room_ids=Room::where('category_id',$value->id)->get()->map(function($query){
                     return $query->id;
-                })->toArray();  
-                
+                })->toArray();
+
                 $value->room = Room::with('category')->where('category_id',$value->id)->where(function($query) {
                     $query->where('is_booked', null)
                         ->orWhere('is_booked', 0);
                 })->get()->count();
-
+                $room_ids=Room::where('category_id',$value->id)->get()->map(function($query){
+                    return $query->id;
+                })->toArray();
                 // #######################################################
                 //++++++++++++  Room Category Amount Calculate Start Here
                 // #########################################################
@@ -188,7 +191,7 @@ class RoomController extends Controller
                 return $query->amount;
                })->toArray();
               $total_advance= array_sum($advance);
-              $booking_net_amount= 0; 
+              $booking_net_amount= 0;
               if ($booking->advance_refund>0){
                 $booking_net_amount= $total_advance-$booking->advance_refund ;
               }else{
@@ -201,8 +204,8 @@ class RoomController extends Controller
              // #######################################################
               //++++++++++++  Room Category Amount Calculate End Here
             // #########################################################
-               
-                
+
+
             }
             if ($value->name=="Normal") {
                 $value->room_name = "Normal";
@@ -211,6 +214,9 @@ class RoomController extends Controller
                     $query->where('is_booked', null)
                         ->orWhere('is_booked', 0);
                 })->get()->count();
+                $room_ids=Room::where('category_id',$value->id)->get()->map(function($query){
+                    return $query->id;
+                })->toArray();
 
                // #######################################################
                 //++++++++++++  Room Category Amount Calculate Start Here
@@ -222,7 +228,7 @@ class RoomController extends Controller
                 return $query->amount;
                })->toArray();
               $total_advance= array_sum($advance);
-              $booking_net_amount= 0; 
+              $booking_net_amount= 0;
               if ($booking->advance_refund>0){
                 $booking_net_amount= $total_advance-$booking->advance_refund ;
               }else{
@@ -244,7 +250,9 @@ class RoomController extends Controller
                     $query->where('is_booked', null)
                         ->orWhere('is_booked', 0);
                 })->get()->count();
-
+                $room_ids=Room::where('category_id',$value->id)->get()->map(function($query){
+                    return $query->id;
+                })->toArray();
 
                  // #######################################################
                 //++++++++++++  Room Category Amount Calculate Start Here
@@ -256,7 +264,7 @@ class RoomController extends Controller
                 return $query->amount;
                })->toArray();
               $total_advance= array_sum($advance);
-              $booking_net_amount= 0; 
+              $booking_net_amount= 0;
               if ($booking->advance_refund>0){
                 $booking_net_amount= $total_advance-$booking->advance_refund ;
               }else{
@@ -279,18 +287,21 @@ class RoomController extends Controller
                         ->orWhere('is_booked', 0);
                 })->get()->count();
 
-
+                $room_ids=Room::where('category_id',$value->id)->get()->map(function($query){
+                    return $query->id;
+                })->toArray();
                  // #######################################################
                 //++++++++++++  Room Category Amount Calculate Start Here
                 // #########################################################
                 $room_booking=Booking::whereIn('room_id',$room_ids)->whereBetween('check_in_time', [$start_year,$end_year])->get();
                 $category_room_amounts=[];
+
                foreach($room_booking as $booking) {
                $advance =Advance::where('booking_id',$booking->id)->get()->map(function($query){
                 return $query->amount;
                })->toArray();
               $total_advance= array_sum($advance);
-              $booking_net_amount= 0; 
+              $booking_net_amount= 0;
               if ($booking->advance_refund>0){
                 $booking_net_amount= $total_advance-$booking->advance_refund ;
               }else{
@@ -313,13 +324,19 @@ class RoomController extends Controller
                         ->orWhere('is_booked', 0);
                 })->get()->count();
 
+                $room_ids=Room::where('category_id',$value->id)->get()->map(function($query){
+                    return $query->id;
+                })->toArray();
+
                  // #######################################################
                 //++++++++++++  Room Category Amount Calculate Start Here
                 // #########################################################
-               
+
                 $room_booking=Booking::whereIn('room_id',$room_ids)->whereBetween('check_in_time', [$start_year,$end_year])->get();
+
+
                 $category_room_amounts=[];
-              
+
                 // dd($start_year,$end_year);
 
                foreach($room_booking as $booking) {
@@ -328,7 +345,7 @@ class RoomController extends Controller
                 return $query->amount;
                })->toArray();
               $total_advance= array_sum($advance);
-              $booking_net_amount= 0; 
+              $booking_net_amount= 0;
               if ($booking->advance_refund>0){
                 $booking_net_amount= $total_advance-$booking->advance_refund ;
               }else{
@@ -351,7 +368,7 @@ class RoomController extends Controller
             ->orWhere('is_booked', 0);
     })->get()->count();
     //    dd($total_room_count,$booked_room_count);
-
+// dd($category);
         return view('pages.room.Available', compact('category','total_room_count','available_room_count'));
     }
 

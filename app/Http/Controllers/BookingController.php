@@ -371,7 +371,7 @@ class BookingController extends Controller
             public function update(Request $request,$id) {
             //    dd($request->all());
             $bookingedit = Booking::with('bookinglogs')->find($id);
-            $rooms=Room::find($bookingedit->room);
+            $rooms=Room::find($bookingedit->room_id);
             $rooms->is_booked=0;
             $rooms->booked_date = null;
             $rooms->update();
@@ -583,21 +583,21 @@ class BookingController extends Controller
                 $paid = $estimateDays * config('app.parking_charge');
             }else{
                     if ($chouttime >= $basetimeout) {
-                        $estimateDays = $difference_days->d +1;
+                        $estimateDays = $difference_days->days +1;
                         $paid = config('app.parking_charge') * $estimateDays;
                     }else{
-                        $estimateDays = $difference_days->d;
+                        $estimateDays = $difference_days->days;
                         $paid = config('app.parking_charge') * $estimateDays;
                     }
             }
             // base checkin time compare ==================
                 if ($stdatetime < $basetimein) {
-                    $estimateDays = $difference_days->d +1;
+                    $estimateDays = $difference_days->days +1;
                     $paid = config('app.parking_charge') * $estimateDays;
                 }
                 // ==========================
                 if ($stdatetime < $basetimein && $chouttime >= $basetimeout) {
-                    $estimateDays = $difference_days->d +2;
+                    $estimateDays = $difference_days->days +2;
                     $paid = config('app.parking_charge') * $estimateDays;
                 }
 
@@ -619,10 +619,10 @@ class BookingController extends Controller
 
     public function balancedue() {
         $bookingdue = Booking::with('advance')->whereNull('check_out_time')->get();
+        // dd($bookingdue);
         $totalrentcount=[];
         $due=0;
             foreach ($bookingdue as $value) {
-            //   $ttt =  $this->getdueRent($value,$totalrentcount);
                 $fdate = date('Y-m-d',(strtotime($value->getRawOriginal('check_in_time'))));
                 $tdate = Carbon::today();
                 $datetime1 = new DateTime($fdate);
@@ -634,16 +634,16 @@ class BookingController extends Controller
                 foreach ($value->advance as $val) {
                     $amount += $val->amount;
                 }
-                $rent = $value->base_rent;
-                $totamt = $days * $rent ;
-                if ($totamt > $amount) {
-                    $due = $totamt - $amount;
-                    $value->due = $due;
-                    if($due>0){
-                        // $totalrent = $value->id;
-                        $totalrent = $value;
-                        array_push($totalrentcount,$totalrent);
-                    }
+                    $rent = $value->base_rent;
+                    $totamt = $days * $rent ;
+
+                    if ($totamt > $amount && $interval->format("%r%a")>0 ) {
+                        $due = $totamt - $amount;
+                        $value->due = $due;
+                        if($due>0){
+                            $totalrent = $value;
+                            array_push($totalrentcount,$totalrent);
+                        }
                 }
         }
         return view('pages.booking.balance-due',compact('totalrentcount'));
