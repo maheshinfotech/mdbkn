@@ -22,7 +22,7 @@
         {{ Session::get('message') }}
     </div>
 @endif
-<div class="content px-3 py-0 w-100">
+{{-- <div class="content px-3 py-0 w-100">
     <div class="container-fluid ">
         <div class="d-flex my-3 justify-content-between align-items-center">
             <div class="">
@@ -95,7 +95,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="row mx-3 mt-3">
         @foreach($cardData as $data)

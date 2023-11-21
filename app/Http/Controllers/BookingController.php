@@ -656,6 +656,7 @@ class BookingController extends Controller
 
         foreach ($bookingData as $booking) {
             $checkInTime = Carbon::parse($booking->check_in_time);
+            
             $now = Carbon::now();
             $daysDifference = $now->diffInDays($checkInTime);
             $booking->daysDifference = $daysDifference;

@@ -41,7 +41,7 @@
                     <div class="text-white fw-bolder fs-2 mb-2">{{$item->room }}/{{ $item->total_room }}
                         <div class="fw-bold text-white fs-5">{{$item->room_name}}</div>
                     </div>
-                    <div class="fw-bold text-white fs-4"> {{ $item->total_booking_amount }}  <i class="fa fa-rupee"></i></div>
+                    <div class="fw-bold text-white fs-4"> {{ $item->total_booking_amount }}  &#8377;</div>
                 </div>
 
             </div>

@@ -63,7 +63,7 @@ class DashboardController extends Controller
                 }
                 $rent = $value->base_rent;
                 $totamt = $days * $rent ;
-                if ($totamt > $amount) {
+                if ($totamt > $amount && $interval->format("%r%a")>0) {
                     $due = $totamt - $amount;
                     if($due>0){
                         $totalrent = $value->id;
