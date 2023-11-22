@@ -319,39 +319,51 @@ class BookingController extends Controller
         $bookings = Booking::with('room')
             ->whereNull('check_out_time')
             ->get();
+            dd($bookings);
             $countdays = [];
             foreach ($bookings as  $booking) {
                 $datetime1 = new DateTime(date('Y-m-d',strtotime($booking->getRawOriginal('check_in_time'))));
                 $datetime2 = new DateTime($today);
                 $days = $datetime1->diff($datetime2);
                if($days->days>3 && $days->days<=5){
-                 $booking->daysmorethree = Booking::whereDate('check_in_time','>',date('Y-m-d', strtotime("+3 days", strtotime($booking->getRawOriginal('check_in_time')))))
+                 $daysmorethree = Booking::whereNull('check_out_time')
+                 ->whereDate('check_in_time','>',date('Y-m-d', strtotime("+3 days", strtotime($booking->getRawOriginal('check_in_time')))))
                  ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+5 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
-                //  array_push($countdays,$daysmorethree);
+                //  dd($daysmorethree);
+                 array_push($countdays,$daysmorethree);
                }if($days->days>5 && $days->days<=7){
-                $booking->daysmorefive = Booking::whereDate('check_in_time','>',date('Y-m-d', strtotime("+5 days", strtotime($booking->getRawOriginal('check_in_time')))))
+                $daysmorefive = Booking::whereNull('check_out_time')
+                ->whereDate('check_in_time','>',date('Y-m-d', strtotime("+5 days", strtotime($booking->getRawOriginal('check_in_time')))))
                 ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+7 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
-                    // array_push($countdays,$daysmorefive);
+// dd($daysmorefive);
+                array_push($countdays,$daysmorefive);
             }if($days->days>7 && $days->days<=15){
-                    $booking->daysmoreseven = Booking::whereDate('check_in_time','>',date('Y-m-d', strtotime("+7 days", strtotime($booking->getRawOriginal('check_in_time')))))
+                    $daysmoreseven = Booking::whereNull('check_out_time')
+                    ->whereDate('check_in_time','>',date('Y-m-d', strtotime("+7 days", strtotime($booking->getRawOriginal('check_in_time')))))
                  ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+15 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
-                    //  array_push($countdays,$daysmoreseven);
+                //  dd($daysmoreseven);
+                 array_push($countdays,$daysmoreseven);
                 }if($days->days>15 && $days->days<=30){
-                    $booking->daysmorefift = Booking::whereDate('check_in_time','>',date('Y-m-d', strtotime("+15 days", strtotime($booking->getRawOriginal('check_in_time')))))
-                 ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+30 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
-                //  array_push($countdays,$daysmorefift);
+                //     $daysmorefift = Booking::whereNull('check_out_time')
+                //     ->whereDate('check_in_time','>',date('Y-m-d', strtotime("+15 days", strtotime($booking->getRawOriginal('check_in_time')))))
+                //  ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+30 days", strtotime($booking->getRawOriginal('check_in_time')))))->get();
+           $ttt =    $booking->whereDate('check_in_time','>',date('Y-m-d', strtotime("+15 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
+                dd($ttt);
+                 array_push($countdays,$daysmorefift);
                 }if($days->days>30 && $days->days<=60){
-                $booking->daysmoreth = Booking::whereDate('check_in_time','>',date('Y-m-d', strtotime("+30 days", strtotime($booking->getRawOriginal('check_in_time')))))
+                $daysmoreth = Booking::whereNull('check_out_time')
+                ->whereDate('check_in_time','>',date('Y-m-d', strtotime("+30 days", strtotime($booking->getRawOriginal('check_in_time')))))
                  ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+60 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
-                //  array_push($countdays,$daysmoreth);
+                 array_push($countdays,$daysmoreth);
+                // dd($daysmoreth);
                 }if($days->days>60){
-                    $booking->daysmorethan = Booking::whereDate('check_in_time','>',date('Y-m-d', strtotime("+60 days", strtotime($booking->getRawOriginal('check_in_time')))))
-                    ->count();
-                    // array_push($countdays,$daysmorethan);
+                    $daysmorethan = Booking::whereNull('check_out_time')
+                    ->whereDate('check_in_time','>',date('Y-m-d', strtotime("+60 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
+                    array_push($countdays,$daysmorethan);
                 }
 
             }
-            dd($bookings);
+            dd($countdays);
 
         return view('pages.booking.index', compact('bookings'));
     }
