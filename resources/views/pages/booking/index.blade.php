@@ -4,12 +4,12 @@
     $tableHeadSecond = ['Full Name', 'Machine Name', 'Working Hours'];
 
     $cardData = [
-        ['color' => 'tan', 'duration' => '>3 days stay'],
-        ['color' => '#a7c2cc', 'duration' => '>5 days stay'],
-        ['color' => 'rgba(134, 137, 169, 0.9)', 'duration' => '>7 days stay'],
-        ['color' => '#7bb8cf', 'duration' => '>15 days stay'],
-        ['color' => 'rgb(162, 207, 123)', 'duration' => '>1 month stay'],
-        ['color' => 'rgb(207, 123, 192)', 'duration' => '>2 month stay'],
+        ['color' => 'tan', 'duration' => '>3 days stay','counting'=>$counting['mtthreeday']],
+        ['color' => '#a7c2cc', 'duration' => '>5 days stay','counting'=>$counting['mtfiveday']],
+        ['color' => 'rgba(134, 137, 169, 0.9)', 'duration' => '>7 days stay','counting'=>$counting['mtsevenday']],
+        ['color' => '#7bb8cf', 'duration' => '>15 days stay','counting'=>$counting['mtfiftday']],
+        ['color' => 'rgb(162, 207, 123)', 'duration' => '>1 month stay','counting'=>$counting['mtonemonth']],
+        ['color' => 'rgb(207, 123, 192)', 'duration' => '>2 month stay','counting'=>$counting['mttwomonth']],
     ];
 @endphp
 
@@ -107,14 +107,11 @@
     </div> --}}
 
     <div class="row mx-3 mt-3">
-        @foreach ($bookings as $item)
-        {{-- @foreach($cardData as $data) --}}
 
-
-
+        @foreach($cardData as $data)
             <div class="col-xl-4 mt-2">
                 <a href="" class="card hoverable card-xl-stretch"
-                {{-- style="background-color: {{ $data['color'] }}" --}}
+                style="background-color: {{ $data['color'] }}"
                 >
                     <div class="card-body">
                         <span class="svg-icon text-white svg-icon-3x ms-n1">
@@ -125,16 +122,16 @@
                                 <rect x="3" y="13" width="3" height="6" rx="1.5" fill="currentColor" />
                             </svg>
                         </span>
-                        <div class="text-black fw-bolder fs-2 mb-2 mt-4">+{{$item->daysmorethan}}</div>
+                        <div class="text-white fw-bolder fs-2 mb-2 mt-4">+{{count($data['counting'])}}</div>
                         <div class="fw-bold text-white duration">
-                            {{-- {{ $data['duration'] }} --}}
+                            {{ $data['duration'] }}
                         </div>
                     </div>
                     <!--end::Body-->
                 </a>
                 <!--end::Statistics Widget 5-->
             </div>
-            {{-- @endforeach --}}
+
         @endforeach
     </div>
 

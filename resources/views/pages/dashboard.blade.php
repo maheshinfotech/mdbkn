@@ -9,14 +9,10 @@
 @section('content')
     <x-reusables.app-header pageName="{{ $pageName }}" />
     <div class="content  mx-0 w-100">
-        <div class="d-flex text-center justify-content-between align-items-center text-purple p-4">
-            <div></div>
+        <div class="text-center text-purple p-4">
+
             <h1 class="mb-0 dashHeading ">Welcome to Maheshwari Dharamshala</h1>
-            <div>
-                <select class="form-select" id="ddlYears">
-                    <option disabled selected >Select Year...</option>
-                </select>
-            </div>
+
         </div>
     </div>
 
@@ -146,18 +142,5 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        let dateDropdown = document.getElementById('ddlYears');
-        let currentYear = new Date().getFullYear();
-        let c1 = new Date().getFullYear() + 1;
-        let earliestYear = 2020;
-
-        while (+currentYear >= +earliestYear ) {
-            let dateOption = document.createElement('option');
-            dateOption.value = earliestYear;
-            dateOption.text = `${earliestYear} - ${(earliestYear+1) - 2000}`;
-            dateDropdown.add(dateOption);
-            earliestYear += 1;
-        }
-      </script>
+    
 @endsection

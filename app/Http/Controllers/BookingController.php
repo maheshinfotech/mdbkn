@@ -314,58 +314,20 @@ class BookingController extends Controller
 
     public function showBookings()
     {
-        $today=Carbon::today();
-        // dd($today);
-        $bookings = Booking::with('room')
-            ->whereNull('check_out_time')
-            ->get();
-            dd($bookings);
-            $countdays = [];
-            foreach ($bookings as  $booking) {
-                $datetime1 = new DateTime(date('Y-m-d',strtotime($booking->getRawOriginal('check_in_time'))));
-                $datetime2 = new DateTime($today);
-                $days = $datetime1->diff($datetime2);
-               if($days->days>3 && $days->days<=5){
-                 $daysmorethree = Booking::whereNull('check_out_time')
-                 ->whereDate('check_in_time','>',date('Y-m-d', strtotime("+3 days", strtotime($booking->getRawOriginal('check_in_time')))))
-                 ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+5 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
-                //  dd($daysmorethree);
-                 array_push($countdays,$daysmorethree);
-               }if($days->days>5 && $days->days<=7){
-                $daysmorefive = Booking::whereNull('check_out_time')
-                ->whereDate('check_in_time','>',date('Y-m-d', strtotime("+5 days", strtotime($booking->getRawOriginal('check_in_time')))))
-                ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+7 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
-// dd($daysmorefive);
-                array_push($countdays,$daysmorefive);
-            }if($days->days>7 && $days->days<=15){
-                    $daysmoreseven = Booking::whereNull('check_out_time')
-                    ->whereDate('check_in_time','>',date('Y-m-d', strtotime("+7 days", strtotime($booking->getRawOriginal('check_in_time')))))
-                 ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+15 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
-                //  dd($daysmoreseven);
-                 array_push($countdays,$daysmoreseven);
-                }if($days->days>15 && $days->days<=30){
-                //     $daysmorefift = Booking::whereNull('check_out_time')
-                //     ->whereDate('check_in_time','>',date('Y-m-d', strtotime("+15 days", strtotime($booking->getRawOriginal('check_in_time')))))
-                //  ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+30 days", strtotime($booking->getRawOriginal('check_in_time')))))->get();
-           $ttt =    $booking->whereDate('check_in_time','>',date('Y-m-d', strtotime("+15 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
-                dd($ttt);
-                 array_push($countdays,$daysmorefift);
-                }if($days->days>30 && $days->days<=60){
-                $daysmoreth = Booking::whereNull('check_out_time')
-                ->whereDate('check_in_time','>',date('Y-m-d', strtotime("+30 days", strtotime($booking->getRawOriginal('check_in_time')))))
-                 ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+60 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
-                 array_push($countdays,$daysmoreth);
-                // dd($daysmoreth);
-                }if($days->days>60){
-                    $daysmorethan = Booking::whereNull('check_out_time')
-                    ->whereDate('check_in_time','>',date('Y-m-d', strtotime("+60 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
-                    array_push($countdays,$daysmorethan);
-                }
 
-            }
-            dd($countdays);
 
-        return view('pages.booking.index', compact('bookings'));
+     $counting = $this->getBookingDayWise();
+    //  $bookings= Booking::whereNull('check_out_time')->get();
+    //  foreach ($bookings as  $booking) {
+    //     // dd($booking);
+    //     $booking->whereDate('check_in_time','<',date('Y-m-d', strtotime("+3 days", strtotime($booking->getRawOriginal('check_in_time')))))
+
+    //     ->get();
+    //     dd($booking);
+    //  }
+
+        dd($this->getBookingDayWise());
+        return view('pages.booking.index', compact('counting'));
     }
 
 
@@ -413,131 +375,132 @@ class BookingController extends Controller
             }
 
 
-            public function update(Request $request,$id) {
-            //    dd($request->all());
-            $bookingedit = Booking::with('bookinglogs')->find($id);
-            $rooms=Room::find($bookingedit->room_id);
-            $rooms->is_booked=0;
-            $rooms->booked_date = null;
-            $rooms->update();
-            $bookingedit->room_id=$request->room;
-            $bookingedit->guest_name=$request->guest_name;
-            $bookingedit->guest_father_name=$request->guest_father;
-            $bookingedit->guest_cast=$request->caste;
-            $bookingedit->guest_address=$request->guest_address;
-            $bookingedit->patient_name=$request->patient_name;
-            $bookingedit->patient_ward_no=$request->ward_no;
-            $bookingedit->pbm_room_no=$request->pbm_room_no;
+    public function update(Request $request,$id)
+        {
+        //    dd($request->all());
+        $bookingedit = Booking::with('bookinglogs')->find($id);
+        $rooms=Room::find($bookingedit->room_id);
+        $rooms->is_booked=0;
+        $rooms->booked_date = null;
+        $rooms->update();
+        $bookingedit->room_id=$request->room;
+        $bookingedit->guest_name=$request->guest_name;
+        $bookingedit->guest_father_name=$request->guest_father;
+        $bookingedit->guest_cast=$request->caste;
+        $bookingedit->guest_address=$request->guest_address;
+        $bookingedit->patient_name=$request->patient_name;
+        $bookingedit->patient_ward_no=$request->ward_no;
+        $bookingedit->pbm_room_no=$request->pbm_room_no;
 
-            $bookingedit->patient_bed_no=$request->bedno;
+        $bookingedit->patient_bed_no=$request->bedno;
 
-            $bookingedit->gender=$request->gender;
-            $bookingedit->hospital_id=$request->hospital_id;
-            $bookingedit->check_in_time = $request->checkin;
-            $bookingedit->age=$request->age;
-            $bookingedit->city=$request->city;
-            $bookingedit->state=$request->state;
-            $bookingedit->docter_name=$request->doctor;
-            $bookingedit->mobile_number=$request->mobile;
-            // id proof saved ===========
-                if ($request->hasFile('idproof')) {
-                    $file = $request->file('idproof');
-                    $imageName = 'Id_Proof_files/' . Str::random(40) . '.' . strtolower($file->getClientOriginalExtension());
-                    $filePath = $file->storeAs('public/', $imageName);
-                    $bookingedit->id_number=$imageName;
-                }else{
-                    $bookingedit->id_number=$bookingedit->id_number;
-                }
-            // ===============================
-            $bookingedit->tehsil            =   $request->tehsil;
-            $bookingedit->relation_patient  =   $request->relation;
-            $bookingedit->ward_type         =   $request->ward;
-            $bookingedit->is_admitted       =   $request->is_admit ? 1 : 0;
-            $bookingedit->patient_type      =   $request->patient;
-            // rent ==================
-            $roomcat = RoomCategory::where('id', $request->category)->first();
-
-            // dd($roomcat,$request->all());
-                if($request->patient=="cancer"){
-                    $bookingedit->base_rent = $roomcat->patient_rent;
-                }else{
-                    $bookingedit->base_rent = $roomcat->normal_rent;
-                }
-            // =======================
-
-            $bookingedit->extra_remark=$request->remark;
-            // ===settings table =========
-            $setting = Setting::latest()->first();
-            if($setting){
-                $bookingedit->base_check_in_time = $setting->check_in_time;
-                $bookingedit->base_check_out_time = $setting->check_out_time;
-                $bookingedit->base_grace_period = $setting->grace_period;
+        $bookingedit->gender=$request->gender;
+        $bookingedit->hospital_id=$request->hospital_id;
+        $bookingedit->check_in_time = $request->checkin;
+        $bookingedit->age=$request->age;
+        $bookingedit->city=$request->city;
+        $bookingedit->state=$request->state;
+        $bookingedit->docter_name=$request->doctor;
+        $bookingedit->mobile_number=$request->mobile;
+        // id proof saved ===========
+            if ($request->hasFile('idproof')) {
+                $file = $request->file('idproof');
+                $imageName = 'Id_Proof_files/' . Str::random(40) . '.' . strtolower($file->getClientOriginalExtension());
+                $filePath = $file->storeAs('public/', $imageName);
+                $bookingedit->id_number=$imageName;
+            }else{
+                $bookingedit->id_number=$bookingedit->id_number;
             }
-            // ===========
-            $bookingedit->update();
-            // booking record update block end
-            // ==================add guest code=============================
-            //  if booking data save then this block execute
-            if($bookingedit->update()){
+        // ===============================
+        $bookingedit->tehsil            =   $request->tehsil;
+        $bookingedit->relation_patient  =   $request->relation;
+        $bookingedit->ward_type         =   $request->ward;
+        $bookingedit->is_admitted       =   $request->is_admit ? 1 : 0;
+        $bookingedit->patient_type      =   $request->patient;
+        // rent ==================
+        $roomcat = RoomCategory::where('id', $request->category)->first();
 
-                $log = BookingLogs::where('booking_id',$id)->pluck('id')->toArray();
-                if ($request->guestlists) {
-                    $log_ids = array_column($request->guestlists,'logs_id');
+        // dd($roomcat,$request->all());
+            if($request->patient=="cancer"){
+                $bookingedit->base_rent = $roomcat->patient_rent;
+            }else{
+                $bookingedit->base_rent = $roomcat->normal_rent;
+            }
+        // =======================
 
-                    $delete_log_ids= array_diff($log,$log_ids);
-                    // dd($delete_log_ids);
-                    foreach ($request->guestlists as $guests) {
-                        foreach($delete_log_ids as $lid){
-                            BookingLogs::where('id',$lid)->delete();
-                        }
-                        if($guests['guestname']!=''){
-                            if (isset($guests['logs_id']) && $guests['logs_id']) {
-                                $guest = BookingLogs::find($guests['logs_id']);
-                                    $guest->guest_name = $guests['guestname'];
-                                    $guest->guest_age = $guests['guestage'];
-                                    $guest->guest_relation = $guests['guestrelation'];
-                                    $guest->guest_remarks = $guests['guestremarks'];
-                            // Create
-                            } else {
-                                $guest = new BookingLogs();
+        $bookingedit->extra_remark=$request->remark;
+        // ===settings table =========
+        $setting = Setting::latest()->first();
+        if($setting){
+            $bookingedit->base_check_in_time = $setting->check_in_time;
+            $bookingedit->base_check_out_time = $setting->check_out_time;
+            $bookingedit->base_grace_period = $setting->grace_period;
+        }
+        // ===========
+        $bookingedit->update();
+        // booking record update block end
+        // ==================add guest code=============================
+        //  if booking data save then this block execute
+        if($bookingedit->update()){
+
+            $log = BookingLogs::where('booking_id',$id)->pluck('id')->toArray();
+            if ($request->guestlists) {
+                $log_ids = array_column($request->guestlists,'logs_id');
+
+                $delete_log_ids= array_diff($log,$log_ids);
+                // dd($delete_log_ids);
+                foreach ($request->guestlists as $guests) {
+                    foreach($delete_log_ids as $lid){
+                        BookingLogs::where('id',$lid)->delete();
+                    }
+                    if($guests['guestname']!=''){
+                        if (isset($guests['logs_id']) && $guests['logs_id']) {
+                            $guest = BookingLogs::find($guests['logs_id']);
                                 $guest->guest_name = $guests['guestname'];
                                 $guest->guest_age = $guests['guestage'];
                                 $guest->guest_relation = $guests['guestrelation'];
                                 $guest->guest_remarks = $guests['guestremarks'];
-                                $guest->booking_id = $id;
-                            }
-                            $guest->save();
+                        // Create
+                        } else {
+                            $guest = new BookingLogs();
+                            $guest->guest_name = $guests['guestname'];
+                            $guest->guest_age = $guests['guestage'];
+                            $guest->guest_relation = $guests['guestrelation'];
+                            $guest->guest_remarks = $guests['guestremarks'];
+                            $guest->booking_id = $id;
                         }
-                    }
-                }else{
-                  if($log){
-                    foreach($log as $loid){
-                        BookingLogs::where('id',$loid)->delete();
-                    }
-                  }
-                }
-                // ================
-                // booking record save block end
-                $room=Room::find($request->room);
-                $room->is_booked=1;
-                $room->booked_date = Carbon::parse($request->checkin)->format('Y-m-d');
-                $room->update();
-                if ($request->advance) {
-                    foreach ($request->advance as $value) {
-                        // dd($value);
-                        $advance =  Advance::where('booking_id',$bookingedit->id)->first();
-                        //dd($request->all());
-                        $advance->booking_id = $bookingedit->id;
-                        $advance->amount = $value;
-                        // Log::info($request->checkin);
-                        $advance->received_date = Carbon::parse($request->checkin)->format('Y-m-d');
-                        $advance->update();
+                        $guest->save();
                     }
                 }
+            }else{
+            if($log){
+                foreach($log as $loid){
+                    BookingLogs::where('id',$loid)->delete();
                 }
-                // =======================================================================
-            return redirect()->route('index-booking')->with('message', 'Booking Updated successfully');
             }
+            }
+            // ================
+            // booking record save block end
+            $room=Room::find($request->room);
+            $room->is_booked=1;
+            $room->booked_date = Carbon::parse($request->checkin)->format('Y-m-d');
+            $room->update();
+            if ($request->advance) {
+                foreach ($request->advance as $value) {
+                    // dd($value);
+                    $advance =  Advance::where('booking_id',$bookingedit->id)->first();
+                    //dd($request->all());
+                    $advance->booking_id = $bookingedit->id;
+                    $advance->amount = $value;
+                    // Log::info($request->checkin);
+                    $advance->received_date = Carbon::parse($request->checkin)->format('Y-m-d');
+                    $advance->update();
+                }
+            }
+            }
+            // =======================================================================
+        return redirect()->route('index-booking')->with('message', 'Booking Updated successfully');
+    }
 
 
     public function addParking(){
@@ -583,28 +546,28 @@ class BookingController extends Controller
     }
 
     public function clearParking(Request $request){
-    request()->validate([
-        'username' => 'required',
-        'received_amount' => 'required',
-        'parking_id'  => 'required'
-    ]);
+        request()->validate([
+            'username' => 'required',
+            'received_amount' => 'required',
+            'parking_id'  => 'required'
+        ]);
 
-    $parkingId = $request->input('parking_id');
-    $receivedAmount = $request->input('received_amount');
-    $endDate = $request->input('username');
+        $parkingId = $request->input('parking_id');
+        $receivedAmount = $request->input('received_amount');
+        $endDate = $request->input('username');
 
-    $parking = Parking::find($parkingId);
+        $parking = Parking::find($parkingId);
 
-    if ($parking) {
-        $parking->parking_end = $endDate;
-        $parking->charges = $receivedAmount;
-        $parking->save();
+        if ($parking) {
+            $parking->parking_end = $endDate;
+            $parking->charges = $receivedAmount;
+            $parking->save();
 
-        return redirect()->back();
-    } else {
+            return redirect()->back();
+        } else {
 
+        }
     }
-}
 
     public function parkingFetchCharge(){
 
@@ -645,11 +608,7 @@ class BookingController extends Controller
                     $estimateDays = $difference_days->days +2;
                     $paid = config('app.parking_charge') * $estimateDays;
                 }
-
-
-
-
-        return  $this->generateJsonResponse(true, '', [
+            return  $this->generateJsonResponse(true, '', [
                                                         'paid_amount' => $paid
                                                     ]
                 );
@@ -698,19 +657,59 @@ class BookingController extends Controller
 
     public function morePage(Request $request)
     {
-        $bookingData = Booking::whereNull('check_out_time')->get();
-
-        foreach ($bookingData as $booking) {
-            $checkInTime = Carbon::parse($booking->check_in_time);
-
-            $now = Carbon::now();
-            $daysDifference = $now->diffInDays($checkInTime);
-            $booking->daysDifference = $daysDifference;
-        }
-
+        $bookingData =[];
+       $counting = $this->getBookingDayWise();
+       if ($request->duration=='>3 days stay') {
+        $bookingData = $counting['mtthreeday'];
+       }if ($request->duration=='>5 days stay') {
+        $bookingData = $counting['mtfiveday'];
+       }if ($request->duration=='>7 days stay') {
+        $bookingData = $counting['mtsevenday'];
+       }if ($request->duration=='>15 days stay') {
+        $bookingData = $counting['mtfiftday'];
+       }if ($request->duration=='>1 month stay') {
+        $bookingData = $counting['mtonemonth'];
+       }if ($request->duration=='>2 month stay') {
+        $bookingData = $counting['mttwomonth'];
+       }
         return view('pages.booking.more', compact('bookingData'));
     }
 
+
+public function getBookingDayWise() {
+    $bookings = Booking::with('room')
+    ->whereNull('check_out_time')
+    ->get();
+    $counting=[];
+   $counting['mtthreeday']=0;
+   $counting['mtfiveday']=0;
+   $counting['mtsevenday']=0;
+   $counting['mtfiftday']=0;
+   $counting['mtonemonth']=0;
+   $counting['mttwomonth']=0;
+
+    foreach ($bookings as  $booking) {
+        // $datetime1 =
+        $counting['mtthreeday'] = $booking->whereDate('check_in_time','<',date('Y-m-d', strtotime("+3 days", strtotime($booking->getRawOriginal('check_in_time')))))
+        ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+5 days", strtotime($booking->getRawOriginal('check_in_time')))))
+        ->get();
+        $counting['mtfiveday'] = $booking->whereDate('check_in_time','<',date('Y-m-d', strtotime("+5 days", strtotime($booking->getRawOriginal('check_in_time')))))
+        ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+7 days", strtotime($booking->getRawOriginal('check_in_time')))))
+        ->get();
+        $counting['mtsevenday'] = $booking->whereDate('check_in_time','<',date('Y-m-d', strtotime("+7 days", strtotime($booking->getRawOriginal('check_in_time')))))
+        ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+15 days", strtotime($booking->getRawOriginal('check_in_time')))))
+        ->get();
+        $counting['mtfiftday'] = $booking->whereDate('check_in_time','<',date('Y-m-d', strtotime("+15 days", strtotime($booking->getRawOriginal('check_in_time')))))
+        ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+30 days", strtotime($booking->getRawOriginal('check_in_time')))))
+        ->get();
+        $counting['mtonemonth'] = $booking->whereDate('check_in_time','<',date('Y-m-d', strtotime("+30 days", strtotime($booking->getRawOriginal('check_in_time')))))
+        ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+60 days", strtotime($booking->getRawOriginal('check_in_time')))))
+        ->get();
+        $counting['mttwomonth'] = $booking->whereDate('check_in_time','<',date('Y-m-d', strtotime("+60 days", strtotime($booking->getRawOriginal('check_in_time')))))
+         ->get();
+    }
+    return  $counting;
+}
 
 
 }
