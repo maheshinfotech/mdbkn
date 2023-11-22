@@ -1,6 +1,6 @@
 @php
     $pageName = 'bookings';
-    $tableHead = ['guestname', 'Mobile No', 'CheckIn/CheckOut Time', 'Paid Rent', 'Room Details'];
+    $tableHead = ['guestname', 'Mobile No', 'CheckIn/CheckOut Time', 'Paid Rent', 'Room Details' ,'Status'];
 @endphp
 
 @extends('layouts.backend')
@@ -14,12 +14,7 @@
     </div>
 @endif --}}
     <div class="content px-3 py-0 w-100">
-        <div class="container-fluid">
-            <div class="d-flex my-3 justify-content-between align-items-center">
-                <div class="">
-                    <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
-                </div>
-            </div>
+        <div class="container-fluid mt-5">
             <div class="card d-print-none">
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
                     <h3 class="text-purple fw-bold mb-0">Today's Checkout Detail</h3>
@@ -60,6 +55,27 @@
                                         <td class=text-left>{{$item->room->room_number }}
                                             <span class="badge badge-primary bg-primary ">{{$item->room->category->name}}</span>
                                             <span class="d-block">{{$item->base_rent}} /-</span>
+                                        </td>
+                                        <td class="text-end">
+
+                                            @if ($item->getRawOriginal('check_out_time') == null)
+                                            <a href="{{ route('advance.create', ['booking_id' => $booking->id]) }}"
+                                                class="btn btn-sm btn-purple open-modal" data-bs-toggle="tooltip"
+                                                data-bs-placement="bottom" data-bs-title="Advance">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </a>
+                                            <a href="/bookings/edit/{{ $item->id }}"
+                                                class="btn btn-sm btn-purple" data-bs-toggle="tooltip"
+                                                data-bs-placement="bottom" data-bs-title="Edit"> <i
+                                                    class="fa-solid fa-pen"></i></a>
+                                                <a href="/bookings/checkout/{{ $item->id }}"
+                                                    class="btn btn-sm btn-purple" data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom" data-bs-title="Checkout"> <i
+                                                        class="fa-solid fa-sign-out"></i></a>
+                                            @endif
+                                            <a href="/bookings/{{ $item->id }}" class="btn btn-sm btn-purple"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View">
+                                                <i class="fa-solid fa-eye"></i> </a>
                                         </td>
                                     </tr>
                                 @endforeach
