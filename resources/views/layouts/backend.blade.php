@@ -42,6 +42,12 @@
         .cursor-pointer {
             cursor: pointer !important;
         }
+
+        @media screen and (max-width: 600px) {
+            .dashHeading {
+                font-size: medium;
+            }
+        }
     </style>
     <!-- Modules -->
 
@@ -104,6 +110,7 @@
 
     <!-- add class sidebar-dark for dark code -->
     <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+        <!-- Side Overlay-->
         <!-- Side Overlay-->
         <aside id="side-overlay">
             <!-- Side Header -->
@@ -234,7 +241,8 @@
                 <div class="d-flex align-items-center">
                     <!-- Toggle Sidebar -->
                     <!-- Layout API, functionality initialized in Template._uiApiLayout()-->
-                    <button type="button" class="btn btn-sm btn-alt-secondary me-2 d-lg-none" >
+                    <button type="button" class="btn btn-sm btn-alt-secondary me-2 d-lg-none" data-toggle="layout"
+                    data-action="sidebar_toggle">
                         <i class="fa fa-fw fa-bars"></i>
                     </button>
                     <!-- END Toggle Sidebar -->
@@ -305,6 +313,7 @@
             <!-- END Header Loader -->
         </header>
         <!-- END Header -->
+        
 
         <!-- Main Container -->
         <main id="main-container">
@@ -348,4 +357,5 @@
     </script>
     <!-- END Page Container -->
 </body>
+
 </html>

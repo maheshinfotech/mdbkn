@@ -144,6 +144,7 @@
     $(document).ready(function() {
     var table = $('#category_table').DataTable( {
         lengthChange: false,
+        "pageLength":100,
         buttons: [
             {
                 extend: 'collection',

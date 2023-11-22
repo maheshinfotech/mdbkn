@@ -14,7 +14,12 @@
     </div>
 @endif --}}
     <div class="content px-3 py-0 w-100">
-        <div class="container-fluid mt-5">
+        <div class="container-fluid">
+            <div class="d-flex my-3 justify-content-between align-items-center">
+                <div class="">
+                    <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
+                </div>
+            </div>
             <div class="card d-print-none">
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
                     <h3 class="text-purple fw-bold mb-0">Balance Due</h3>
@@ -38,7 +43,7 @@
                                             <span class="d-block">{{$totb->base_rent}} /-</span>
                                         </td>
                                         <td class=text-left>
-                                            {{date('Y-m-d H:i A',strtotime($totb->getRawOriginal('check_in_time')))}}
+                                            {{date('d-M-y h:i A',strtotime($totb->getRawOriginal('check_in_time')))}}
                                         </td>
                                         <td class="text-left"> @if ($totb->advance)
                                             @php

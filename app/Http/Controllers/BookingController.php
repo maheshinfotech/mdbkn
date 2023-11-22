@@ -203,11 +203,14 @@ class BookingController extends Controller
 
     // Fetch parking data based on parking_id
     $parking = Parking::find($request->parking_id);
-    $parking->parking_end = $request->username;
-    $parking->charges = $request->received_amount;
+    if ($parking) {
+        $parking->parking_end = $request->username;
+        $parking->charges = $request->received_amount;
+        $parking->save();
+    }
+
     // dd($parking);
 
-    $parking->save();
 
     $amount = $request->totalrent - $request->advancepayment;
 
@@ -274,21 +277,21 @@ class BookingController extends Controller
                     $estimateDays = 1;
                 }else{
                         if ($checkouttime >= $basetimeout) {
-                            $estimateDays = $days->d +1;
+                            $estimateDays = $days->days +1;
                             $payble_rent = $bookings->base_rent * $estimateDays;
                         }else{
-                            $estimateDays = $days->d;
+                            $estimateDays = $days->days;
                             $payble_rent = $bookings->base_rent * $estimateDays;
                         }
                 }
                 // base checkin time compare ==================
                     if ($start_datetime < $basetimein) {
-                        $estimateDays = $days->d +1;
+                        $estimateDays = $days->days +1;
                         $payble_rent = $bookings->base_rent * $estimateDays;
                     }
                     // ==========================
                     if ($start_datetime < $basetimein && $checkouttime >= $basetimeout) {
-                        $estimateDays = $days->d +2;
+                        $estimateDays = $days->days +2;
                         $payble_rent = $bookings->base_rent * $estimateDays;
                     }
 
@@ -368,6 +371,10 @@ class BookingController extends Controller
             public function update(Request $request,$id) {
             //    dd($request->all());
             $bookingedit = Booking::with('bookinglogs')->find($id);
+            $rooms=Room::find($bookingedit->room_id);
+            $rooms->is_booked=0;
+            $rooms->booked_date = null;
+            $rooms->update();
             $bookingedit->room_id=$request->room;
             $bookingedit->guest_name=$request->guest_name;
             $bookingedit->guest_father_name=$request->guest_father;
@@ -576,21 +583,21 @@ class BookingController extends Controller
                 $paid = $estimateDays * config('app.parking_charge');
             }else{
                     if ($chouttime >= $basetimeout) {
-                        $estimateDays = $difference_days->d +1;
+                        $estimateDays = $difference_days->days +1;
                         $paid = config('app.parking_charge') * $estimateDays;
                     }else{
-                        $estimateDays = $difference_days->d;
+                        $estimateDays = $difference_days->days;
                         $paid = config('app.parking_charge') * $estimateDays;
                     }
             }
             // base checkin time compare ==================
                 if ($stdatetime < $basetimein) {
-                    $estimateDays = $difference_days->d +1;
+                    $estimateDays = $difference_days->days +1;
                     $paid = config('app.parking_charge') * $estimateDays;
                 }
                 // ==========================
                 if ($stdatetime < $basetimein && $chouttime >= $basetimeout) {
-                    $estimateDays = $difference_days->d +2;
+                    $estimateDays = $difference_days->days +2;
                     $paid = config('app.parking_charge') * $estimateDays;
                 }
 
@@ -611,11 +618,12 @@ class BookingController extends Controller
     }
 
     public function balancedue() {
-        $bookingdue = Booking::with('advance')->whereNull('check_out_time')->get();
+        $start_year=get_years()->start_year." 00:00:00";
+        $end_year=get_years()->end_year." 23:59:00";
+        $bookingdue = Booking::with('advance')->whereBetween('check_in_time',[$start_year,$end_year])->whereNull('check_out_time')->get();
         $totalrentcount=[];
         $due=0;
             foreach ($bookingdue as $value) {
-            //   $ttt =  $this->getdueRent($value,$totalrentcount);
                 $fdate = date('Y-m-d',(strtotime($value->getRawOriginal('check_in_time'))));
                 $tdate = Carbon::today();
                 $datetime1 = new DateTime($fdate);
@@ -627,20 +635,38 @@ class BookingController extends Controller
                 foreach ($value->advance as $val) {
                     $amount += $val->amount;
                 }
-                $rent = $value->base_rent;
-                $totamt = $days * $rent ;
-                if ($totamt > $amount) {
-                    $due = $totamt - $amount;
-                    $value->due = $due;
-                    if($due>0){
-                        // $totalrent = $value->id;
-                        $totalrent = $value;
-                        array_push($totalrentcount,$totalrent);
-                    }
+                    $rent = $value->base_rent;
+                    $totamt = $days * $rent ;
+
+                    if ($totamt > $amount && $interval->format("%r%a")>0 ) {
+                        $due = $totamt - $amount;
+                        $value->due = $due;
+                        if($due>0){
+                            $totalrent = $value;
+                            array_push($totalrentcount,$totalrent);
+                        }
                 }
         }
         return view('pages.booking.balance-due',compact('totalrentcount'));
     }
+
+
+    public function morePage(Request $request)
+    {
+        $bookingData = Booking::whereNull('check_out_time')->get();
+
+        foreach ($bookingData as $booking) {
+            $checkInTime = Carbon::parse($booking->check_in_time);
+
+            $now = Carbon::now();
+            $daysDifference = $now->diffInDays($checkInTime);
+            $booking->daysDifference = $daysDifference;
+        }
+
+        return view('pages.booking.more', compact('bookingData'));
+    }
+
+
 
 }
 
