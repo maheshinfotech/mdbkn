@@ -21,7 +21,12 @@
     </div>
 @endif
 <div class="content px-3 py-0 w-100">
-    <div class="container-fluid mt-5">
+    <div class="container-fluid">
+        <div class="d-flex my-3 justify-content-between align-items-center">
+            <div class="">
+                <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
+            </div>
+        </div>
         <div class="card d-print-none">
             <div class="card-header bg-light d-flex justify-content-between align-items-center">
                 <h3 class="text-purple fw-bold mb-0">Booked Rooms</h3>
@@ -34,10 +39,10 @@
                         data-ordering="false" data-info="false">
                         <thead>
                             <tr>
-                                <th class="text-center">Category</th>
+                                <th class="text-start">Category</th>
                                 <th class="text-center">Floor Number</th>
                                 <th class="text-center">Room Number</th>
-                                <th class="text-center">GuestName</th>
+                                <th class="text-center">Guest Name</th>
                                 <th class="text-center">Rent</th>
                                 <th class="text-center">Booked Date</th>
                             </tr>
@@ -45,7 +50,7 @@
                         <tbody class="text-capitalize">
                             @foreach ($room_booked as $room)
                             <tr>
-                                <td>{{ $room->category->name }}</td>
+                                <td class="text-start">{{ $room->category->name }}</td>
                                 <td>{{ $room->floor_number }}</td>
                                 <td>{{ $room->room_number }}</td>
                                 <td>

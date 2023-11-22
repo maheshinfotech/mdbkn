@@ -33,7 +33,7 @@
                     <div class="table-responsive">
                         <table class="table table-striped align-middle py-3 text-center" id="booking_table"
                             style="width:100%;white-space:nowrap;" data-paging="true" data-searching="true"
-                            data-ordering="false" data-info="false">
+                            data-ordering="false" data-info="true">
                             <thead class="align-middle">
                                 <tr>
                                     <th class="text-start">Guest Name</th>
@@ -110,7 +110,6 @@
                                                 data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View">
                                                 <i class="fa-solid fa-eye"></i> </a>
                                         </td>
-
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -137,6 +136,7 @@
         $(document).ready(function() {
             var table = $('#booking_table').DataTable({
                 lengthChange: false,
+                "pageLength":100,
                 buttons: [{
                     extend: 'collection',
                     text: 'Export',

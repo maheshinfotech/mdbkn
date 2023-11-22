@@ -13,8 +13,17 @@
                 {{ Session::get('message') }}
             </div>
         @endif
+        <div class="d-flex flex-wrap mx-4 my-3 justify-content-between align-items-center">
+            <div class="">
+                <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
+            </div>
+            <div class="">
+                <h1 class="text-purple text-center my-3"> Room Database</h1>
+            </div>
+            <div><h4 class="text-purple text-center my-3">Available Rooms ({{ $available_room_count }}/{{ $total_room_count }})</h4></div>
+        </div>
 
-<h1 class="text-purple text-center my-3">Available Rooms</h1>
+
 <div class="row mx-3">
     @php
     $color=['tan','#a7c2cc','rgba(134, 137, 169, 0.9)','#7bb8cf','rgb(162, 207, 123)','rgb(207, 123, 192)'];
@@ -28,8 +37,13 @@
             <a href="#" class="card hoverable card-xl-stretch project-link  " data-project-id="{{$item->id}}"  style="background-color:{{$color[$i]}}">
             <!--begin::Body-->
             <div class="card-body ">
-                <div class="text-white fw-bolder fs-2 mb-2">{{ count($item->room) }}</div>
-                <div class="fw-bold text-white">{{$item->room_name}}</div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-white fw-bolder fs-2 mb-2">{{$item->room }}/{{ $item->total_room }}
+                        <div class="fw-bold text-white fs-5">{{$item->room_name}}</div>
+                    </div>
+                    <div class="fw-bold text-white fs-4"> {{ $item->total_booking_amount }}  &#8377;</div>
+                </div>
+
             </div>
             <!--end::Body-->
         </a>
@@ -55,6 +69,7 @@
     $(document).ready(function() {
         var table = $('#booking_table').DataTable({
             lengthChange: false,
+            "pageLength":100,
             buttons: [{
                 extend: 'collection',
                 text: 'Export',
