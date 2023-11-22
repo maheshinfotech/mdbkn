@@ -1,6 +1,6 @@
-@php 
+@php
 $pageName = "Roles";
-$tableHead = ['Role Name' , 'Created Date' ,  'Action'] ; 
+$tableHead = ['Role Name' , 'Created Date' ,  'Action'] ;
 @endphp
 
 @extends('layouts.backend' , ['pageName' => "Roles"])
@@ -11,7 +11,7 @@ $tableHead = ['Role Name' , 'Created Date' ,  'Action'] ;
 
 @section('content')
   <x-reusables.app-header pageName="{{$pageName}}" :createButton="true" module="role" />
-  
+
   <!-- Page Content -->
   <div class="content  mx-0 w-100">
     <!-- Info -->
@@ -30,6 +30,7 @@ $tableHead = ['Role Name' , 'Created Date' ,  'Action'] ;
                 <x-reusables.table-header :tableHead="$tableHead"/>
 
                 <tbody>
+                  
                     @foreach ($listingData as $data)
                         <tr>
                             <td class="whitespace-nowrap ">
@@ -40,7 +41,7 @@ $tableHead = ['Role Name' , 'Created Date' ,  'Action'] ;
                             </td>
                             {{-- <td class="whitespace-nowrap ">
 
-                                <a href = "{{route('toggle-role-status' , ['role_placeholder' => $data->id])}}" 
+                                <a href = "{{route('toggle-role-status' , ['role_placeholder' => $data->id])}}"
                                     class=" fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill cursor-pointer {{$data->is_active ? 'bg-success-light text-success' : 'bg-danger-light text-danger'  }}">
                                         {{$data->is_active ? 'Active' : 'Inactive'}}
                                 </a>
@@ -54,7 +55,7 @@ $tableHead = ['Role Name' , 'Created Date' ,  'Action'] ;
                     @endforeach
                 </tbody>
             </table>
-            
+
         </div>
       </div>
     </div>

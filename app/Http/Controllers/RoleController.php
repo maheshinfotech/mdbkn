@@ -14,11 +14,12 @@ class RoleController extends Controller
     {
 
         Gate::authorize('view','role');
-        
+
+
         return view('pages.role.view-role', [
             'listingData' => Role::order()->get()->except(1)->map(function($role){
                                 $role->id = encrypt($role->id);
-                                return $role;    
+                                return $role;
                             }),
         ]);
     }
@@ -28,9 +29,9 @@ class RoleController extends Controller
         if($role_placeholder){
 
             $data       =  Role::findOrFail(decrypt($role_placeholder));
-            
+
             $data->id   =  encrypt($data->id);
-            
+
             Gate::authorize('view' , 'role');
 
         }else{
@@ -43,40 +44,40 @@ class RoleController extends Controller
     }
 
     public function manage($role_placeholder = null){
-        
+
         if (!$role_placeholder) {
-        
+
             $role = new Role();
-            
+
             request()->validate([
                 'role_name' => 'required|string|unique:roles,role_name',
             ]);
-        
+
             Gate::authorize('create' ,  'role');
-        
+
             $role->is_active = 1;
-        
+
         }else{
-        
+
             $role = Role::findOrFail(decrypt($role_placeholder));
-        
+
             request()->validate([
                 'role_name' => "required|string|unique:roles,role_name,$role->id",
             ]);
-        
+
             Gate::authorize('update' ,  'role');
         }
 
         $role->role_name = request()->role_name;
-        
+
         $res = $role->save();
-        
+
         $this->setFlashSession($res);
-        
+
         if($res)
-        
+
             return redirect()->route('index-role');
-        
+
         return redirect()->route('manage-role' , ['role' => $role_placeholder]);
 
     }
@@ -84,15 +85,15 @@ class RoleController extends Controller
     public function toggleStatus($role_placeholder){
 
         if(Gate::allows('update' , 'role')){
-            
+
             $role = Role::findOrFail(decrypt($role_placeholder));
 
-            $role->is_active = !$role->is_active ; 
+            $role->is_active = !$role->is_active ;
 
             $this->setFlashSession($role->save());
 
         }
-        
+
         return redirect()->route('index-role');
 
     }
@@ -105,11 +106,11 @@ class RoleController extends Controller
 
         if($role->users_count)
 
-            return $this->generateJsonResponse(false , 'Opps! Some users are connected with this role, we can\'t delete this.');    
+            return $this->generateJsonResponse(false , 'Opps! Some users are connected with this role, we can\'t delete this.');
 
         $res = $role->delete();
-    
+
         return $this->generateJsonResponse($res);
-    
+
     }
 }
