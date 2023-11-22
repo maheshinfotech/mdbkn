@@ -712,6 +712,18 @@ public function getBookingDayWise() {
 }
 
 
+    public function showTodayBookings()
+{
+    $today_bookings = Booking::whereDate('check_in_time', now()->toDateString())->get();
+
+    return view('pages.booking.today-bookings', compact('today_bookings'));
 }
+
+
+
+
+    }
+
+
 
 

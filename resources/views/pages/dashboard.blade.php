@@ -60,7 +60,7 @@
         </div>
         <div class="col-xl-4 mb-3">
             <!--begin::Statistics Widget 5-->
-            <a href="#" class="card hoverable card-xl-stretch" style="background-color: rgba(134, 137, 169, 0.9)">
+            <a href="{{ route('today-bookings') }}" class="card hoverable card-xl-stretch" style="background-color: rgba(134, 137, 169, 0.9)">
                 <!--begin::Body-->
                 <div class="card-body">
                     <span class="svg-icon text-white svg-icon-3x ms-n1">
