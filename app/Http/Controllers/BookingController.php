@@ -193,47 +193,6 @@ class BookingController extends Controller
 
     }
 
-    public function checkout(Request $request)
-{
-    Gate::authorize('update', 'booking');
-    $checkoutdet = Booking::find($request->booking_id);
-    $checkoutdet->check_out_time = $request->check_out_time;
-    $checkoutdet->estimated_total_days = $request->estimatedays;
-    $checkoutdet->payable_rent = $request->totalrent;
-
-    // Fetch parking data based on parking_id
-    $parking = Parking::find($request->parking_id);
-    if ($parking) {
-        $parking->parking_end = $request->username;
-        $parking->charges = $request->received_amount;
-        $parking->save();
-    }
-
-    // dd($parking);
-
-
-    $amount = $request->totalrent - $request->advancepayment;
-
-    if ($amount >= 0) {
-        $checkoutdet->paid_rent = $request->paidrent ? $request->paidrent : 0;
-    } else {
-        $checkoutdet->advance_refund = $request->paidrent ? $request->paidrent : 0;
-        $checkoutdet->paid_rent = 0;
-    }
-    $checkoutdet->save();
-
-    // ==== room isbooked code ====
-    if ($checkoutdet->save()) {
-        $room = Room::find($checkoutdet->room_id);
-        $room->is_booked = 0;
-        $room->booked_date = null;
-        $room->update();
-    }
-
-    return redirect()->route('index-booking')->with('message', 'Checked Out Details Saved Successfully');
-}
-
-
     public function show($id){
 
         $booking= Booking::with(['room','bookinglogs','advance'])->find($id);
@@ -302,6 +261,45 @@ class BookingController extends Controller
        ]);
 
     }
+    public function checkout(Request $request)
+    {
+        Gate::authorize('update', 'booking');
+        $checkoutdet = Booking::find($request->booking_id);
+        $checkoutdet->check_out_time = $request->check_out_time;
+        $checkoutdet->estimated_total_days = $request->estimatedays;
+        $checkoutdet->payable_rent = $request->totalrent;
+
+        // Fetch parking data based on parking_id
+        $parking = Parking::find($request->parking_id);
+        if ($parking) {
+            $parking->parking_end = $request->username;
+            $parking->charges = $request->received_amount;
+            $parking->save();
+        }
+
+        // dd($parking);
+
+
+        $amount = $request->totalrent - $request->advancepayment;
+
+        if ($amount >= 0) {
+            $checkoutdet->paid_rent = $request->paidrent ? $request->paidrent : 0;
+        } else {
+            $checkoutdet->advance_refund = $request->paidrent ? $request->paidrent : 0;
+            $checkoutdet->paid_rent = 0;
+        }
+        $checkoutdet->save();
+
+        // ==== room isbooked code ====
+        if ($checkoutdet->save()) {
+            $room = Room::find($checkoutdet->room_id);
+            $room->is_booked = 0;
+            $room->booked_date = null;
+            $room->update();
+        }
+
+        return redirect()->route('index-booking')->with('message', 'Checked Out Details Saved Successfully');
+    }
 
     public function getguestpreviousdetails(Request $request) {
         $guestpredetail = Booking::where('mobile_number',$request->numb)->latest()->first();
@@ -316,9 +314,44 @@ class BookingController extends Controller
 
     public function showBookings()
     {
+        $today=Carbon::today();
+        // dd($today);
         $bookings = Booking::with('room')
             ->whereNull('check_out_time')
             ->get();
+            $countdays = [];
+            foreach ($bookings as  $booking) {
+                $datetime1 = new DateTime(date('Y-m-d',strtotime($booking->getRawOriginal('check_in_time'))));
+                $datetime2 = new DateTime($today);
+                $days = $datetime1->diff($datetime2);
+               if($days->days>3 && $days->days<=5){
+                 $booking->daysmorethree = Booking::whereDate('check_in_time','>',date('Y-m-d', strtotime("+3 days", strtotime($booking->getRawOriginal('check_in_time')))))
+                 ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+5 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
+                //  array_push($countdays,$daysmorethree);
+               }if($days->days>5 && $days->days<=7){
+                $booking->daysmorefive = Booking::whereDate('check_in_time','>',date('Y-m-d', strtotime("+5 days", strtotime($booking->getRawOriginal('check_in_time')))))
+                ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+7 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
+                    // array_push($countdays,$daysmorefive);
+            }if($days->days>7 && $days->days<=15){
+                    $booking->daysmoreseven = Booking::whereDate('check_in_time','>',date('Y-m-d', strtotime("+7 days", strtotime($booking->getRawOriginal('check_in_time')))))
+                 ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+15 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
+                    //  array_push($countdays,$daysmoreseven);
+                }if($days->days>15 && $days->days<=30){
+                    $booking->daysmorefift = Booking::whereDate('check_in_time','>',date('Y-m-d', strtotime("+15 days", strtotime($booking->getRawOriginal('check_in_time')))))
+                 ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+30 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
+                //  array_push($countdays,$daysmorefift);
+                }if($days->days>30 && $days->days<=60){
+                $booking->daysmoreth = Booking::whereDate('check_in_time','>',date('Y-m-d', strtotime("+30 days", strtotime($booking->getRawOriginal('check_in_time')))))
+                 ->whereDate('check_in_time','<=',date('Y-m-d', strtotime("+60 days", strtotime($booking->getRawOriginal('check_in_time')))))->count();
+                //  array_push($countdays,$daysmoreth);
+                }if($days->days>60){
+                    $booking->daysmorethan = Booking::whereDate('check_in_time','>',date('Y-m-d', strtotime("+60 days", strtotime($booking->getRawOriginal('check_in_time')))))
+                    ->count();
+                    // array_push($countdays,$daysmorethan);
+                }
+
+            }
+            dd($bookings);
 
         return view('pages.booking.index', compact('bookings'));
     }
@@ -656,7 +689,7 @@ class BookingController extends Controller
 
         foreach ($bookingData as $booking) {
             $checkInTime = Carbon::parse($booking->check_in_time);
-            
+
             $now = Carbon::now();
             $daysDifference = $now->diffInDays($checkInTime);
             $booking->daysDifference = $daysDifference;

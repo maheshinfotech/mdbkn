@@ -22,6 +22,15 @@
         {{ Session::get('message') }}
     </div>
 @endif
+<div class="d-flex flex-wrap mx-4 my-3 justify-content-between align-items-center">
+    <div class="">
+        <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
+    </div>
+    <div class="">
+        <h1 class="text-purple text-center my-3"> Current Bookings</h1>
+    </div>
+
+</div>
 {{-- <div class="content px-3 py-0 w-100">
     <div class="container-fluid ">
         <div class="d-flex my-3 justify-content-between align-items-center">
@@ -98,9 +107,15 @@
     </div> --}}
 
     <div class="row mx-3 mt-3">
-        @foreach($cardData as $data)
+        @foreach ($bookings as $item)
+        {{-- @foreach($cardData as $data) --}}
+
+
+
             <div class="col-xl-4 mt-2">
-                <a href="" class="card hoverable card-xl-stretch" style="background-color: {{ $data['color'] }}">
+                <a href="" class="card hoverable card-xl-stretch"
+                {{-- style="background-color: {{ $data['color'] }}" --}}
+                >
                     <div class="card-body">
                         <span class="svg-icon text-white svg-icon-3x ms-n1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -110,13 +125,16 @@
                                 <rect x="3" y="13" width="3" height="6" rx="1.5" fill="currentColor" />
                             </svg>
                         </span>
-                        <div class="text-white fw-bolder fs-2 mb-2 mt-4">+</div>
-                        <div class="fw-bold text-white duration">{{ $data['duration'] }}</div>
+                        <div class="text-black fw-bolder fs-2 mb-2 mt-4">+{{$item->daysmorethan}}</div>
+                        <div class="fw-bold text-white duration">
+                            {{-- {{ $data['duration'] }} --}}
+                        </div>
                     </div>
                     <!--end::Body-->
                 </a>
                 <!--end::Statistics Widget 5-->
             </div>
+            {{-- @endforeach --}}
         @endforeach
     </div>
 
