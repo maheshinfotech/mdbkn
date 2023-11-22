@@ -651,8 +651,9 @@ class BookingController extends Controller
     }
 
     public function balancedue() {
-        $bookingdue = Booking::with('advance')->whereNull('check_out_time')->get();
-        // dd($bookingdue);
+        $start_year=get_years()->start_year." 00:00:00";
+        $end_year=get_years()->end_year." 23:59:00";
+        $bookingdue = Booking::with('advance')->whereBetween('check_in_time',[$start_year,$end_year])->whereNull('check_out_time')->get();
         $totalrentcount=[];
         $due=0;
             foreach ($bookingdue as $value) {
