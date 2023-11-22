@@ -28,6 +28,7 @@ Route::post('/advance/store', [AdvanceController::class,'store'])->name('advance
 //Route::get('/booking/more-than/{days}', [BookingController::class, 'showMoreThan']);
 Route::get('/booking/more', [BookingController::class, 'morePage'])->name('booking.more');
 
+
 //
 // Route::get('/advance/show/{booking_id}', [AdvanceController::class .'show'])->name('advance.show');
 // Route::get('migrate', function(){
@@ -116,6 +117,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/getguestpreviousdetails', 'getguestpreviousdetails')->name('getguestpreviousdetails');
             Route::get('/booking/index', [BookingController::class,'showBookings'])->name('bookings.index');
             Route::post('/save-parking-data/{id}', 'BookingController@Bookingcheckout')->name('saveParkingData');
+            Route::get('/today-bookings', [BookingController::class, 'showTodayBookings'])->name('today-bookings');
 
             /**Parking Module */
             Route::get('/parkings', 'parkings')->name('parkings');
