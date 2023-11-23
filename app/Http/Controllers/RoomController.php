@@ -18,6 +18,9 @@ class RoomController extends Controller
      */
     public function index()
     {
+
+        // Gate::authorize('view', 'rooms');
+
         $category = RoomCategory::all();
         $rooms = Room::orderBy('room_number')->get();
         return view('pages.room.index', compact('category', 'rooms'));

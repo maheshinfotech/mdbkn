@@ -42,6 +42,10 @@
                             <label class="form-label" >Full Name<span class="text-danger">*</span></label>
                             <input class="form-control " placeholder-m="User Name" name="name" value="{{ $name }}" type="text" required>
                         </div>
+                        <div class="col">
+                            <label class="form-label" >Email<span class="text-danger">*</span></label>
+                            <input class="form-control " placeholder-m="User Name" name="email" value="{{ $name }}" type="text" required>
+                        </div>
                         {{-- <div class="col">
                             <label class="form-label" >Employee Id / Email Id<span class="text-danger">*</span></label>
                             <input class="form-control" placeholder-m="Email Id" name="email" value="{{ $email }}" type="text" required>
