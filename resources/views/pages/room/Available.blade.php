@@ -13,14 +13,21 @@
                 {{ Session::get('message') }}
             </div>
         @endif
-        <div class="d-flex flex-wrap mx-4 my-3 justify-content-between align-items-center">
+        <div class="d-flex flex-wrap mx-4 my-3 justify-content-between align-items-center ">
             <div class="">
                 <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
             </div>
             <div class="">
-                <h1 class="text-purple text-center my-3"> Room Database</h1>
+                <h1 class="text-purple text-center mb-0"> Room Database</h1>
             </div>
-            <div><h4 class="text-purple text-center my-3">Available Rooms ({{ $available_room_count }}/{{ $total_room_count }})</h4></div>
+            <div><h4 class="text-purple text-center mb-1">Available Rooms ({{ $available_room_count }}/{{ $total_room_count }})</h4>
+
+                    <select class="form-select w-75" id="ddlYears">
+                        <option disabled>Select Year...</option>
+                    </select>
+
+            </div>
+
         </div>
 
 
@@ -116,5 +123,23 @@
         });
     });
 </script>
+<script>
+    let dateDropdown = document.getElementById('ddlYears');
+    let currentYear = new Date().getFullYear();
+    let c1 = new Date().getFullYear() + 1;
+    let earliestYear = 2020;
 
+    while (+currentYear >= +earliestYear ) {
+        let dateOption = document.createElement('option');
+        dateOption.value = earliestYear;
+        dateOption.text = `${earliestYear} - ${(earliestYear+1) - 2000}`;
+
+
+        dateDropdown.add(dateOption);
+        dateDropdown.setAttribute('selected', earliestYear == currentYear);
+// console.log(earliestYear);
+// console.log(currentYear);
+        earliestYear += 1;
+    }
+  </script>
 @endsection

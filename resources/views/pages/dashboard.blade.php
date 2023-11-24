@@ -9,8 +9,10 @@
 @section('content')
     <x-reusables.app-header pageName="{{ $pageName }}" />
     <div class="content  mx-0 w-100">
-        <div class=" text-center text-purple p-4">
-                <h1 class="mb-0 dashHeading ">Welcome to Maheshwari Dharamshala</h1>
+        <div class="text-center text-purple p-4">
+
+            <h1 class="mb-0 dashHeading ">Welcome to Maheshwari Dharamshala</h1>
+
         </div>
     </div>
 
@@ -58,7 +60,7 @@
         </div>
         <div class="col-xl-4 mb-3">
             <!--begin::Statistics Widget 5-->
-            <a href="#" class="card hoverable card-xl-stretch" style="background-color: rgba(134, 137, 169, 0.9)">
+            <a href="{{ route('today-bookings') }}" class="card hoverable card-xl-stretch" style="background-color: rgba(134, 137, 169, 0.9)">
                 <!--begin::Body-->
                 <div class="card-body">
                     <span class="svg-icon text-white svg-icon-3x ms-n1">
@@ -139,7 +141,6 @@
     </div>
 
 
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    
 @endsection

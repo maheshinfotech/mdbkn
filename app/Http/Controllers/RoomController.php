@@ -123,8 +123,9 @@ class RoomController extends Controller
 
     public function AvailableRooms(request $request)
     {
+        // dd(get_years());
         $category = RoomCategory::all();
-        $start_year=get_years()->start_year;
+        $start_year = get_years()->start_year;
         $end_year=get_years()->end_year;
 
         foreach ($category as $value) {
