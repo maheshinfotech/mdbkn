@@ -109,7 +109,18 @@
                                             <a href="/bookings/{{ $booking->id }}" class="btn btn-sm btn-purple"
                                                 data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View">
                                                 <i class="fa-solid fa-eye"></i> </a>
+
+                                              <a href="{{ route('billing.show', ['booking_id' => $booking->id]) }}"
+                                                       class="btn btn-sm btn-purple btn-billing"
+                                                       data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom"
+                                                       data-bs-title="Billing">
+                                                       <i class="fa-solid fa-file-invoice"></i>
+                                                    </a>
+
                                         </td>
+
+
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -173,5 +184,31 @@
                 $('#advanceModal').modal('show');
             });
         });
+
+
+        $(document).ready(function() {
+        // Handle click on "Billing" button
+        $('.btn-billing').on('click', function(e) {
+            e.preventDefault();
+
+            var url = $(this).attr('href');
+
+            // Make an AJAX request to get the billing show page content
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(response) {
+                    // Insert the content into the modal
+                    $('#advanceModal .modal-content').html(response);
+
+                    // Show the modal
+                    $('#advanceModal').modal('show');
+                },
+                error: function(error) {
+                    console.error('Error loading billing show page:', error);
+                }
+            });
+        });
+    });
     </script>
 @endsection
