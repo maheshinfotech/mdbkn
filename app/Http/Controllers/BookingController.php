@@ -720,6 +720,27 @@ public function getBookingDayWise() {
 }
 
 
+public function Billingshow($id)
+{
+    $booking = Booking::find($id);
+
+
+
+    $totalPaidRent = $booking->paid_rent;
+
+    $advances = Advance::where('booking_id', $id)->get();
+
+    $totalAdvancesAmount = $advances->sum('amount');
+
+    $refundAmount = $booking->advance_refund;
+
+    $totalAmount = $totalPaidRent + $totalAdvancesAmount - $refundAmount;
+
+    return view('pages.booking.bilingshow', compact('booking', 'totalAmount', 'advances', 'refundAmount'));
+}
+
+
+
 
 
     }
