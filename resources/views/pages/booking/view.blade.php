@@ -105,11 +105,15 @@
                                                     class="btn btn-sm btn-purple" data-bs-toggle="tooltip"
                                                     data-bs-placement="bottom" data-bs-title="Checkout"> <i
                                                         class="fa-solid fa-sign-out"></i></a>
-                                            @endif
+
+
                                             <a href="/bookings/{{ $booking->id }}" class="btn btn-sm btn-purple"
                                                 data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View">
                                                 <i class="fa-solid fa-eye"></i> </a>
-
+                                                        @else
+                                                        <a href="/bookings/{{ $booking->id }}" class="btn btn-sm btn-purple"
+                                                            data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View">
+                                                            <i class="fa-solid fa-eye"></i> </a>
                                               <a href="{{ route('billing.show', ['booking_id' => $booking->id]) }}"
                                                        class="btn btn-sm btn-purple btn-billing"
                                                        data-bs-toggle="tooltip"
@@ -117,6 +121,7 @@
                                                        data-bs-title="Billing">
                                                        <i class="fa-solid fa-file-invoice"></i>
                                                     </a>
+                                                    @endif
 
                                         </td>
 
