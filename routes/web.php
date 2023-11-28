@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
-use App\Http\Controllers\RoomCategoryController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\AdvanceController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\RoomCategoryController;
 
 
 
@@ -103,6 +104,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
 
             Route::post('/permissions', 'setPermissions')->name('set-permission');
         });
+        Route::resource('/groups',GroupController::class);
 
         Route::controller(\App\Http\Controllers\BookingController::class)->group(function () {
             Route::get('/bookings', 'index')->name('index-booking');

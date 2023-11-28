@@ -51,7 +51,7 @@
                                         </a>
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                        <x-reusables.action-buttons :id="$data->id" module="user" :name="$data->name" />
+                                        <x-reusables.action-buttons :id="$data->id" module="user"  :name="$data->name" />
                                     </td>
                                 </tr>
                             @endforeach

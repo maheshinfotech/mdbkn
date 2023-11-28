@@ -36,6 +36,7 @@ $(document).ready(function () {
                     data: "",
                     method: "DELETE",
                     success: function (res) {
+                        console.log(res);
                         if (res.status) {
                             $(context).parents("tr").first().remove();
                             showError(res.message, "success");

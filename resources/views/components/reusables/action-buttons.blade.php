@@ -10,7 +10,11 @@
                     <i class="fa-solid fa-pen"></i>
                 </a>
             @else
-                <a href="{{ url(config('app.admin_prefix') . "$module/$id") }}" class="btn text-primary edit-record"
+                <a href="{{ url(
+                    // config('app.admin_prefix') .
+                // "$module/$id"
+                "manage-$module/$id"
+                ) }}" class="btn text-primary edit-record"
                     data-bs-toggle="tooltip" title="Edit Record">
                     <i class="fa-solid fa-pen"></i>
                 </a>
