@@ -23,6 +23,8 @@ class BookingController extends Controller
     public function index()
     {
         // dd(config('app.parking_charge'));
+        Gate::authorize('view', 'booking');
+
         $bookings = Booking::orderBy('check_out_time', 'asc')
             ->orderBy('id', 'desc')
             ->get();
@@ -45,6 +47,8 @@ class BookingController extends Controller
 
     public function create(Request $request)
     {
+        Gate::authorize('create', 'booking');
+
         if($request->ajax()){
             // $rooms=Room::where('category_id',$request->id)->where('is_booked','!=',1)->get();
             $rooms=Room::where('category_id',$request->id)->where(function ($query){
@@ -62,6 +66,8 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
+        Gate::authorize('create', 'booking');
+
         $booking = new Booking;
         $booking->room_id=$request->room;
         $booking->guest_name=$request->guest_name;
@@ -194,6 +200,7 @@ class BookingController extends Controller
     }
 
     public function show($id){
+        Gate::authorize('view', 'booking');
 
         $booking= Booking::with(['room','bookinglogs','advance'])->find($id);
         // dd($booking);
@@ -202,6 +209,7 @@ class BookingController extends Controller
     }
 
     public function Bookingcheckout($id) {
+        Gate::authorize('update', 'booking');
 
         $booking = Booking::with(['room','advance'])->find($id);
         $advanceAmt = 0;
@@ -314,6 +322,8 @@ class BookingController extends Controller
 
     public function showBookings()
     {
+        Gate::authorize('view', 'booking');
+
         $counting = $this->getBookingDayWise();
         // dd($counting);
         return view('pages.booking.index', compact('counting'));
@@ -321,12 +331,16 @@ class BookingController extends Controller
 
 
     public function parkings() {
+        Gate::authorize('view', 'parking');
+
         $data['activeBooking'] = Booking::whereNull('check_out_time')->get();
         $data['listingData'] = Parking::whereNull('parking_end')->latest()->get();
         return view('parkings.index', $data);
     }
 
             public function edit(Request $request ,$id) {
+        Gate::authorize('update', 'booking');
+
                 $editbooking =Booking::with(['room','bookinglogs','advance'])->find($id);
                 $room = Room::find($editbooking->room_id)->toArray();
                  // onchange category edit ============
@@ -367,6 +381,8 @@ class BookingController extends Controller
     public function update(Request $request,$id)
         {
         //    dd($request->all());
+        Gate::authorize('update', 'booking');
+
         $bookingedit = Booking::with('bookinglogs')->find($id);
         $rooms=Room::find($bookingedit->room_id);
         $rooms->is_booked=0;
@@ -493,6 +509,7 @@ class BookingController extends Controller
 
 
     public function addParking(){
+        Gate::authorize('create', 'parking');
 
         request()->validate([
             'active_booking' => 'required',
@@ -535,6 +552,8 @@ class BookingController extends Controller
     }
 
     public function clearParking(Request $request){
+        Gate::authorize('update', 'parking');
+
         request()->validate([
             'username' => 'required',
             'received_amount' => 'required',
@@ -606,11 +625,15 @@ class BookingController extends Controller
 
 
     public function todaycheckout() {
+        Gate::authorize('view', 'dashboard');
+
         $todaycheckout = Booking::with(['advance','room'])->whereDate('check_out_time', Carbon::today())->get();
         return view('pages.booking.today_booking_checkout',compact('todaycheckout'));
     }
 
     public function balancedue() {
+        Gate::authorize('view', 'dashboard');
+
         $start_year=get_years()->start_year." 00:00:00";
         $end_year=get_years()->end_year." 23:59:00";
         $bookingdue = Booking::with('advance')->whereBetween('check_in_time',[$start_year,$end_year])->whereNull('check_out_time')->get();
@@ -646,6 +669,8 @@ class BookingController extends Controller
 
     public function morePage(Request $request)
     {
+        Gate::authorize('view', 'dashboard');
+
         $bookingData =[];
        $counting = $this->getBookingDayWise();
        if ($request->duration=='< 3 days stay') {
@@ -694,6 +719,8 @@ $counting['mtonemonth'] = Booking::whereNull('check_out_time')->where('check_in_
 
     public function showTodayBookings()
 {
+    Gate::authorize('view', 'dashboard');
+
     $today_bookings = Booking::whereDate('check_in_time', now()->toDateString())->get();
 
     return view('pages.booking.today-bookings', compact('today_bookings'));
@@ -702,6 +729,8 @@ $counting['mtonemonth'] = Booking::whereNull('check_out_time')->where('check_in_
 
 public function Billingshow($id)
 {
+    Gate::authorize('view', 'dashboard');
+
     $booking = Booking::find($id);
 
 

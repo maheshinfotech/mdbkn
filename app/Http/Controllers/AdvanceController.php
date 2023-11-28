@@ -14,6 +14,8 @@ class AdvanceController extends Controller
 {
     public function create($booking_id)
 {
+    Gate::authorize('create', 'booking');
+
     $advances = Advance::where('booking_id', $booking_id)->get();
     $booking = Booking::with('room')->find($booking_id);
 
@@ -46,6 +48,8 @@ class AdvanceController extends Controller
     // }
     public function store(Request $request)
     {
+    Gate::authorize('create', 'booking');
+
         $validatedData = $request->validate([
             'booking_id' => 'required',
             'amount' => 'required|numeric',

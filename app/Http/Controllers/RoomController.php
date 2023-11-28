@@ -18,6 +18,7 @@ class RoomController extends Controller
      */
     public function index()
     {
+        Gate::authorize('view', 'rooms');
 
         // Gate::authorize('view', 'rooms');
 
@@ -44,6 +45,8 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', 'rooms');
+
         // dd($request->all());
         $room = new Room;
         $room->floor_number = $request->floor;
@@ -64,6 +67,8 @@ class RoomController extends Controller
      */
     public function show($id)
     {
+        Gate::authorize('view', 'rooms');
+
         $roomname = RoomCategory::find($id)->name;
         $rooms = Room::where('category_id', $id)->orderBy('is_booked')
         ->get();
@@ -84,6 +89,8 @@ class RoomController extends Controller
      */
     public function edit($id)
     {
+        Gate::authorize('update', 'rooms');
+
         $room = Room::with('category')->find($id);
         return response()->json($room);
     }
@@ -97,6 +104,7 @@ class RoomController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Gate::authorize('update', 'rooms');
 
         // dd($request->all());
         $room = Room::find($id);
@@ -118,6 +126,8 @@ class RoomController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('delete', 'rooms');
+
         $room = Room::find($id);
         return $this->generateResponse($room->delete());
     }
@@ -125,9 +135,11 @@ class RoomController extends Controller
     public function AvailableRooms(request $request)
     {
         // dd(get_years());
+        Gate::authorize('view', 'dashboard');
+
         $category = RoomCategory::all();
-        $start_year = get_years()->start_year;
-        $end_year=get_years()->end_year;
+        $start_year = get_years()->start_year." 00:00:00";
+        $end_year=get_years()->end_year." 23:59:00";
 
         foreach ($category as $value) {
             if ($value->name=="Initial") {
@@ -152,7 +164,7 @@ class RoomController extends Controller
 
         }
 
-       $total_room_count= Room::get()->count();
+       $total_room_count = Room::get()->count();
        $available_room_count=Room::with('category')->where(function($query) {
         $query->where('is_booked', null)
             ->orWhere('is_booked', 0);
@@ -206,6 +218,8 @@ class RoomController extends Controller
 
 
     public function bookedRooms() {
+        Gate::authorize('view', 'dashboard');
+
         $room_booked = Room::where('is_booked',1)->get();
         return view('pages.room.room-booked', compact('room_booked'));
     }

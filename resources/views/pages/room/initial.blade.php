@@ -38,7 +38,7 @@
 
                               // particular room  amount calculate
                         @endphp
-                            <tr class="{{ $room->is_booked ? 'bg-success' :''}}">
+                            <tr class="" style="background-color: {{ $room->is_booked ? '#C1E1C1' :''}}">
                                 <td>{{ $room->floor_number }}</td>
                                 <td>{{ $room->room_number }}</td>
                                 <td>{{  $total_room_booking_amount }}</td>
