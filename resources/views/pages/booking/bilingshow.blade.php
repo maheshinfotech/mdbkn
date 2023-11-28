@@ -25,7 +25,7 @@
                     <tbody>
                         @foreach ($advances as $advance)
                             <tr>
-                                <td class="px-0">{{ $advance->created_at->format('d/m/y') }}</td>
+                                <td class="px-0">{{ date('d/m/Y',strtotime($advance->received_date)) }}</td>
                                 <td>{{ $advance->amount }}</td>
                             </tr>
                         @endforeach

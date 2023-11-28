@@ -26,6 +26,9 @@
 @section('content')
     <x-reusables.app-header pageName="{{$pageName}}" :createButton="false" module="user" modulePlaceholder="User"  />
     <div class="content  mx-0 w-100">
+        <div class="mb-3 mx-1">
+            <a href="/users" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
+        </div>
         <div class="block block-rounded">
             <div class="block-content block-content-full">
 
@@ -42,10 +45,10 @@
                             <label class="form-label" >Full Name<span class="text-danger">*</span></label>
                             <input class="form-control " placeholder-m="User Name" name="name" value="{{ $name }}" type="text" required>
                         </div>
-                        {{-- <div class="col">
-                            <label class="form-label" >Employee Id / Email Id<span class="text-danger">*</span></label>
+                        <div class="col">
+                            <label class="form-label" >Email Id<span class="text-danger">*</span></label>
                             <input class="form-control" placeholder-m="Email Id" name="email" value="{{ $email }}" type="text" required>
-                        </div> --}}
+                        </div>
 
                         @if (!$is_update_form)
                             <div class="col">
@@ -114,4 +117,6 @@
             </div>
         </div>
     </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 @endsection
