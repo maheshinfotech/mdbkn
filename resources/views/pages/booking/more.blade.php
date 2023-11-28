@@ -49,12 +49,14 @@
                             </tr>
                         </thead>
                         <tbody class="text-capitalize">
+
                             @php
                             $counter = 1;
                             @endphp
+
                             @foreach($bookingData as $booking)
                             <tr>
-                                <td>{{ $counter }}</td>
+                                <td>{{ $counter }}</td> 
                                 <td>{{ $booking->guest_name }}</td>
                                 <td>{{ $booking->room->room_number }}</td>
                                 <td>{{ $booking->patient_name }}</td>

@@ -18,6 +18,9 @@ class RoomController extends Controller
      */
     public function index()
     {
+
+        // Gate::authorize('view', 'rooms');
+
         $category = RoomCategory::all();
         $rooms = Room::orderBy('room_number')->get();
         return view('pages.room.index', compact('category', 'rooms'));
@@ -62,14 +65,15 @@ class RoomController extends Controller
     public function show($id)
     {
         $roomname = RoomCategory::find($id)->name;
-        $rooms = Room::where('category_id', $id)
-        ->where(function ($query) {
-            $query->where('is_booked', null)
-                  ->orWhere('is_booked', 0);
-        })
+        $rooms = Room::where('category_id', $id)->orderBy('is_booked')
         ->get();
+        $start_year = get_years()->start_year." 00:00:00";
+        $end_year= get_years()->end_year." 23:59:00";
 
-        return view('pages.room.initial', compact('rooms','roomname'));
+
+
+
+        return view('pages.room.initial', compact('rooms','roomname','start_year','end_year'));
     }
 
     /**

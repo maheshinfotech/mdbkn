@@ -127,7 +127,7 @@
                 url: '/room/'+projectId,
                 method: "GET",
                 success: function (data) {
-                    // console.log(data);
+                    console.log(data);
                     $("#project-details-container").html(data);
                 }
             });

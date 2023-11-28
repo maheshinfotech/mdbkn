@@ -659,6 +659,8 @@ class BookingController extends Controller
        }if ($request->duration=='> 1 month stay') {
         $bookingData = $counting['mtonemonth'];
        }
+
+    //    dd("hi");
         return view('pages.booking.more', compact('bookingData'));
     }
 

@@ -98,7 +98,7 @@ class UserController extends Controller
 
                 'name' => 'required',
 
-                // 'email' => 'required|unique:users,email',
+                'email' => 'required|unique:users,email',
 
             ]);
 
@@ -117,7 +117,7 @@ class UserController extends Controller
             request()->validate([
                 'role_id' => 'required',
                 'name' => 'required',
-                // 'email' => "required|unique:users,email,{$user_id}",
+                'email' => "required|unique:users,email,{$user_id}",
             ]);
 
             Gate::authorize('update' ,  'user');
