@@ -326,7 +326,7 @@ class BookingController extends Controller
     //     dd($booking);
     //  }
 
-        dd($this->getBookingDayWise());
+        // dd($this->getBookingDayWise());
         return view('pages.booking.index', compact('counting'));
     }
 
@@ -672,6 +672,8 @@ class BookingController extends Controller
        }if ($request->duration=='>2 month stay') {
         $bookingData = $counting['mttwomonth'];
        }
+
+    //    dd("hi");
         return view('pages.booking.more', compact('bookingData'));
     }
 
