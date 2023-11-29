@@ -26,7 +26,6 @@
     <div class="">
         <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
     </div>
-
     <div class="">
         <h1 class="text-purple text-center mb-0"> Current Bookings</h1>
     </div>

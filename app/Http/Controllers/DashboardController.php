@@ -21,12 +21,20 @@ class DashboardController extends Controller
 
 
         //  available count is here start
-        $room_category=RoomCategory::where('name','other')->first();
-        $room_available_count= Room::where('category_id','!=',$room_category->id)->where(function ($query){
-            $query->whereNull('is_booked')->Orwhere('is_booked','!=',1);
-        })->where(function ($query){
-            $query->whereNull('room_status')->Orwhere('room_status','!=',0);
-        })->get()->count();
+        $room_category = RoomCategory::where('name', 'other')->first();
+    //     $room_available_count = Room::where('category_id', '!=', $room_category->id)
+    // ->where(function ($query) {
+    //     $query->whereNull('is_booked')->orWhere('is_booked', '!=', 1);
+    // })
+    // ->get()
+    // ->count();
+    $room_available_count = Room::whereNull('is_booked')
+        ->orWhere('is_booked', '!=', 1)
+        ->count();
+
+
+
+
         //  available count is here end
 
 
@@ -76,7 +84,9 @@ class DashboardController extends Controller
         }
 // dd($totalrentcount);
         $totalbookingcou = Booking::whereIn('id',$totalrentcount)->get()->count();
-
+       // dd($room_available_count);
+      // dd($room_category);
+//dd($room_available_count);
         return view('pages.dashboard',compact('room_available_count',
             'today_booking_count','running_booking_count','room_booked_count','today_checkout_count','totalbookingcou'
         ));
