@@ -6,6 +6,8 @@ use App\Models\Advance;
 use App\Models\Booking;
 use App\Models\RoomCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
 use App\Http\Controllers\Controller;
 
 

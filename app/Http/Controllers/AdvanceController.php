@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Advance;
 use Illuminate\Http\Request;
 use App\Advance as AppAdvance;
+use Illuminate\Support\Facades\Gate;
+
 use  App\Models\Booking;
 
 use Illuminate\Routing\Controller;

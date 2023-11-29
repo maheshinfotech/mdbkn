@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\RoomCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
 
 class RoomCategoryController extends Controller
 {
