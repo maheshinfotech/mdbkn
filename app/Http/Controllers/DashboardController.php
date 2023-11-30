@@ -22,15 +22,13 @@ class DashboardController extends Controller
 
         //  available count is here start
         $room_category = RoomCategory::where('name', 'other')->first();
-    //     $room_available_count = Room::where('category_id', '!=', $room_category->id)
-    // ->where(function ($query) {
-    //     $query->whereNull('is_booked')->orWhere('is_booked', '!=', 1);
-    // })
-    // ->get()
-    // ->count();
-    $room_available_count = Room::whereNull('is_booked')
-        ->orWhere('is_booked', '!=', 1)
-        ->count();
+        $room_available_count = Room::where('category_id', '!=', $room_category->id)
+    ->where(function ($query) {
+        $query->whereNull('is_booked')->orWhere('is_booked', '!=', 1);
+    })
+    ->get()
+    ->count();
+   
 
 
 

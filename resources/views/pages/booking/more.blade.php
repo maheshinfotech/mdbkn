@@ -45,6 +45,7 @@
                                 <th class="text-center">Check-in DateTime</th>
                                 <th class="text-center">Guest Address</th>
                                 <th class="text-center">Mobile Number</th>
+                                <th class="text-center">Catogery</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -56,13 +57,15 @@
 
                             @foreach($bookingData as $booking)
                             <tr>
-                                <td>{{ $counter }}</td> 
+                                <td>{{ $counter }}</td>
                                 <td>{{ $booking->guest_name }}</td>
                                 <td>{{ $booking->room->room_number }}</td>
                                 <td>{{ $booking->patient_name }}</td>
                                 <td>{{ date('d-M-y h:i A', strtotime($booking->getRawOriginal('check_in_time'))) }}</td>
                                 <td>{{ $booking->guest_address }}</td>
                                 <td>{{ $booking->mobile_number }}</td>
+                                <td>{{ $booking->room->category->name}}</td>
+
                                 <td>
                                     @if ($booking->getRawOriginal('check_out_time') == null)
                                     <a href="{{ route('advance.create', ['booking_id' => $booking->id]) }}"
