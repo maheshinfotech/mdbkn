@@ -81,4 +81,18 @@ class DashboardController extends Controller
             'today_booking_count','running_booking_count','room_booked_count','today_checkout_count','totalbookingcou'
         ));
     }
+
+
+
+
+    public function booking_check(){
+        $running_booking_count=Booking::with(['room'=>function($query){
+            $query->orderBy('room_number');
+        }])->whereNull('check_out_time')->get();
+        $all_room=Room::orderBy('room_number')->get();
+
+
+        // dd($running_booking_count);
+        return view('pages.booking.booking_check',compact('running_booking_count','all_room'));
+    }
 }

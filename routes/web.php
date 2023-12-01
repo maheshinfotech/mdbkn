@@ -28,7 +28,6 @@ Route::post('/advance/store', [AdvanceController::class,'store'])->name('advance
 //Route::get('/booking/more-than/{days}', [BookingController::class, 'showMoreThan']);
 Route::get('/booking/more', [BookingController::class, 'morePage'])->name('booking.more');
 
-
 //
 // Route::get('/advance/show/{booking_id}', [AdvanceController::class .'show'])->name('advance.show');
 // Route::get('migrate', function(){
@@ -70,6 +69,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
 
         Route::controller(\App\Http\Controllers\DashboardController::class)->group(function () {
             Route::get('/dashboard', 'index')->name('dashboard');
+            Route::get('/booking/check','booking_check')->name('booking.check');
         });
 
         Route::controller(\App\Http\Controllers\UserController::class)->group(function () {
@@ -103,6 +103,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
         });
 
         Route::controller(\App\Http\Controllers\BookingController::class)->group(function () {
+
             Route::get('/bookings', 'index')->name('index-booking');
             Route::get('/bookings/create', 'create')->name('create-booking');
             Route::post('/bookings', 'store')->name('store-booking');
