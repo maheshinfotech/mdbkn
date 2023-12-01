@@ -30,14 +30,14 @@
                             @foreach($running_booking_count as $booking)
                             <tr>
                                 <td>{{ $booking->guest_name }}</td>
-                                <td>{{ $booking->room->room_number }}</td>
+                                <td>{{ $booking->room_number }}</td>
                                 {{-- <td>{{ $booking->patient_name }}</td>
                                 <td>{{ date('d-M-y h:i A', strtotime($booking->getRawOriginal('check_in_time'))) }}</td>
                                 <td>{{ $booking->guest_address }}</td>
                                 <td>{{ $booking->mobile_number }}</td> --}}
 
 
-                                <td>{{ $booking->room->is_booked==1?'yes':'no'}}</td>
+                                <td>{{ $booking->is_booked==1?'yes':'no'}}</td>
                             </tr>
                             @endforeach
 
