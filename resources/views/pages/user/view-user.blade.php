@@ -1,16 +1,67 @@
 @php
-    
+
     $pageName = 'Users';
-    
-    $tableHead = ['Full Name' , 'Employee Id /Email Id' , 'Role' ,  'Access Level', 'Created Date' , 'Status' , 'Action'];
-    
+
+    $tableHead = ['Full Name' , 'Email Id' , 'Role' , 'Created Date' , 'Status' , 'Action'];
+
 @endphp
 
 @extends('layouts.backend')
 @section('content')
     <x-reusables.app-header pageName="{{ $pageName }}" :createButton="true" module="user" modulePlaceholder="User" />
     <div class="content  mx-0 w-100">
-        <div class="block block-rounded">
+        <div class="container-fluid px-0 mb-5">
+            <div class="card d-print-none">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h3 class="text-purple fw-bold mb-0">Users</h3>
+                    <div>
+                        <a href="/manage-user" type="button" class="btn btn-purple">
+                            Add User +
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped align-middle py-3" id="users_table"
+                            style="width:100%;white-space:nowrap;" data-paging="true" data-searching="true"
+                            data-ordering="false" data-info="false">
+                            <x-reusables.table-header :tableHead="$tableHead"/>
+                            <tbody>
+                                @foreach ($listingData as $data)
+                                <tr>
+                                    <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                        {{ $data->name }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                        {{ $data->email }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                        {{ $data->role->role_name }}
+                                    </td>
+                                    {{-- <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                        {{ config('app.accessibility')[$data->accessibility] ??'' }}
+                                    </td> --}}
+                                    <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                        {{ $data->created_at }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                        <a href = "{{route('toggle-user-status' , ['user_placeholder' => $data->id])}}"
+                                            class=" fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill cursor-pointer {{$data->is_active ? 'bg-success-light text-success' : 'bg-danger-light text-danger'  }}">
+                                                {{$data->is_active ? 'Active' : 'Inactive'}}
+                                        </a>
+                                    </td>
+                                    <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                        <x-reusables.action-buttons :id="$data->id" module="user"  :name="$data->name" />
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- <div class="block block-rounded">
             <div class="block-content block-content-full">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm">
@@ -34,7 +85,7 @@
                                         {{ $data->created_at }}
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                        <a href = "{{route('toggle-user-status' , ['user_placeholder' => $data->id])}}" 
+                                        <a href = "{{route('toggle-user-status' , ['user_placeholder' => $data->id])}}"
                                             class=" fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill cursor-pointer {{$data->is_active ? 'bg-success-light text-success' : 'bg-danger-light text-danger'  }}">
                                                 {{$data->is_active ? 'Active' : 'Inactive'}}
                                         </a>
@@ -48,7 +99,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
     {{-- Password reset modal --}}
@@ -102,6 +153,29 @@
         </div>
     </div>
     {{-- Reset password modal end --}}
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script>
+        $(document).ready(function() {
+            var table = $('#users_table').DataTable({
+                lengthChange: false,
+                buttons: [{
+                    extend: 'collection',
+                    text: 'Export',
+                    buttons: [
+                        'pdf',
+                        'excel'
+                    ]
+                }],
+                language: {
+                    searchPlaceholder: "Search"
+                }
+            });
+            table.buttons().container()
+                .appendTo(' .col-md-6:eq(0)');
+        });
+    </script>
 @endsection
+
+
 

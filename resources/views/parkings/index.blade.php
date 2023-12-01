@@ -15,57 +15,57 @@
 @endif --}}
     <div class="content px-3 py-0 w-100">
         <div class="container-fluid mt-5">
-            <div class="card">
-
+            <div class="card mb-4">
                 <div class="card-body">
                     <form class="row row-cols-lg-auto g-3 align-items-center" action="{{ route('add-parking') }}"
                         method="POST">
                         @csrf
-                        <div class="col-12">
-                            <label for="example-if-email2">Active Booking</label>
+                        <div class="row p-4 justify-content-center align-items-end">
+                            <div class="col-2">
+                                <label for="example-if-email2">Active Booking:</label>
 
-                            <select name="active_booking" class="form-select active-booking" id=""
-                                placeholder="Email">
-                                <option value="0">N/A</option>
-                                @foreach ($activeBooking as $booking)
-                                    <option value="{{ $booking->id }}" data-username="{{ $booking->guest_name }}"
-                                        data-phone="{{ $booking->mobile_number }}">
-                                        {{ $booking->room->room_number }} / {{ $booking->guest_name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                                <select name="active_booking" class="form-select active-booking" id=""
+                                    placeholder="Email">
+                                    <option value="0">N/A</option>
+                                    @foreach ($activeBooking as $booking)
+                                        <option value="{{ $booking->id }}" data-username="{{ $booking->guest_name }}"
+                                            data-phone="{{ $booking->mobile_number }}">
+                                            {{ $booking->room->room_number }} / {{ $booking->guest_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
 
-                        </div>
-                        <div class="col-12">
-                            <label for="example-if-password2">Username</label>
-                            <input type="text" class="form-control username" id="example-if-password2" name="username"
-                                required placeholder="Username">
-                        </div>
-                        <div class="col-12">
-                            <label for="example-if-password3">Phone.</label>
-                            <input type="text" class="form-control phone" id="example-if-password3" name="userphone"
-                                required placeholder="Phone">
+                            </div>
+                            <div class="col-2">
+                                <label for="example-if-password2">Username:</label>
+                                <input type="text" class="form-control username" id="example-if-password2" name="username"
+                                    required placeholder="Username">
+                            </div>
+                            <div class="col-2">
+                                <label for="example-if-password3">Phone:</label>
+                                <input type="text" class="form-control phone" id="example-if-password3" name="userphone"
+                                    required placeholder="Phone">
+                            </div>
+                            <div class="col-2">
+                                <label for="example-if-password4">Vehicle No:</label>
+                                <input type="text" class="form-control" id="example-if-password4" name="vehicle" required
+                                    placeholder="Vehicle No.">
+                            </div>
+                            <div class="col-2">
+                                <label for="example-if-password4">Parking Start Date:</label>
+                                <input type="datetime-local" class="form-control" id="example-if-password4" required
+                                    value="<?= date('Y-m-d H:i') ?>" name="start_date">
+                            </div>
+                            <div class="col-2 mb-1">
+                                <label for=""></label>
+                                <button type="submit" class="btn btn-dark">Add New Parking</button>
+                            </div>
                         </div>
 
-                        <div class="col-12">
-                            <label for="example-if-password4">Vehicle No.</label>
-                            <input type="text" class="form-control" id="example-if-password4" name="vehicle" required
-                                placeholder="Vehicle No.">
-                        </div>
-
-                        <div class="col-12">
-                            <label for="example-if-password4">Parking Start Date</label>
-                            <input type="datetime-local" class="form-control" id="example-if-password4" required
-                                value="<?= date('Y-m-d H:i') ?>" name="start_date">
-                        </div>
-                        <div class="col-12 align-end">
-                            <label for=""></label>
-                            <button type="submit" class="btn btn-dark">Add New Parking</button>
-                        </div>
                     </form>
                 </div>
-
             </div>
+
             <div class="card d-print-none">
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
                     <h3 class="text-purple fw-bold mb-0">Current Parkings</h3>
@@ -230,7 +230,7 @@
                   method : "post",
 
                   success : function(res){
-console.log(res.data.paid_amount);
+        console.log(res.data.paid_amount);
                         $('.payable-amount').val(res.data.paid_amount);
 
                   }

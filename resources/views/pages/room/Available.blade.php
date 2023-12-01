@@ -17,14 +17,25 @@
             <div class="">
                 <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
             </div>
+            @php
+                $current_date=Carbon\Carbon::now();
+                if($current_date->format('m')>3){
+                $start_year=Carbon\Carbon::now()->format('Y-04-01');
+                $end_year=Carbon\Carbon::now()->addYear()->format('Y-03-31');
+                //   dd($start_year,$end_year);
+                }else{
+                $start_year=Carbon\Carbon::now()->subYear()->format('Y-04-01');
+                $end_year=Carbon\Carbon::now()->format('Y-03-31');
+                }
+            @endphp
             <div class="">
-                <h1 class="text-purple text-center mb-0"> Room Database</h1>
+                <h1 class="text-purple text-center mb-0"> Room Database ({{date('F Y',strtotime($start_year))." - ".date('F Y',strtotime($end_year))}})</h1>
             </div>
             <div><h4 class="text-purple text-center mb-1">Available Rooms ({{ $available_room_count }}/{{ $total_room_count }})</h4>
 
-                    <select class="form-select w-75" id="ddlYears">
+                    {{-- <select class="form-select w-75" id="ddlYears">
                         <option disabled>Select Year...</option>
-                    </select>
+                    </select> --}}
 
             </div>
 

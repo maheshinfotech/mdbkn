@@ -14,7 +14,10 @@
     </div>
 @endif --}}
     <div class="content px-3 py-0 w-100">
-        <div class="container-fluid mt-5">
+        <div class="my-3 mx-4">
+            <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
+        </div>
+        <div class="container-fluid">
             <div class="card d-print-none">
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
                     <h3 class="text-purple fw-bold mb-0">Today's Checkout Detail</h3>

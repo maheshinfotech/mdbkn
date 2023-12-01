@@ -35,7 +35,7 @@
     <link rel="stylesheet" id="css-main" href="{{ asset('theme/css/oneui.min.css') }}">
     <link rel="stylesheet" href="{{ asset('js/plugins/ion-rangeslider/css/ion.rangeSlider.css') }}">
     <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/custom.css?' . date('Ymdhis')) }}">
-
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> --}}
     {{-- Datatable --}}
 
     <style>
@@ -60,7 +60,7 @@
         const base = "{!! url(config('app.admin_prefix')) !!}";
     </script>
     {{-- datatables cdn start --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
@@ -73,6 +73,7 @@
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
     {{-- datatables cdn end --}}
+    <script src="{{ asset('theme/js/oneui.app.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
@@ -107,7 +108,6 @@
 </head>
 
 <body>
-
     <!-- add class sidebar-dark for dark code -->
     <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-fixed main-content-narrow">
         <!-- Side Overlay-->
@@ -232,7 +232,6 @@
             <!-- END Sidebar Scrolling -->
         </nav>
         <!-- END Sidebar -->
-
         <!-- Header -->
         <header id="page-header">
             <!-- Header Content -->
@@ -313,7 +312,7 @@
             <!-- END Header Loader -->
         </header>
         <!-- END Header -->
-        
+
 
         <!-- Main Container -->
         <main id="main-container">
@@ -321,7 +320,7 @@
         </main>
     </div>
 
-    <script src="{{ asset('theme/js/oneui.app.min.js') }}"></script>
+
     <!-- Page JS Code -->
     <script src="{{ url('theme/js/pages/be_tables_datatables.min.js') }}"></script>
     @php

@@ -50,7 +50,7 @@ class RoleController extends Controller
             $role = new Role();
 
             request()->validate([
-                'role_name' => 'required|string|unique:roles,role_name',
+                'role_name' => 'required|string|unique:roles,role_name,NULL,id,deleted_at,NULL',
             ]);
 
             Gate::authorize('create' ,  'role');

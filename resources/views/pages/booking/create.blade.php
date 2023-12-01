@@ -54,6 +54,7 @@
                                     Non-Admitted
                                 </label>
                             </div>
+                            
                             <div class="col-1 text-center">
                                 <div class="vr" style="opacity:0.5"></div>
                             </div>

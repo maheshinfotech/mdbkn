@@ -192,13 +192,13 @@ class UserController extends Controller
 
         DB::table('personal_access_tokens')->where("tokenable_id" , decrypt($user_placeholder) )->delete();
 
-        if($user->fuelConsumption()->exists())
+        // if($user->fuelConsumption()->exists())
 
-            return $this->generateResponse(false , 'Opps! fuel Consumptions records are Associated with this User so can\'t Delete this.');
+        //     return $this->generateResponse(false , 'Opps! fuel Consumptions records are Associated with this User so can\'t Delete this.');
 
-        if($user->workingHours()->exists())
+        // if($user->workingHours()->exists())
 
-            return $this->generateResponse(false , 'Opps! Working Hours are Associated with this User so can\'t Delete this.');
+        //     return $this->generateResponse(false , 'Opps! Working Hours are Associated with this User so can\'t Delete this.');
 
         $res = $user->delete();
 

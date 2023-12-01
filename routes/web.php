@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
-use App\Http\Controllers\RoomCategoryController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\AdvanceController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\RoomCategoryController;
 
 
 
@@ -27,6 +28,8 @@ Route::get('/advance/create/{booking_id}', [AdvanceController::class , 'create']
 Route::post('/advance/store', [AdvanceController::class,'store'])->name('advance.store');
 //Route::get('/booking/more-than/{days}', [BookingController::class, 'showMoreThan']);
 Route::get('/booking/more', [BookingController::class, 'morePage'])->name('booking.more');
+Route::get('/billing/show/{booking_id}', [BookingController::class,'billingShow'])->name('billing.show');
+
 
 //
 // Route::get('/advance/show/{booking_id}', [AdvanceController::class .'show'])->name('advance.show');
@@ -101,6 +104,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
 
             Route::post('/permissions', 'setPermissions')->name('set-permission');
         });
+        Route::resource('/groups',GroupController::class);
 
         Route::controller(\App\Http\Controllers\BookingController::class)->group(function () {
 
