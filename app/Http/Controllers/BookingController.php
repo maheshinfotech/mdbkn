@@ -28,9 +28,56 @@ class BookingController extends Controller
         $bookings = Booking::orderBy('check_out_time', 'asc')
             ->orderBy('id', 'desc')
             ->get();
-
+            // for ($i = 0; $i < count( $bookings); $i++) {
+            //     $bookings[$i]->check_in_time =  $bookings[$i]->getRawOriginal('check_in_time');
+            //     $bookings[$i]->check_out_time =  $bookings[$i]->getRawOriginal('check_out_time');
+            // }
+            // dd($bookings);
         return view('pages.booking.view', compact('bookings'));
     }
+
+
+
+    public function filterByDate(Request $request)
+{
+    $selectedDate = $request->input('filterDate');
+    $selectedType = $request->input('filterType');
+
+    $bookings = Booking::with(['room', 'bookinglogs', 'advance'])
+        ->where(function ($query) use ($selectedDate, $selectedType) {
+            if ($selectedType == 0) {
+                $query->whereDate('check_in_time', $selectedDate);
+            } elseif ($selectedType == 1) {
+                $query->whereDate('check_out_time', $selectedDate);
+            } else {
+                $query->whereDate('check_in_time', $selectedDate)
+                      ->orderByRaw('check_out_time', $selectedDate);
+            }
+        })
+        ->get()
+        ->map(function ($booking) {
+            $booking->check_in_times = Carbon::parse($booking->getRawOriginal('check_in_time'))->format('d-M-y h:i A');
+
+            if ($booking->check_out_time != null) {
+                $booking->check_out_times = Carbon::parse($booking->getRawOriginal('check_out_time'))->format('d-M-y h:i A');
+            }
+
+            return $booking;
+        });
+
+
+
+
+        return response()->json(['bookings' => $bookings]);
+    }
+
+
+
+
+
+
+
+
 //     public function index()
 // {
 //     // Retrieve bookings where check_out_time is null first, and then retrieve the rest.

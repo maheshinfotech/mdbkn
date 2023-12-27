@@ -123,6 +123,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/booking/index', [BookingController::class,'showBookings'])->name('bookings.index');
             Route::post('/save-parking-data/{id}', 'BookingController@Bookingcheckout')->name('saveParkingData');
             Route::get('/today-bookings', [BookingController::class, 'showTodayBookings'])->name('today-bookings');
+            Route::get('/datebooking/filter', [BookingController::class ,'filterByDate'])->name('datebooking.filter');
 
             /**Parking Module */
             Route::get('/parkings', 'parkings')->name('parkings');
