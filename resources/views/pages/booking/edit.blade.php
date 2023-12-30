@@ -86,8 +86,8 @@
                                     RT
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose" @if ($editbooking->patient_type=="cancer") @else style="display: none" @endif>
-                                    <input type="radio" name="ward"  value="o ward" class="ward"
-                                    @if ($editbooking->ward_type=="o ward")
+                                    <input type="radio" name="ward"  value="oward" class="ward"
+                                    @if ($editbooking->ward_type=="oward")
                                     checked
                                     @endif>
                                     O Ward

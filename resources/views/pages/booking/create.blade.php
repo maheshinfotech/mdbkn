@@ -54,7 +54,7 @@
                                     Non-Admitted
                                 </label>
                             </div>
-                            
+
                             <div class="col-1 text-center">
                                 <div class="vr" style="opacity:0.5"></div>
                             </div>
@@ -68,7 +68,7 @@
                                     RT
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose" style="display: none">
-                                    <input type="radio" name="ward"  value="o ward" class="ward" >
+                                    <input type="radio" name="ward"  value="oward" class="ward" >
                                     O Ward
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1 me-3">
