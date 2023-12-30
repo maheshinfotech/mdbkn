@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\CheckoutNotification;
+use Illuminate\Support\Facades\Notification;
 
 class BookingController extends Controller
 {
@@ -58,8 +60,10 @@ class BookingController extends Controller
         ->map(function ($booking) {
             $booking->check_in_times = Carbon::parse($booking->getRawOriginal('check_in_time'))->format('d-M-y h:i A');
 
-            if ($booking->check_out_time != null) {
+            if ($booking->check_out_time !== NULL && $booking->check_out_time !== '--') {
                 $booking->check_out_times = Carbon::parse($booking->getRawOriginal('check_out_time'))->format('d-M-y h:i A');
+            }else {
+                $booking->check_out_times = 'N/A';
             }
 
             return $booking;
@@ -318,6 +322,7 @@ class BookingController extends Controller
     }
     public function checkout(Request $request)
     {
+       // dd($request->all());
         Gate::authorize('update', 'booking');
         $checkoutdet = Booking::find($request->booking_id);
         $checkoutdet->check_out_time = $request->check_out_time;
@@ -352,6 +357,7 @@ class BookingController extends Controller
             $room->booked_date = null;
             $room->update();
         }
+        $checkoutdet->notify(new CheckoutNotification($checkoutdet));
 
         return redirect()->route('index-booking')->with('message', 'Checked Out Details Saved Successfully');
     }

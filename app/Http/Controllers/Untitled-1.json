@@ -1,0 +1,82 @@
+{
+    "bookings": [
+        {
+            "id": 2,
+            "room_id": 9,
+            "guest_name": "Rajesh",
+            "guest_father_name": "Rajesh sing",
+            "guest_cast": "shrma",
+            "guest_address": "jaipur 34",
+            "patient_name": "rajesh",
+            "patient_ward_no": "r4",
+            "patient_bed_no": "9",
+            "advance_payment": "1000",
+            "check_in_time": "12:19 PM",
+            "check_out_time": "03:07 PM",
+            "estimated_total_days": "44",
+            "age": 23,
+            "city": "Adityapur",
+            "docter_name": "karan",
+            "mobile_number": "9088745332",
+            "id_number": "Id_Proof_files/tWPnVRn6wfSaxNbRYjgmfyLJ0a1kiIgaaKZPVFlx.jpeg",
+            "tehsil": "jaipur",
+            "relation_patient": "bhai",
+            "ward_type": "ct",
+            "payable_rent": "13200",
+            "base_rent": "300",
+            "paid_rent": "12200",
+            "extra_remark": null,
+            "is_parking_provided": null,
+            "base_check_in_time": "08:00:00",
+            "base_check_out_time": "08:00:00",
+            "base_grace_period": "2",
+            "deleted_at": null,
+            "created_at": "2023-11-09T06:52:35.000000Z",
+            "updated_at": "2023-12-23T09:37:45.000000Z",
+            "state": "Jharkhand",
+            "advance_refund": 0,
+            "hospital_id": 2,
+            "ward_id": null,
+            "patient_type": "non-cancer",
+            "is_admitted": 1,
+            "gender": "male",
+            "pbm_room_no": null,
+            "room": {
+                "id": 9,
+                "category_id": 5,
+                "floor_number": 0,
+                "room_number": 109,
+                "is_booked": 0,
+                "extra_remark": null,
+                "booked_date": null,
+                "guest_capacity": null,
+                "room_status": null,
+                "deleted_at": null,
+                "created_at": null,
+                "updated_at": "2023-12-23T09:37:45.000000Z",
+                "category": {
+                    "id": 5,
+                    "name": "Flats",
+                    "facility": "Big room and all facilities",
+                    "description": "Flat with big room and all facilities",
+                    "normal_rent": "350",
+                    "patient_rent": "300",
+                    "deleted_at": null,
+                    "created_at": null,
+                    "updated_at": null
+                }
+            },
+            "bookinglogs": [],
+            "advance": [
+                {
+                    "id": 2,
+                    "booking_id": 2,
+                    "amount": 1000,
+                    "received_date": "2023-11-10",
+                    "created_at": "2023-11-09T06:52:35.000000Z",
+                    "updated_at": "2023-11-09T06:52:35.000000Z"
+                }
+            ]
+        }
+    ]
+}

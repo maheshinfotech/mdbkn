@@ -23,8 +23,6 @@
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
                     <h3 class="text-purple fw-bold mb-0">Booking Records</h3>
 
-
-
                     <div class="d-flex justify-content-right">
                         <div class="mb-3 me-3">
                             <label for="filterDate" class="form-label">Filter by Date:</label>
@@ -169,26 +167,28 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        $(document).ready(function() {
-            var table = $('#booking_table').DataTable({
-                lengthChange: false,
-                "pageLength": 100,
-                buttons: [{
-                    extend: 'collection',
-                    text: 'Export',
-                    buttons: [
-                        'pdf',
-                        'excel'
-                    ]
-                }],
-                language: {
-                    searchPlaceholder: "Search"
-                }
-            });
+       var bookingTable;
 
-            table.buttons().container()
-                .appendTo(' .col-md-6:eq(0)');
-        });
+function initializeDataTable() {
+    bookingTable = $('#booking_table').DataTable({
+        lengthChange: false,
+        searching: true,
+        pageLength: 100,
+        buttons: [{
+            extend: 'collection',
+            text: 'Export',
+            buttons: [
+                'pdf',
+                'excel'
+            ]
+        }],
+        language: {
+            searchPlaceholder: "Search"
+        }
+    });
+
+    bookingTable.buttons().container().appendTo('.col-md-6:eq(0)');
+}
 
 
 
@@ -234,98 +234,70 @@
                 });
             });
         });
-
-
-
-
-
+ 
     function updateBookings() {
-    var selectedDate = $('#filterDate').val();
-    var selectedType = $('.filterTypeClass').val();
-    // console.log(selectedType);
-    // $('#booking_table').DataTable().destroy();
+        var selectedDate = $('#filterDate').val();
+        var selectedType = $('.filterTypeClass').val();
 
+        $.ajax({
+            url: '{{ route("datebooking.filter") }}',
+            type: 'GET',
+            data: {
+                filterDate: selectedDate,
+                filterType: selectedType
+            },
+            dataType: 'json',
+            success: function(res) {
+                if (bookingTable) {
+                    bookingTable.destroy();
+                }
 
-    $.ajax({
-        url: '{{ route("datebooking.filter") }}',
-        type: 'GET',
-        data: {
-            filterDate: selectedDate,
-            filterType: selectedType
-        },
-        dataType: 'json',
-        success: function(res) {
-            console.log(res);
-            var table = $('#booking_table');
+                var table = $('#booking_table');
+                table.find('tbody').empty();
 
-            table.find('tbody').empty();
-            // $('#booking_table').DataTable().destroy();
-            $.each(res.bookings, function(index, booking) {
-                var row = '<tr>' +
-                    '<td>' + booking.guest_name + '</td>' +
-                    '<td>' + booking.patient_name + '</td>' +
-                   '<td>' +
-                    booking.room.room_number +
-                    '<span class="badge badge-primary bg-primary">' + booking.room.category.name + '</span>' +
-                   '<span class="d-block">' + booking.base_rent + ' /-</span>' +
-                   '</td>' +
-                    '<td>' + booking.check_in_times + '</td>' +
-                    '<td>' + booking.check_out_times + '</td>' +
-                    '<td>' + booking.docter_name + '</td>' +
-                    '<td>' + booking.mobile_number + '</td>' +
-                    '<td>' + booking.paid_rent + '</td>' +
-                    '<td class="text-end">' +
-                    '<a href="{{ url("/bookings/edit/") }}/' + booking.id + '" class="btn btn-sm btn-purple" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Edit"><i class="fa-solid fa-pen"></i></a>' +
+                $.each(res.bookings, function(index, booking) {
+                    var row = '<tr>' +
+                        '<td>' + booking.guest_name + '</td>' +
+                        '<td>' + booking.patient_name + '</td>' +
+                        '<td>' +
+                            booking.room.room_number +
+                            '<span class="badge badge-primary bg-primary">' + booking.room.category.name + '</span>' +
+                            '<span class="d-block">' + booking.base_rent + ' /-</span>' +
+                        '</td>' +
+                        '<td>' + booking.check_in_times + '</td>' +
+                        '<td>' + booking.check_out_times + '</td>' +
+                        '<td>' + booking.docter_name + '</td>' +
+                        '<td>' + booking.mobile_number + '</td>' +
+                     '<td>' + (booking.paid_rent !== null ? booking.paid_rent : 'N/A') + '</td>' +
+                        '<td class="text-end ">';
 
-                    '<a href="{{ url("/bookings/checkout/") }}/' + booking.id + '" class="btn btn-sm btn-purple" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Checkout"><i class="fa-solid fa-sign-out"></i></a>' +
-                    '<a href="{{ url("/bookings/") }}/' + booking.id + '" class="btn btn-sm btn-purple" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View"><i class="fa-solid fa-eye"></i></a>' +
-                    '</td>' +
+                    if (booking.check_out_time !== null && booking.check_out_time !== '--') {
+                        row += '<a href="{{ url("/bookings/") }}/' + booking.id + '" class="btn btn-sm btn-purple" data-bs-toggle="tooltip me-2" data-bs-placement="bottom" data-bs-title="Ajax View" ><i class="fa-solid fa-eye"></i></a>';
+                    } else {
+                        row += '<a href="{{ url("/bookings/edit/") }}/' + booking.id + '" class="btn btn-sm btn-purple me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Edit"><i class="fa-solid fa-pen"></i></a>' +
+                            '<a href="{{ url("/bookings/checkout/") }}/' + booking.id + '" class="btn btn-sm btn-purple me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Checkout"><i class="fa-solid fa-sign-out"></i></a>' +
+                            '<a href="{{ url("/bookings/") }}/' + booking.id + '" class="btn btn-sm btn-purple me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View"><i class="fa-solid fa-eye"></i></a>';
+                    }
 
-                    '</tr>';
+                    row += '</td></tr>';
+                    table.find('tbody').append(row);
+                });
 
-                table.find('tbody').append(row);
-            });
-            // var table = $("#booking_table").DataTable(
+                initializeDataTable();
+            },
+            error: function(error) {
+                console.error('Error loading bookings:', error);
+            }
+        });
+    }
 
-            // );
-            // $(".dataTables_length").hide();
-            // var table = $('#booking_table').DataTable({
-            //     lengthChange: false,
-            //     "pageLength": 100,
-            //     buttons: [{
-            //         extend: 'collection',
-            //         text: 'Export',
-            //         buttons: [
-            //             'pdf',
-            //             'excel'
-            //         ]
-            //     }],
-            //     language: {
-            //         searchPlaceholder: "Search"
-            //     }
-            // });
+    $(document).ready(function() {
+        initializeDataTable();
 
-            // table.buttons().container()
-            //     .appendTo(' .col-md-6:eq(0)');
-
-        },
-        error: function(error) {
-            console.error('Error loading bookings:', error);
-        }
+        $('#filterDate, .filterTypeClass').change(function() {
+            updateBookings();
+        });
     });
-}
-
-$('#filterDate, .filterTypeClass').change(function() {
-    updateBookings();
-});
-
-
-
-
-    $('#filterDate').change(function() {
-        updateBookings();
-    });
-
 
     </script>
 @endsection
