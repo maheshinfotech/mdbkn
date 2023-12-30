@@ -9,12 +9,14 @@ use App\Models\BookingLogs;
 use App\Models\hospital;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
+
 
 class Booking extends Model
 {
     use HasFactory;
 
-
+    use Notifiable;
 
     public function getCheckInTimeAttribute($value){
         if ($value){
