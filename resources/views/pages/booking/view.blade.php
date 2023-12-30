@@ -242,7 +242,9 @@
     function updateBookings() {
     var selectedDate = $('#filterDate').val();
     var selectedType = $('.filterTypeClass').val();
-    console.log(selectedType);
+    // console.log(selectedType);
+    // $('#booking_table').DataTable().destroy();
+
 
     $.ajax({
         url: '{{ route("datebooking.filter") }}',
@@ -257,7 +259,7 @@
             var table = $('#booking_table');
 
             table.find('tbody').empty();
-
+            // $('#booking_table').DataTable().destroy();
             $.each(res.bookings, function(index, booking) {
                 var row = '<tr>' +
                     '<td>' + booking.guest_name + '</td>' +
@@ -283,6 +285,29 @@
 
                 table.find('tbody').append(row);
             });
+            // var table = $("#booking_table").DataTable(
+
+            // );
+            // $(".dataTables_length").hide();
+            // var table = $('#booking_table').DataTable({
+            //     lengthChange: false,
+            //     "pageLength": 100,
+            //     buttons: [{
+            //         extend: 'collection',
+            //         text: 'Export',
+            //         buttons: [
+            //             'pdf',
+            //             'excel'
+            //         ]
+            //     }],
+            //     language: {
+            //         searchPlaceholder: "Search"
+            //     }
+            // });
+
+            // table.buttons().container()
+            //     .appendTo(' .col-md-6:eq(0)');
+
         },
         error: function(error) {
             console.error('Error loading bookings:', error);
