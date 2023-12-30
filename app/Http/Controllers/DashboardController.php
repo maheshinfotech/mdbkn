@@ -94,7 +94,7 @@ class DashboardController extends Controller
         // $running_booking_count=Booking::with(['room'=>function($query){
         //     $query->orderBy('room_number');
         // }])->whereNull('check_out_time')->get();
-  $running_booking_count=Booking::join('rooms','bookings.room_id','=','rooms.id')->orderBy('rooms.room_number')->get();
+  $running_booking_count=Booking::join('rooms','bookings.room_id','=','rooms.id')->orderBy('rooms.room_number')->whereNull('check_out_time')->get();
 //   dd($running_booking_count);
         // sql query
     //    select * from `rooms` order by case when (is_booked is null or is_booked =0) then 1 else 0 end, `room_number` asc;

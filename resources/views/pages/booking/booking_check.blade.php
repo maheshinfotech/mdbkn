@@ -28,7 +28,7 @@
                         </thead>
                         <tbody class="text-capitalize">
                             @foreach($running_booking_count as $booking)
-                            @dd($booking->room->room_number)
+                            {{-- @dd($booking->room->room_number) --}}
                             <tr>
                                 <td>{{ $booking->guest_name }}</td>
                                 <td>{{ $booking->room_number }}</td>

@@ -193,8 +193,8 @@ class BookingController extends Controller
 
             // =======================================================================
 
-        // return redirect()->back()->with('message', 'Booking added successfully');
-        return redirect()->route('index-booking')->with('message', 'Booking added successfully');
+        return redirect()->back()->with('message', 'Booking added successfully');
+        // return redirect()->route('index-booking')->with('message', 'Booking added successfully');
 
 
     }
@@ -225,7 +225,7 @@ class BookingController extends Controller
     }
     // }
 
-    public function checkoutCal(Request $request) {
+    public function checkoutCal(Request $request) { 
         $payble_rent=0;
         $estimateDays=0;
         $bookings = Booking::with(['room'])->find($request->booking_id);

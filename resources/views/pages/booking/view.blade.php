@@ -7,7 +7,7 @@
 @extends('layouts.backend')
 
 @section('content')
-{{-- <a href="booking/index">Go to Booking List</a>
+    {{-- <a href="booking/index">Go to Booking List</a>
 <table class="table"> --}}
     <x-reusables.app-header pageName="{{ $pageName }}" />
     @if (Session::has('message'))
@@ -22,10 +22,29 @@
             <div class="card d-print-none">
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
                     <h3 class="text-purple fw-bold mb-0">Booking Records</h3>
-                    <div>
-                        <a href="/bookings/create" type="button" class="btn btn-purple">
-                            Add Bookings +
-                        </a>
+
+
+
+                    <div class="d-flex justify-content-right">
+                        <div class="mb-3 me-3">
+                            <label for="filterDate" class="form-label">Filter by Date:</label>
+                            <input type="date" name="filterDate" id="filterDate" class="form-control">
+
+                        </div>
+                        <div class="mb-3 me-3">
+                            <label for="filterType" class="form-label filtertype">Filter by Type:</label>
+                            <select name="filterType" id="filterType" class="form-select filterTypeClass">
+                                <!-- Add your class name here -->
+                                <option value="" selected> select--</option>
+                                <option value="0">Check In</option>
+                                <option value="1">Check Out</option>
+                            </select>
+                        </div>
+                        <div class="mt-3 mt-4">
+                            <a href="/bookings/create" type="button" class="btn btn-purple">
+                                Add Bookings +
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <!--card body starts -->
@@ -54,17 +73,19 @@
                                     <tr>
                                         <td class="text-start">{{ $booking->guest_name }}</td>
                                         <td>{{ $booking->patient_name }}</td>
-                                        <td>{{$booking->room->room_number }}
-                                            <span class="badge badge-primary bg-primary ">{{$booking->room->category->name}}</span>
-                                            <span class="d-block">{{$booking->base_rent}} /-</span>
+                                        <td>{{ $booking->room->room_number }}
+                                            <span
+                                                class="badge badge-primary bg-primary ">{{ $booking->room->category->name }}</span>
+                                            <span class="d-block">{{ $booking->base_rent }} /-</span>
                                         </td>
-                                     <td>{{ date('d-M-y h:i A',strtotime($booking->getRawOriginal('check_in_time'))) }}</td>
+                                        <td>{{ date('d-M-y h:i A', strtotime($booking->getRawOriginal('check_in_time'))) }}
+                                        </td>
 
                                         <td>
-                                            @if($booking->getRawOriginal('check_out_time'))
+                                            @if ($booking->getRawOriginal('check_out_time'))
                                                 {{ date('d-M-y h:i A', strtotime($booking->getRawOriginal('check_out_time'))) }}
                                             @else
-                                              --
+                                                --
                                             @endif
                                         </td>
                                         <td>{{ $booking->docter_name }}</td>
@@ -75,16 +96,16 @@
                                                 @php
                                                     $Amt = 0;
                                                     $totalAmt = 0;
-                                                    foreach ($booking->advance as  $adv) {
+                                                    foreach ($booking->advance as $adv) {
                                                         $Amt += $adv->amount;
                                                     }
-                                                    if ($booking->advance_refund>0) {
+                                                    if ($booking->advance_refund > 0) {
                                                         $totalAmt = $Amt - $booking->advance_refund;
-                                                    }else{
+                                                    } else {
                                                         $totalAmt = $Amt + $booking->paid_rent;
                                                     }
                                                 @endphp
-                                                {{$totalAmt}}
+                                                {{ $totalAmt }}
                                             @endif
                                         </td>
 
@@ -92,36 +113,35 @@
                                         <td class="text-end">
 
                                             @if ($booking->getRawOriginal('check_out_time') == null)
-                                            <a href="{{ route('advance.create', ['booking_id' => $booking->id]) }}"
-                                                class="btn btn-sm btn-purple open-modal" data-bs-toggle="tooltip"
-                                                data-bs-placement="bottom" data-bs-title="Advance">
-                                                <i class="fa-solid fa-plus"></i>
-                                            </a>
-                                            <a href="/bookings/edit/{{ $booking->id }}"
-                                                class="btn btn-sm btn-purple" data-bs-toggle="tooltip"
-                                                data-bs-placement="bottom" data-bs-title="Edit"> <i
-                                                    class="fa-solid fa-pen"></i></a>
+                                                <a href="{{ route('advance.create', ['booking_id' => $booking->id]) }}"
+                                                    class="btn btn-sm btn-purple open-modal" data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom" data-bs-title="Advance">
+                                                    <i class="fa-solid fa-plus"></i>
+                                                </a>
+                                                <a href="/bookings/edit/{{ $booking->id }}" class="btn btn-sm btn-purple"
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    data-bs-title="Edit"> <i class="fa-solid fa-pen"></i></a>
                                                 <a href="/bookings/checkout/{{ $booking->id }}"
                                                     class="btn btn-sm btn-purple" data-bs-toggle="tooltip"
                                                     data-bs-placement="bottom" data-bs-title="Checkout"> <i
                                                         class="fa-solid fa-sign-out"></i></a>
 
 
-                                            <a href="/bookings/{{ $booking->id }}" class="btn btn-sm btn-purple"
-                                                data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View">
-                                                <i class="fa-solid fa-eye"></i> </a>
-                                                        @else
-                                                        <a href="/bookings/{{ $booking->id }}" class="btn btn-sm btn-purple"
-                                                            data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View">
-                                                            <i class="fa-solid fa-eye"></i> </a>
-                                              <a href="{{ route('billing.show', ['booking_id' => $booking->id]) }}"
-                                                       class="btn btn-sm btn-purple btn-billing"
-                                                       data-bs-toggle="tooltip"
-                                                       data-bs-placement="bottom"
-                                                       data-bs-title="Billing">
-                                                       <i class="fa-solid fa-file-invoice"></i>
-                                                    </a>
-                                                    @endif
+                                                <a href="/bookings/{{ $booking->id }}" class="btn btn-sm btn-purple"
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    data-bs-title="View">
+                                                    <i class="fa-solid fa-eye"></i> </a>
+                                            @else
+                                                <a href="/bookings/{{ $booking->id }}" class="btn btn-sm btn-purple"
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    data-bs-title="View">
+                                                    <i class="fa-solid fa-eye"></i> </a>
+                                                <a href="{{ route('billing.show', ['booking_id' => $booking->id]) }}"
+                                                    class="btn btn-sm btn-purple btn-billing" data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom" data-bs-title="Billing">
+                                                    <i class="fa-solid fa-file-invoice"></i>
+                                                </a>
+                                            @endif
 
                                         </td>
 
@@ -152,7 +172,7 @@
         $(document).ready(function() {
             var table = $('#booking_table').DataTable({
                 lengthChange: false,
-                "pageLength":100,
+                "pageLength": 100,
                 buttons: [{
                     extend: 'collection',
                     text: 'Export',
@@ -192,28 +212,28 @@
 
 
         $(document).ready(function() {
-        // Handle click on "Billing" button
-        $('.btn-billing').on('click', function(e) {
-            e.preventDefault();
+            // Handle click on "Billing" button
+            $('.btn-billing').on('click', function(e) {
+                e.preventDefault();
 
-            var url = $(this).attr('href');
+                var url = $(this).attr('href');
 
-            // Make an AJAX request to get the billing show page content
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success: function(response) {
-                    // Insert the content into the modal
-                    $('#advanceModal .modal-content').html(response);
+                // Make an AJAX request to get the billing show page content
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(response) {
+                        // Insert the content into the modal
+                        $('#advanceModal .modal-content').html(response);
 
-                    // Show the modal
-                    $('#advanceModal').modal('show');
-                },
-                error: function(error) {
-                    console.error('Error loading billing show page:', error);
-                }
+                        // Show the modal
+                        $('#advanceModal').modal('show');
+                    },
+                    error: function(error) {
+                        console.error('Error loading billing show page:', error);
+                    }
+                });
             });
         });
-    });
     </script>
 @endsection
