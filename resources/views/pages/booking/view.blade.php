@@ -70,7 +70,7 @@
                             </thead>
                             <tbody class="text-capitalize">
                                 @foreach ($bookings as $booking)
-                                    <tr>
+                                    <tr id="filterDate">
                                         <td class="text-start">{{ $booking->guest_name }}</td>
                                         <td>{{ $booking->patient_name }}</td>
                                         <td>{{ $booking->room->room_number }}
@@ -191,7 +191,6 @@
         });
 
 
-        //   message div animation
 
         $("#alert1")
             .fadeTo(2000, 2000)
@@ -235,5 +234,73 @@
                 });
             });
         });
+
+
+
+
+
+    function updateBookings() {
+    var selectedDate = $('#filterDate').val();
+    var selectedType = $('.filterTypeClass').val();
+    console.log(selectedType);
+
+    $.ajax({
+        url: '{{ route("datebooking.filter") }}',
+        type: 'GET',
+        data: {
+            filterDate: selectedDate,
+            filterType: selectedType
+        },
+        dataType: 'json',
+        success: function(res) {
+            console.log(res);
+            var table = $('#booking_table');
+
+            table.find('tbody').empty();
+
+            $.each(res.bookings, function(index, booking) {
+                var row = '<tr>' +
+                    '<td>' + booking.guest_name + '</td>' +
+                    '<td>' + booking.patient_name + '</td>' +
+                   '<td>' +
+                    booking.room.room_number +
+                    '<span class="badge badge-primary bg-primary">' + booking.room.category.name + '</span>' +
+                   '<span class="d-block">' + booking.base_rent + ' /-</span>' +
+                   '</td>' +
+                    '<td>' + booking.check_in_times + '</td>' +
+                    '<td>' + booking.check_out_times + '</td>' +
+                    '<td>' + booking.docter_name + '</td>' +
+                    '<td>' + booking.mobile_number + '</td>' +
+                    '<td>' + booking.paid_rent + '</td>' +
+                    '<td class="text-end">' +
+                    '<a href="{{ url("/bookings/edit/") }}/' + booking.id + '" class="btn btn-sm btn-purple" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Edit"><i class="fa-solid fa-pen"></i></a>' +
+
+                    '<a href="{{ url("/bookings/checkout/") }}/' + booking.id + '" class="btn btn-sm btn-purple" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Checkout"><i class="fa-solid fa-sign-out"></i></a>' +
+                    '<a href="{{ url("/bookings/") }}/' + booking.id + '" class="btn btn-sm btn-purple" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View"><i class="fa-solid fa-eye"></i></a>' +
+                    '</td>' +
+
+                    '</tr>';
+
+                table.find('tbody').append(row);
+            });
+        },
+        error: function(error) {
+            console.error('Error loading bookings:', error);
+        }
+    });
+}
+
+$('#filterDate, .filterTypeClass').change(function() {
+    updateBookings();
+});
+
+
+
+
+    $('#filterDate').change(function() {
+        updateBookings();
+    });
+
+
     </script>
 @endsection

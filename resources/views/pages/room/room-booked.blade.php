@@ -24,7 +24,7 @@
     <div class="container-fluid">
         <div class="d-flex my-3 justify-content-between align-items-center">
             <div class="">
-                <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
+                <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back      </a>
             </div>
         </div>
         <div class="card d-print-none">

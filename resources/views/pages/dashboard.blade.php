@@ -78,7 +78,7 @@
             </a>
             <!--end::Statistics Widget 5-->
         </div>
-        {{-- <div class="col-xl-4 mb-3">
+        <div class="col-xl-4 mb-3">
             <!--begin::Statistics Widget 5-->
             <a href="{{ route('booked-rooms')}}" class="card hoverable card-xl-stretch" style="background-color: #7bb8cf">
                 <!--begin::Body-->
@@ -97,7 +97,7 @@
                 <!--end::Body-->
             </a>
             <!--end::Statistics Widget 5-->
-        </div> --}}
+        </div>
         <div class="col-xl-4 mb-3">
             <!--begin::Statistics Widget 5-->
             <a href="{{ route('todaycheckout')}}" class="card hoverable card-xl-stretch" style="background-color: rgb(162, 207, 123)">
@@ -142,5 +142,5 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
 @endsection

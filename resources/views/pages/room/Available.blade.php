@@ -31,7 +31,7 @@
             <div class="">
                 <h1 class="text-purple text-center mb-0"> Room Database ({{date('F Y',strtotime($start_year))." - ".date('F Y',strtotime($end_year))}})</h1>
             </div>
-            <div><h4 class="text-purple text-center mb-1">Available Rooms ({{ $available_room_count }}/{{ $total_room_count }})</h4>
+            <div><h4 class="text-purple text-center mb-1">Available Rooms ({{ $available_room_count }}/{{ $total_room_count}})</h4>
 
                     {{-- <select class="form-select w-75" id="ddlYears">
                         <option disabled>Select Year...</option>
@@ -42,46 +42,45 @@
         </div>
 
 
-<div class="row mx-3">
-    @php
-    $color=['tan','#a7c2cc','rgba(134, 137, 169, 0.9)','#7bb8cf','rgb(162, 207, 123)','rgb(207, 123, 192)'];
-       $i=0;
-   @endphp
-    @foreach ($category as $item)
+        <div class="row mx-3">
+            @php
+                $color=['tan','#a7c2cc','rgba(134, 137, 169, 0.9)','#7bb8cf','rgb(162, 207, 123)','rgb(207, 123, 192)'];
+                $i=0;
+            @endphp
 
-    <div class="col-xl-4 mb-3">
-        <!--begin::Statistics Widget 5-->
-        {{-- @dd($color[$i]) --}}
-            <a href="#" class="card hoverable card-xl-stretch project-link  " data-project-id="{{$item->id}}"  style="background-color:{{$color[$i]}}">
-            <!--begin::Body-->
-            <div class="card-body ">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="text-white fw-bolder fs-2 mb-2">{{$item->room }}/{{ $item->total_room }}
-                        <div class="fw-bold text-white fs-5">{{$item->room_name}}</div>
+            @foreach ($category as $item)
+                @if ($item->name !== 'Other') <!-- Skip rendering for the "Other" category -->
+                    <div class="col-xl-4 mb-3">
+                        <!--begin::Statistics Widget 5-->
+                        {{-- @dd($color[$i]) --}}
+                        <a href="#" class="card hoverable card-xl-stretch project-link" data-project-id="{{$item->id}}" style="background-color:{{$color[$i]}}">
+                            <!--begin::Body-->
+                            <div class="card-body ">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="text-white fw-bolder fs-2 mb-2">{{$item->room }}/{{ $item->total_room }}
+                                        <div class="fw-bold text-white fs-5">{{$item->room_name}}</div>
+                                    </div>
+                                    <div class="fw-bold text-white fs-4"> {{ $item->total_booking_amount }}  &#8377;</div>
+                                </div>
+                            </div>
+                            <!--end::Body-->
+                        </a>
+                        <!--end::Statistics Widget 5-->
                     </div>
-                    <div class="fw-bold text-white fs-4"> {{ $item->total_booking_amount }}  &#8377;</div>
-                </div>
+                    @php
+                        $i++
+                    @endphp
 
-            </div>
-            <!--end::Body-->
-        </a>
-        <!--end::Statistics Widget 5-->
-    </div>
-    @php
-        $i++
-        // dd($i)
-    @endphp
-      @if ($i==count($color))
-         @php
+                    @if ($i == count($color))
+                        @php
+                            $i = 0;
+                        @endphp
+                    @endif
+                @endif
+            @endforeach
 
-        $i=0;
-        @endphp
-
-      @endif
-    @endforeach
-
-    <div id="project-details-container">
-    </div>
+            <div id="project-details-container"></div>
+        </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     $(document).ready(function() {

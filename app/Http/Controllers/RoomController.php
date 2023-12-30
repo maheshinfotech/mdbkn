@@ -160,20 +160,28 @@ class RoomController extends Controller
             if ($value->name=="Flats") {
               $this->add_properties($value,$value->name,$start_year,$end_year);
             }
-            if ($value->name=="Other") {
-              $this->add_properties($value,$value->name,$start_year,$end_year);
-            }
+            // if ($value->name=="Other") {
+            //   $this->add_properties($value,$value->name,$start_year,$end_year);
+            // }
 
         }
 
-       $total_room_count = Room::get()->count();
-       $available_room_count=Room::with('category')->where(function($query) {
-        $query->where('is_booked', null)
-            ->orWhere('is_booked', 0);
-    })->get()->count();
-    //    dd($total_room_count,$booked_room_count);
+        $total_room_count = Room::whereNotIn('category_id', function ($query) {
+            $query->select('id')->from('room_categories')->where('name', 'Other');
+        })->count();
+        $available_room_count = Room::with('category')
+            ->whereNotIn('category_id', function ($query) {
+                $query->select('id')->from('room_categories')->where('name', 'Other');
+            })
+            ->where(function ($query) {
+                $query->where('is_booked', null)
+                    ->orWhere('is_booked', 0);
+            })
+            ->count();
 
-        return view('pages.room.Available', compact('category','total_room_count','available_room_count'));
+        // ...
+
+        return view('pages.room.Available', compact('category', 'total_room_count', 'available_room_count'));
     }
 
 
