@@ -259,7 +259,7 @@ function initializeDataTable() {
                         '<td>' + booking.check_out_times + '</td>' +
                         '<td>' + booking.docter_name + '</td>' +
                         '<td>' + booking.mobile_number + '</td>' +
-                        '<td>' + booking.paid_rent + '</td>' +
+                     '<td>' + (booking.paid_rent !== null ? booking.paid_rent : 'N/A') + '</td>' +
                         '<td class="text-end ">';
 
                     if (booking.check_out_time !== null && booking.check_out_time !== '--') {
