@@ -6,10 +6,10 @@ use DateTime;
 use Carbon\Carbon;
 use App\Models\Room;
 use App\Models\Advance;
-use App\Models\Setting;
 use App\Models\Booking;
-use App\Models\BookingLogs;
 use App\Models\Parking;
+use App\Models\Setting;
+use App\Models\BookingLogs;
 use Illuminate\Support\Str;
 use App\Models\RoomCategory;
 use Illuminate\Http\Request;
@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\CheckoutNotification;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\SmsNotification;
 
 class BookingController extends Controller
 {
@@ -320,47 +321,50 @@ class BookingController extends Controller
        ]);
 
     }
-    public function checkout(Request $request)
-    {
-       // dd($request->all());
-        Gate::authorize('update', 'booking');
-        $checkoutdet = Booking::find($request->booking_id);
-        $checkoutdet->check_out_time = $request->check_out_time;
-        $checkoutdet->estimated_total_days = $request->estimatedays;
-        $checkoutdet->payable_rent = $request->totalrent;
+        public function checkout(Request $request)
+        {
+        // dd($request->all());
+            Gate::authorize('update', 'booking');
+            $checkoutdet = Booking::find($request->booking_id);
+            $checkoutdet->check_out_time = $request->check_out_time;
+            $checkoutdet->estimated_total_days = $request->estimatedays;
+            $checkoutdet->payable_rent = $request->totalrent;
 
-        // Fetch parking data based on parking_id
-        $parking = Parking::find($request->parking_id);
-        if ($parking) {
-            $parking->parking_end = $request->username;
-            $parking->charges = $request->received_amount;
-            $parking->save();
+            // Fetch parking data based on parking_id
+            $parking = Parking::find($request->parking_id);
+            if ($parking) {
+                $parking->parking_end = $request->username;
+                $parking->charges = $request->received_amount;
+                $parking->save();
+            }
+
+            // dd($parking);
+
+
+            $amount = $request->totalrent - $request->advancepayment;
+
+            if ($amount >= 0) {
+                $checkoutdet->paid_rent = $request->paidrent ? $request->paidrent : 0;
+            } else {
+                $checkoutdet->advance_refund = $request->paidrent ? $request->paidrent : 0;
+                $checkoutdet->paid_rent = 0;
+            }
+            $checkoutdet->save();
+
+            // ==== room isbooked code ====
+            if ($checkoutdet->save()) {
+                $room = Room::find($checkoutdet->room_id);
+                $room->is_booked = 0;
+                $room->booked_date = null;
+                $room->update();
+            }
+            $booking = Booking::find($request->booking_id);
+    //         $phoneNumber = $checkoutdet->mobile_number;
+    // $checkoutdet->notify(new SmsNotification($phoneNumber));
+        // Notification::send($booking, new CheckoutNotification($booking));
+
+         return redirect()->route('index-booking')->with('message', 'Checked Out Details Saved Successfully');
         }
-
-        // dd($parking);
-
-
-        $amount = $request->totalrent - $request->advancepayment;
-
-        if ($amount >= 0) {
-            $checkoutdet->paid_rent = $request->paidrent ? $request->paidrent : 0;
-        } else {
-            $checkoutdet->advance_refund = $request->paidrent ? $request->paidrent : 0;
-            $checkoutdet->paid_rent = 0;
-        }
-        $checkoutdet->save();
-
-        // ==== room isbooked code ====
-        if ($checkoutdet->save()) {
-            $room = Room::find($checkoutdet->room_id);
-            $room->is_booked = 0;
-            $room->booked_date = null;
-            $room->update();
-        }
-        $checkoutdet->notify(new CheckoutNotification($checkoutdet));
-
-        return redirect()->route('index-booking')->with('message', 'Checked Out Details Saved Successfully');
-    }
 
     public function getguestpreviousdetails(Request $request) {
         $guestpredetail = Booking::where('mobile_number',$request->numb)->latest()->first();
@@ -801,6 +805,22 @@ public function Billingshow($id)
     return view('pages.booking.bilingshow', compact('booking', 'totalAmount', 'advances', 'refundAmount'));
 }
 
+
+
+
+public function getBookedRoomsCount(Request $request)
+{
+    $selectedDate = $request->input('selectedDate');
+
+    $bookedRoomsCount = Booking::whereDate('check_in_time', '<=', $selectedDate)
+        ->where(function ($query) use ($selectedDate) {
+            $query->whereNull('check_out_time')
+                ->orWhereDate('check_out_time', '>', $selectedDate);
+        })
+        ->count();
+
+    return response()->json(['bookedRoomsCount' => $bookedRoomsCount]);
+}
 
 
 
