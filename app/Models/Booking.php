@@ -9,6 +9,7 @@ use App\Models\BookingLogs;
 use App\Models\hospital;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Notifications\Notifiable;
 
 
@@ -57,5 +58,8 @@ class Booking extends Model
         return $this->hasMany(Advance::class);
     }
 
-
+    public function notifications()
+    {
+        return $this->morphMany(\Illuminate\Notifications\DatabaseNotification::class, 'notifiable')->orderBy('created_at', 'desc');
+    }
 }
