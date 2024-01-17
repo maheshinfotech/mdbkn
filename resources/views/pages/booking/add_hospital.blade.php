@@ -47,7 +47,7 @@ $tableHeadSecond = ['Full Name', 'Machine Name', 'Working Hours'];
                                 @if ($loop->last)
                                 {{$ward->ward}}
                                 @else
-                                {{$ward->ward}}     ,
+                                {{$ward->ward}} ,
                                 @endif
 
 
