@@ -234,7 +234,7 @@ function initializeDataTable() {
                 });
             });
         });
- 
+
     function updateBookings() {
         var selectedDate = $('#filterDate').val();
         var selectedType = $('.filterTypeClass').val();

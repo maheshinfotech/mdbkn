@@ -44,6 +44,14 @@ class Booking extends Model
         return $this->hasMany(BookingLogs::class);
     }
 
+    public function hospital(){
+        return $this->belongsTo(Hospital::class);
+    }
+
+    public function ward(){
+        return $this->belongsTo(Ward::class);
+    }
+
     public function room(){
         return $this->belongsTo(Room::class)->with('category');
     }

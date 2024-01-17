@@ -128,7 +128,7 @@
         </div>
         <div class="col-xl-4 mb-3">
             <!--begin::Statistics Widget 5-->
-            <a href="{{ route('balancedue')}}" class="card hoverable card-xl-stretch" style="background-color: #bc45a8">
+            <a href="{{ route('balancedue')}}" class="card hoverable card-xl-stretch" style="background-color: #c97bbc">
                 <!--begin::Body-->
                 <div class="card-body">
                     <span class="svg-icon text-white svg-icon-3x ms-n1">
