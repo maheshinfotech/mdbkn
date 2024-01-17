@@ -17,7 +17,7 @@
 
             <div class="card my-3">
                 <div class="card-header bg-light">
-                    <h3 class="text-purple fw-bold mb-0">Edit Booking Details</h3>
+                    <h3 class="text-purple fw-bold mb-0">Edit Booking Details </h3>
                 </div>
                 <!--card body starts -->
                 <div class="card-body">
@@ -260,10 +260,13 @@
 
                         <div class="row mb-4">
 
-                           @if ($editbooking->id_number)
+                           {{-- @if ($editbooking->id_number)
                            <img src="{{ asset('').'storage/'.$editbooking->id_number }}" alt="" style="width: 80px;height:40px;">
 
-                           @endif
+                           @endif --}}
+                           <a target="_blank" href="{{ asset('').'storage/'.$editbooking->id_number }}">
+                            <img src="{{ asset('').'storage/'.$editbooking->id_number }}" width="100" height="100" class=" mb-3 img-thumbnail" alt="Photo1">
+                        </a>
 
                         </div>
 
@@ -287,10 +290,18 @@
                                 </select>
                             </div>
 
+
                             <!-- col start -->
-                            <div class="col-md-2 ">
-                                <label class=" fw-bold mb-1 ">Patient Ward No:</label>
-                                <input type="text" class="form-control" name="ward_no" value="{{$editbooking->patient_ward_no}}" id="wardno"  />
+                            <div class="col-md-2">
+                                <input type="hidden" name="ward_id" id="ward_id" value="{{ $editbooking->ward_id }}">
+
+                                <label class="fw-bold mb-1">Patient Ward No:</label>
+                                <select class="form-select" name="ward_no" id="wardno" required>
+                                    <option value="" disabled>Select Ward...</option>
+                                    @foreach (\DB::table('wards')->where('hospital_id', $editbooking->hospital_id)->get() as $ward)
+                                        <option @if($editbooking->ward_id == $ward->id) selected @endif value="{{ $ward->id }}">{{ $ward->ward}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 pbmroomno" style="display:none">
@@ -686,6 +697,34 @@
 
         // })
         // ==============================
+
+        $(document).ready(function () {
+        $('#hospitalname').change(function () {
+            var hospitalId = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url: '/get-wards',
+                data: { hospital_id: hospitalId },
+                success: function (response) {
+                    console.log(response);
+                    var options = '<option value="" disabled selected>Select Ward...</option>';
+                    $.each(response.wards, function (key, ward) {
+                        options += '<option value="' + ward.id + '">' + ward.ward + '</option>';
+                    });
+                    $('#wardno').html(options);
+
+                    $('#ward_id').val(response.wards[0].id);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        $('#wardno').change(function () {
+            $('#ward_id').val($(this).val());
+        });
+    });
     </script>
 @endsection
 

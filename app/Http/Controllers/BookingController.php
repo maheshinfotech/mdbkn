@@ -439,7 +439,7 @@ class BookingController extends Controller
 
     public function update(Request $request,$id)
         {
-        //    dd($request->all());
+          //  dd($request->all());
         Gate::authorize('update', 'booking');
 
         $bookingedit = Booking::with('bookinglogs')->find($id);
@@ -460,6 +460,7 @@ class BookingController extends Controller
 
         $bookingedit->gender=$request->gender;
         $bookingedit->hospital_id=$request->hospital_id;
+        $bookingedit->ward_id=$request->ward_id;
         $bookingedit->check_in_time = $request->checkin;
         $bookingedit->age=$request->age;
         $bookingedit->city=$request->city;
