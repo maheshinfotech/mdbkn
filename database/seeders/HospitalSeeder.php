@@ -16,49 +16,59 @@ class HospitalSeeder extends Seeder
     {
         DB::table('hospitals')->insert([
             [
-                'name' =>'Trauma Centre',
+                'id' => 1,
+                'name' =>'Medicine Hospital',
             ],
             [
-                'name' =>'PBM Super Speciality Hospital',
+                'id' => 2,
+                'name' =>'Sarjan Hospital',
             ],
             [
-                'name' =>'PBM Eye Hospital',
+                'id' => 3,
+                'name' =>'Trauma center Hospital',
             ],
             [
-                'name' =>"PBM Men's Hospital",
+                'id' => 4,
+                'name' =>"Haldiram heart Hospital",
             ],
             [
-                'name' =>'PBM Women Hospital',
+                'id' => 5,
+                'name' =>'Cancer Hospital',
+            ],
+            [ 'id' => 6,
+                'name' =>'Nasha mukti Hospital',
             ],
             [
-                'name' =>'OPD wing, PBM hospital',
-            ],
-            [
+                'id' => 7,
                 'name' =>'TB Hospital PBM',
             ],
             [
-                'name' =>'ENT PBM hospital',
+                'id' => 8,
+                'name' =>'ENT PBM Hospital',
             ],
             [
-                'name' =>'OPD Medicine And Surgery',
+                'id' => 9,
+                'name' =>'PBM HHG super speciality Hospital',
             ],
             [
-                'name' =>'Eye Ear Nose PBM Hospital',
+                'id' => 10,
+                'name' =>'Urology Hospital',
             ],
             [
-                'name' =>'E-Ward PBM',
+                'id' => 11,
+                'name' =>'Eye  PBM Hospotal',
             ],
             [
-                'name' =>"Prince Bijay Singh Memorial Children's Hospital",
+                'id' => 12,
+                'name' =>'Child Hospital',
             ],
             [
-                'name' =>'Original PBM Hospital',
+                'id' => 13,
+                'name' =>'female Hospital',
             ],
             [
-                'name' =>'Rehabilitation center PBM HOSPITAL',
-            ],
-            [
-                'name' =>'Others',
+                'id' => 15,
+             'name' =>'Others',
             ],
             ]);
     }

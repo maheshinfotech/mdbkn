@@ -21,7 +21,7 @@
             <!-- card starts -->
             <div class="card d-print-none">
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                    <h3 class="text-purple fw-bold mb-0">Booking Records</h3>
+                    <h3 class="text-purple fw-bold mb-0">Booking Records </h3>
                     <div class="mb-3">
                         <label for="filterDate" class="form-label">Filter by Date:</label>
                         <input type="date" name="filterDate" id="filterDate" class="form-control">

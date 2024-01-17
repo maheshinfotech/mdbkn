@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use Exception;
 use Carbon\Carbon;
 use App\Models\Room;
 use App\Models\Advance;
 use App\Models\Booking;
 use App\Models\Parking;
 use App\Models\Setting;
+use Twilio\Rest\Client;
 use App\Models\BookingLogs;
 use Illuminate\Support\Str;
 use App\Models\RoomCategory;
@@ -16,10 +18,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use App\Notifications\SmsNotification;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\CheckoutNotification;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\SmsNotification;
 
 class BookingController extends Controller
 {
@@ -122,6 +124,7 @@ class BookingController extends Controller
 
         $booking = new Booking;
         $booking->room_id=$request->room;
+        $booking->ward_id =$request->ward_id;
         $booking->guest_name=$request->guest_name;
         $booking->guest_father_name=$request->guest_father;
         $booking->guest_cast=$request->caste;
@@ -165,7 +168,6 @@ class BookingController extends Controller
         // ===============================
         $booking->tehsil            =   $request->tehsil;
         $booking->relation_patient  =   $request->relation;
-        $booking->ward_type         =   $request->ward;
         $booking->is_admitted       =   $request->is_admit ? 1 : 0;
         $booking->patient_type      =   $request->patient;
         // rent ==================
@@ -361,7 +363,7 @@ class BookingController extends Controller
             $booking = Booking::find($request->booking_id);
     //         $phoneNumber = $checkoutdet->mobile_number;
     // $checkoutdet->notify(new SmsNotification($phoneNumber));
-        // Notification::send($booking, new CheckoutNotification($booking));
+        Notification::send($booking, new CheckoutNotification($booking));
 
          return redirect()->route('index-booking')->with('message', 'Checked Out Details Saved Successfully');
         }
@@ -826,7 +828,35 @@ public function getBookedRoomsCount(Request $request)
 
 
 
+
+
+public function test()
+    {
+        $receiverNumber = "+91 9664247584";
+        $message = "hello ritik";
+
+        try {
+
+            $account_sid = getenv("TWILIO_SID");
+            $auth_token = getenv("TWILIO_AUTH_TOKEN");
+            $twilio_number = getenv("TWILIO_PHONE_NUMBER");
+            // dd($account_sid,$auth_token,$twilio_number);
+
+            $client = new Client($account_sid, $auth_token);
+            $client->messages->create($receiverNumber, [
+                'from' => $twilio_number,
+                'body' => $message]);
+
+            dd('SMS Sent Successfully.');
+
+        } catch (Exception $e) {
+            dd("Error: ". $e->getMessage());
+        }
     }
+
+    }
+
+
 
 
 

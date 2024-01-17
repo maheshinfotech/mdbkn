@@ -54,7 +54,7 @@
                                     Non-Admitted
                                 </label>
                             </div>
-                            
+
                             <div class="col-1 text-center">
                                 <div class="vr" style="opacity:0.5"></div>
                             </div>
@@ -249,9 +249,13 @@
                             </div>
 
                             <!-- col start -->
-                            <div class="col-md-2 ">
-                                <label class=" fw-bold mb-1 ">Patient Ward No:</label>
-                                <input type="text" class="form-control" name="ward_no" id="wardno" />
+                            <div class="col-md-2">
+                                <input type="hidden" name="ward_id" id="ward_id" value="">
+
+                                <label class="fw-bold mb-1">Patient Ward No:</label>
+                                <select class="form-select" name="ward_no" id="wardno">
+                                    <option value="" disabled selected>Select Ward...</option>
+                                </select>
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 pbmroomno" style="display:none">
@@ -605,6 +609,35 @@
             }
 
         })
+
+        $(document).ready(function () {
+        $('#hospitalname').change(function () {
+            var hospitalId = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url: '/get-wards',
+                data: { hospital_id: hospitalId },
+                success: function (response) {
+                    console.log(response);
+                    var options = '<option value="" disabled selected>Select Ward...</option>';
+                    $.each(response.wards, function (key, ward) {
+                        options += '<option value="' + ward.id + '">' + ward.ward + '</option>';
+                    });
+                    $('#wardno').html(options);
+
+                    $('#ward_id').val(response.wards[0].id);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        $('#wardno').change(function () {
+            $('#ward_id').val($(this).val());
+        });
+    });
+
 
     </script>
 @endsection

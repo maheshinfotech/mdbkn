@@ -5,6 +5,7 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\AdvanceController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\RoomCategoryController;
 
 
@@ -125,6 +126,24 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/today-bookings', [BookingController::class, 'showTodayBookings'])->name('today-bookings');
             Route::get('/datebooking/filter', [BookingController::class ,'filterByDate'])->name('datebooking.filter');
             Route::post('/getBookedRoomsCount', [BookingController::class, 'getBookedRoomsCount'])->name('getBookedRoomsCount');
+             Route::delete('/hospital/delete/{id}', [HospitalController::class,'destroy'])->name('hospital.delete');
+             Route::post('/hospital/store', [HospitalController::class, 'store'])->name('hospital.store');
+             Route::get('/hospital/edit/{id}', [HospitalController::class, 'edit']);
+               Route::put('/hospital/update/{id}', [HospitalController::class ,'update'])->name('hospital.update');
+
+
+
+
+
+            // Route::get('/tesesms', [BookingController::class, 'test'])->name('test');
+            // Example Route
+              Route::get('/get-wards', [HospitalController::class ,'getWards']);
+              Route::get('/add_hospital', [HospitalController::class ,'index']);
+
+
+
+
+            Route::get('/test', [BookingController::class, 'test']);
 
             /**Parking Module */
             Route::get('/parkings', 'parkings')->name('parkings');
