@@ -27,7 +27,8 @@ class MenuSeeder extends Seeder
                 (5, 'user', 'users', 0, '<i class=\"fa-solid fa-user\"></i>', 'users', '1,2,3,4,5', 1, NULL, NULL, NULL, 0, 6),
                 (6, 'parking', 'parkings', 0, '<i class=\"fas fa-parking \"></i>', 'Parkings', '1,2,3,4', 1, NULL, NULL, NULL, 0, 5),
                 (7, 'permission', 'permissions', 0, '<i class=\"fa-solid fa-lock\"></i>', 'permissions', '1,2,3,4', 1, NULL, NULL, NULL, 0, 8),
-                (8, 'role', 'roles', 0, '<i class=\"fa-solid fa-users\"></i>', 'roles', '1,2,3,4', 1, NULL, NULL, NULL, 0, 7)
+                (8, 'role', 'roles', 0, '<i class=\"fa-solid fa-users\"></i>', 'roles', '1,2,3,4', 1, NULL, NULL, NULL, 0, 7),
+                (9, 'hospital', 'hospitals', 0, '<i class=\"fa-solid fa fa-h-square\"></i>', 'hospitals', '1,2,3,4', 1, NULL, NULL, NULL, 0, 9)
                 ;"
         ));
     }

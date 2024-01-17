@@ -58,7 +58,7 @@ class HospitalController extends Controller
             }
         }
 
-        return redirect('/add_hospital')->with('message', 'Data has been successfully stored.');
+        return redirect('/hospitals')->with('message', 'Data has been successfully stored.');
     }
 
 
@@ -139,7 +139,7 @@ public function edit($id)
         //     }
         // }
 
-        return redirect('/add_hospital')->with('message', 'Hospital updated successfully');
+        return redirect('/hospitals')->with('message', 'Hospital updated successfully');
     }
 
 

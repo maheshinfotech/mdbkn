@@ -68,7 +68,7 @@ class HospitalSeeder extends Seeder
             ],
             [
                 'id' => 15,
-             'name' =>'Others',
+                'name' =>'Others',
             ],
             ]);
     }

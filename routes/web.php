@@ -24,7 +24,13 @@ use App\Http\Controllers\RoomCategoryController;
 // Example Routes
 
 //Route::post('/advances/store', [AdvanceController::class,'store'])->name('advances.store');
+Route::get('/storagelink', function(){
+    // dd(new Artisan);
+    \Illuminate\Support\Facades\Artisan::call('storage:link');
 
+    // exec('composer update my-package');
+
+});
 Route::get('/advance/create/{booking_id}', [AdvanceController::class , 'create'])->name('advance.create');
 Route::post('/advance/store', [AdvanceController::class,'store'])->name('advance.store');
 //Route::get('/booking/more-than/{days}', [BookingController::class, 'showMoreThan']);
@@ -138,7 +144,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             // Route::get('/tesesms', [BookingController::class, 'test'])->name('test');
             // Example Route
               Route::get('/get-wards', [HospitalController::class ,'getWards']);
-              Route::get('/add_hospital', [HospitalController::class ,'index']);
+              Route::get('/hospitals', [HospitalController::class ,'index']);
 
 
 
