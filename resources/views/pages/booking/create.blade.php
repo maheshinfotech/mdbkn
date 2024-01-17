@@ -17,7 +17,7 @@
 
             <div class="card my-3">
                 <div class="card-header bg-light">
-                    <h3 class="text-purple fw-bold mb-0">Add Booking</h3>
+                    <h3 class="text-purple fw-bold mb-0">Add Booking </h3>
                 </div>
                 <!--card body starts -->
                 <div class="card-body">

@@ -16,7 +16,7 @@
 
         <div class="card my-3">
           <div class="card-header bg-light">
-            <h3 class="text-purple fw-bold mb-0">Booking Details</h3>
+            <h3 class="text-purple fw-bold mb-0">Booking Details </h3>
           </div>
           <!--card body starts -->
           <div class="card-body">
@@ -154,7 +154,7 @@
 
                     <div class="col-4">
                           <a target="_blank" href="{{ asset('').'storage/'.$booking->id_number }}">
-                              <img src="{{ asset('').'storage/'.$booking->id_number }}" width="400" height="400" class=" mb-3 img-thumbnail" alt="Photo1">
+                              <img src="{{ asset('').'storage/'.$booking->id_number }}" width="100" height="100" class=" mb-3 img-thumbnail" alt="Photo1">
                           </a>
                           <div class="text-center">ID Proof</div>
                       </div>
