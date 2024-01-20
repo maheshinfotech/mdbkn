@@ -22,7 +22,7 @@
                 <!--card body starts -->
                 <div class="card-body">
                     <!--form starts -->
-                    <form action="/bookings" method="post" enctype="multipart/form-data">
+                    <form action="/bookings" method="post" class="uniqueclass" enctype="multipart/form-data">
                         @csrf
                         <!--begin::Input group -->
                         <div class="row my-4 justify-content-center ">
@@ -59,24 +59,12 @@
                                 <div class="vr" style="opacity:0.5"></div>
                             </div>
                             <div class="col-lg-4 col-12 text-start">
-                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose " style="display: none">
-                                    <input type="radio" name="ward" value="ct" class="ward">
-                                    CT
-                                </label>
-                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose" style="display: none">
-                                    <input type="radio" name="ward" value="rt" class="ward">
-                                    RT
-                                </label>
-                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose" style="display: none">
-                                    <input type="radio" name="ward"  value="o ward" class="ward" >
-                                    O Ward
-                                </label>
                                 <label class=" fs-7 fw-bold mb-1 me-3">
-                                    <input type="radio" name="ward" value="report" class="ward">
+                                    <input type="radio" name="ward" value="report" class="ward" >
                                     Tests/Reports
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1">
-                                    <input type="radio" name="ward" checked value="other" class="ward">
+                                    <input type="radio" name="ward" checked value="other" class="ward" value="{{old('ward')}}">
                                     Other
                                 </label>
                             </div>
@@ -92,7 +80,7 @@
                             <div class="col-lg-3 col-12">
                                 <label class="fs-7 fw-bold mb-1">Check-in Time<span class="text-danger">*</span></label>
                                 <input type="datetime-local" class="form-control" name="checkin"
-                                    value="{{ now()->format('Y-m-d\TH:i') }}" required />
+                                    value="{{ now()->format('Y-m-d\TH:i') }}"  />
                             </div>
 
                             <!-- col 0 ends  -->
@@ -100,11 +88,11 @@
                             <!-- col 1 starts  -->
                             <div class="col-lg-3 col-12">
                                 <label class=" fs-7 fw-bold mb-1 ">Choose Category<span class="text-danger">*</span></label>
-                                <select id="category" class="form-select" name="category" required
-                                    onchange="select_category()">
+                                <select id="category" class="form-select" name="category"
+                                    onchange="select_category()" >
                                     <option value="" disabled selected>Category...</option>
                                     @foreach ($category as $cat)
-                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                        <option value="{{ $cat->id }}" {{old('category','')==$cat->id ? 'selected' : ''}}>{{ $cat->name }}</option>
                                     @endforeach
 
                                 </select>
@@ -114,7 +102,7 @@
                             <!-- col 2 starts  -->
                             <div class="col-lg-3 col-12">
                                 <label class=" fs-7 fw-bold mb-1 ">Choose Room<span class="text-danger">*</span></label>
-                                <select id="room" class="form-select" name="room" required>
+                                <select id="room" class="form-select" name="room" >
                                     <option value="" disabled selected>Rooms...</option>
                                 </select>
                             </div>
@@ -132,18 +120,18 @@
                                 <label class=" fw-bold mb-1">Mobile No<span class="text-danger">*</span></label>
                                 <input type="tel" class="form-control" name="mobile" id="mobile"
                                     pattern="[6-9]{1}[0-9]{9}" maxLength="10"
-                                    onkeyup="this.value = this.value.replace(/[^0-9-]/g, '');" required />
+                                    onkeyup="this.value = this.value.replace(/[^0-9-]/g, '');"   value="{{old('mobile')}}"/>
                             </div>
                             <!-- col start -->
                             <div class="col-md-3 ">
                                 <label class=" fw-bold mb-1 ">Guest Name<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="guest_name" id="name" required />
+                                <input type="text" class="form-control" name="guest_name" id="name" value="{{old('guest_name')}}"  />
                             </div>
 
                             <!-- col start -->
                             <div class="col-md-3 ">
                                 <label class="fw-bold mb-1 ">Guest Father Name:</label>
-                                <input type="text" class="form-control" name="guest_father" id="guest_father" />
+                                <input type="text" class="form-control" name="guest_father" id="guest_father"  value="{{old('guest_father')}}"/>
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 ">
@@ -160,7 +148,7 @@
                             <div class="col-md-2 ">
                                 <label class="d-flex align-items-center fw-bold mb-1"> Guest Caste<span
                                         class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="caste" id="caste" />
+                                <input type="text" class="form-control" name="caste" id="caste" value="{{old('caste')}}" />
                             </div>
 
                         </div>
@@ -171,13 +159,13 @@
                             <!-- col start -->
                             <div class="col-md-2">
                                 <label class=" fw-bold mb-1 ">Age:</label>
-                                <input type="number" class="form-control" name="age" id="age" />
+                                <input type="number" class="form-control" name="age" id="age"  value="{{old('age')}}"/>
                             </div>
 
                             <!-- col start -->
                             <div class="col-md-2">
                                 <label class=" fw-bold mb-1">State<span class="text-danger">*</span></label>
-                                <select class="form-select" name="state" required id="state">
+                                <select class="form-select" name="state"  id="state" >
 
                                 </select>
                                 {{-- <input type="text" class="form-control" name="state" id="state" required /> --}}
@@ -193,18 +181,18 @@
                             <!-- col start -->
                             <div class="col-md-2">
                                 <label class="fw-bold mb-1">Tehsil:</label>
-                                <input type="text" class="form-control" id="tehsil" name="tehsil" />
+                                <input type="text" class="form-control" id="tehsil" name="tehsil"  value="{{old('tehsil')}}"/>
                             </div>
                             <!-- col start -->
                             <div class="col-md-2">
                                 <label class="d-flex align-items-center fw-bold mb-1"> Guest Address<span
                                         class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="guest_address" name="guest_address" />
+                                <input type="text" class="form-control" id="guest_address" name="guest_address" value="{{old('guest_address')}}" />
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 ">
                                 <label class="fw-bold mb-1">Relation (Patient)<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="relation" name="relation" required />
+                                <input type="text" class="form-control" id="relation" name="relation"  value="{{old('relation')}}" />
                             </div>
                         </div>
                         <!--end::Input group-->
@@ -213,9 +201,9 @@
                         <div class="row mb-4">
                             <div class="col-md-12 ">
                                 <label class="fw-bold mb-1">(Guest)ID-Proof<span class="text-danger">*</span></label>
-                                <input type="file" class="form-control" id="idproof" name="idproof" required />
+                                <input type="file" class="form-control" id="idproof" name="idproof"  value="{{old('idproof')}}" />
                                 <a target="_blank" href="" id="showpreviousid">
-                                    <img src="" id="id_numberphoto" style="height:50px;width:80px; display:none">
+                                    <img src="" id="id_numberphoto" style="height:50px;width:80px; display:none" >
                                 </a>
                             </div>
                         </div>
@@ -232,14 +220,14 @@
                             <!-- col start -->
                             <div class="col-md-2 ">
                                 <label class=" fw-bold mb-1 ">Patient Name<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="patient_name" required
-                                    id="patient_name" required />
+                                <input type="text" class="form-control" name="patient_name"
+                                    id="patient_name"  value="{{old('patient_name')}}" />
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 ">
                                 <label class="fw-bold mb-1 ">Hospital (Department)<span
                                         class="text-danger">*</span></label>
-                                <select class="form-select" name="hospital_id" id="hospitalname" required>
+                                <select class="form-select" name="hospital_id" id="hospitalname" >
                                     <option value="">Choose..</option>
                                     @foreach (\DB::table('hospitals')->get() as $hosname)
                                         <option value="{{ $hosname->id }}">{{ $hosname->name }}
@@ -265,14 +253,14 @@
                             <!-- col start -->
                             <div class="col-md-2 ">
                                 <label class=" fw-bold mb-1 ">Patient Bed No:</label>
-                                <input type="text" class="form-control" name="bedno" id="bedno" />
+                                <input type="text" class="form-control" name="bedno" value="{{old('bedno')}}" id="bedno" />
                             </div>
 
                             <!-- col start -->
                             <div class="col-md-2 mb-3">
 
                                 <label class="fw-bold mb-1 ">Doctor Name:</label>
-                                <input type="text" class="form-control" name="doctor" id="doctor" />
+                                <input type="text" class="form-control" name="doctor" value="{{old('doctor')}}" id="doctor" />
                             </div>
 
                         </div>
@@ -332,19 +320,19 @@
                                         <!-- col start -->
                                         <div class="col-md-2 mb-3">
                                             <label class=" fw-bold mb-1 ">Guest Name:</label>
-                                            <input type="text" class="form-control" name="guestname"
-                                                id="" />
+                                            <input type="text" class="form-control" name="guestname"  value="{{ old('guestname') }}"
+                                                id=""  />
                                         </div>
                                         <!-- col start -->
                                         <div class="col-md-2 mb-3">
                                             <label class=" fw-bold mb-1 ">Guest Age:</label>
-                                            <input type="number" class="form-control" name="guestage" id="" />
+                                            <input type="number" class="form-control" name="guestage" id=""value="{{ old('guestage') }}" />
                                         </div>
                                         <!-- col start -->
                                         <div class="col-md-2 mb-3">
                                             <label class=" fw-bold mb-1 ">Guest Relation:</label>
                                             <input type="text" class="form-control" name="guestrelation"
-                                                id="" />
+                                                id="" value="{{ old('guestrelation') }}" />
                                         </div>
                                         <!-- col start -->
                                         <div class="col-md-2 mb-3">
@@ -638,6 +626,10 @@
         });
     });
 
-
+    $(document).ready(function(){
+            $('form.uniqueclass').submit(function(){
+                $(this).find(':button[type=submit]').prop('disabled', true);
+            });
+        });
     </script>
 @endsection
