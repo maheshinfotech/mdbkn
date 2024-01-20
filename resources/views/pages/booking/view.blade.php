@@ -57,6 +57,8 @@
                                     <th class="text-center">Doctor Name</th>
                                     <th class="text-center">Mobile No.</th>
                                     <th class="text-center">Total Paid Amt</th>
+                                    <th class="text-center">Created At</th>
+                                     <th class="text-center">Updated At</th>
 
                                     {{-- <th class ="text-center">Normal Rent <br>Patient Rent</th> --}}
                                     <th class="text-end">Action</th>
@@ -100,6 +102,8 @@
                                                 {{$totalAmt}}
                                             @endif
                                         </td>
+                                        <td>{{ date('d-M-y h:i A', strtotime($booking->created_at)) }}</td>
+                                        <td>{{ date('d-M-y h:i A', strtotime($booking->updated_at)) }}</td>
 
 
                                         <td class="text-end">
