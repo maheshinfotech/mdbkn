@@ -120,6 +120,33 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
+
+
+        $request->validate(
+
+            [
+                'room' => 'required|exists:rooms,id',
+                'ward_id' => 'required',
+                'guest_name' => 'required',
+                'guest_father' => 'required',
+                'caste' => 'required',
+                'guest_address' => 'required',
+                'patient_name' => 'required',
+                'bedno' => 'required',
+                'advance' => 'required|numeric',
+                'hospital_id' => 'required',
+                'checkin' => 'required|date',
+                'age' => 'required|numeric',
+                'state' => 'required',
+                'city' => 'required',
+                'doctor' => 'required',
+                'mobile' => 'required|numeric',
+                'tehsil' => 'required',
+                'relation' => 'required',
+            ]
+        );
+
+
         Gate::authorize('create', 'booking');
 
         $booking = new Booking;
@@ -247,8 +274,8 @@ class BookingController extends Controller
 
             // =======================================================================
 
-        return redirect()->back()->with('message', 'Booking added successfully');
-        // return redirect()->route('index-booking')->with('message', 'Booking added successfully');
+        // return redirect()->back()->with('message', 'Booking added successfully');
+        return redirect()->back()->with('message', 'Booking added successfully')->withInput();
 
 
     }
@@ -279,7 +306,7 @@ class BookingController extends Controller
     }
     // }
 
-    public function checkoutCal(Request $request) { 
+    public function checkoutCal(Request $request) {
         $payble_rent=0;
         $estimateDays=0;
         $bookings = Booking::with(['room'])->find($request->booking_id);

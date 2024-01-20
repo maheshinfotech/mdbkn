@@ -22,7 +22,7 @@
                 <!--card body starts -->
                 <div class="card-body">
                     <!--form starts -->
-                    <form action="/bookings/update/{{$editbooking->id}}" method="post" enctype="multipart/form-data">
+                    <form action="/bookings/update/{{$editbooking->id}}" method="post" enctype="multipart/form-data" class="uniqueclass">
                         @csrf
                         <!--begin::Input group -->
                         <div class="row my-4 justify-content-center ">
@@ -72,26 +72,6 @@
                                 <div class="vr" style="opacity:0.5"></div>
                             </div>
                             <div class="col-lg-4 col-12 text-center">
-                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose " @if ($editbooking->patient_type=="cancer") @else style="display: none" @endif>
-                                    <input type="radio" name="ward"  value="ct" class="ward"  @if ($editbooking->ward_type=="ct")
-                                    checked
-                                    @endif>
-                                    CT
-                                </label>
-                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose" @if ($editbooking->patient_type=="cancer") @else style="display: none" @endif>
-                                    <input type="radio" name="ward"  value="rt" class="ward"
-                                    @if ($editbooking->ward_type=="rt")
-                                    checked
-                                    @endif>
-                                    RT
-                                </label>
-                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose" @if ($editbooking->patient_type=="cancer") @else style="display: none" @endif>
-                                    <input type="radio" name="ward"  value="oward" class="ward"
-                                    @if ($editbooking->ward_type=="oward")
-                                    checked
-                                    @endif>
-                                    O Ward
-                                </label>
                                 <label class=" fs-7 fw-bold mb-1 me-3">
                                     <input type="radio" name="ward"  value="report" class="ward"
                                     @if ($editbooking->ward_type=="report")
@@ -725,6 +705,11 @@
             $('#ward_id').val($(this).val());
         });
     });
+    $(document).ready(function(){
+            $('form.uniqueclass').submit(function(){
+                $(this).find(':button[type=submit]').prop('disabled', true);
+            });
+        });
     </script>
 @endsection
 

@@ -15,7 +15,7 @@
         @endif
         <div class="d-flex flex-wrap mx-4 my-3 justify-content-between align-items-center ">
             <div class="">
-                <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
+                <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back </a>
             </div>
             @php
                 $current_date=Carbon\Carbon::now();
