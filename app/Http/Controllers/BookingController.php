@@ -390,7 +390,7 @@ class BookingController extends Controller
             $booking = Booking::find($request->booking_id);
     //         $phoneNumber = $checkoutdet->mobile_number;
     // $checkoutdet->notify(new SmsNotification($phoneNumber));
-        Notification::send($booking, new CheckoutNotification($booking));
+     //   Notification::send($booking, new CheckoutNotification($booking));
 
          return redirect()->route('index-booking')->with('message', 'Checked Out Details Saved Successfully');
         }
