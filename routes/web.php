@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RoomController;
-use App\Http\Controllers\RoomCategoryController;
 use App\Http\Controllers\AdvanceController;
+use App\Http\Controllers\RoomCategoryController;
 
 
 /*
@@ -24,7 +25,11 @@ use App\Http\Controllers\AdvanceController;
 Route::get('/advance/create/{booking_id}', [AdvanceController::class , 'create'])->name('advance.create');
 Route::post('/advance/store', [AdvanceController::class,'store'])->name('advance.store');
 // Route::get('/advance/show/{booking_id}', [AdvanceController::class .'show'])->name('advance.show');
-
+Route::get('/migrate', function () {
+    // dd('migration cmd');
+    // dd(new  Artisan );
+    Artisan::call('migrate');
+});
 Route::prefix(config('app.admin_prefix'))->group(function () {
 
     Route::middleware(['auth', 'shareview'])->group(function () {
