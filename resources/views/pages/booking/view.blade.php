@@ -252,6 +252,7 @@ function initializeDataTable() {
             },
             dataType: 'json',
             success: function(res) {
+                console.log(res);
                 if (bookingTable) {
                     bookingTable.destroy();
                 }
@@ -260,6 +261,11 @@ function initializeDataTable() {
                 table.find('tbody').empty();
 
                 $.each(res.bookings, function(index, booking) {
+                    var createdDate = new Date(booking.created_at);
+    var updatedDate = new Date(booking.updated_at);
+    var createdFormattedDateTime = createdDate.toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
+    var updatedFormattedDateTime = updatedDate.toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
+
                     var row = '<tr>' +
                         '<td>' + booking.guest_name + '</td>' +
                         '<td>' + booking.patient_name + '</td>' +
@@ -273,6 +279,8 @@ function initializeDataTable() {
                         '<td>' + booking.docter_name + '</td>' +
                         '<td>' + booking.mobile_number + '</td>' +
                      '<td>' + (booking.paid_rent !== null ? booking.paid_rent : 'N/A') + '</td>' +
+                     '<td>' + createdFormattedDateTime + '</td>' +
+                  '<td>' + updatedFormattedDateTime + '</td>' +
                         '<td class="text-end ">';
 
                     if (booking.check_out_time !== null && booking.check_out_time !== '--') {

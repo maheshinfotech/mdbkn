@@ -132,14 +132,12 @@ class BookingController extends Controller
                 'caste' => 'required',
                 'guest_address' => 'required',
                 'patient_name' => 'required',
-                'bedno' => 'required',
                 'advance' => 'required|numeric',
                 'hospital_id' => 'required',
                 'checkin' => 'required|date',
                 'age' => 'required|numeric',
                 'state' => 'required',
                 'city' => 'required',
-                'doctor' => 'required',
                 'mobile' => 'required|numeric',
                 'tehsil' => 'required',
                 'relation' => 'required',
@@ -274,8 +272,9 @@ class BookingController extends Controller
 
             // =======================================================================
 
-        // return redirect()->back()->with('message', 'Booking added successfully');
-        return redirect()->back()->with('message', 'Booking added successfully')->withInput();
+       // return redirect()->back()->with('message', 'Booking added successfully');
+         return redirect('/bookings')->with('message', 'Booking added successfully')->withInput();
+
 
 
     }
