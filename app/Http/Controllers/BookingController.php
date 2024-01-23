@@ -272,8 +272,8 @@ class BookingController extends Controller
 
             // =======================================================================
 
-        // return redirect()->back()->with('message', 'Booking added successfully');
-        return redirect('/bookings')->with('message', 'Booking added successfully')->withInput();
+       // return redirect()->back()->with('message', 'Booking added successfully');
+         return redirect('/bookings')->with('message', 'Booking added successfully')->withInput();
 
 
 
