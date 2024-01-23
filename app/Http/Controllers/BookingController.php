@@ -23,21 +23,25 @@ use Illuminate\Support\Facades\Storage;
 use App\Notifications\CheckoutNotification;
 use Illuminate\Support\Facades\Notification;
 
+
+//============== Meaning ==============================================
+$room=[
+'booked_room'=>'booked room mean is_booked is 1',
+'unbooked_room'=>'unbooked room mean is_booked is 0 and NULL',
+'inactive'=>'inactive room mean room_status is 0 ',
+'active'=>'active room mean room_status is 1 and Null ',
+];
+// ========== Meaning ============================================
+
+
 class BookingController extends Controller
 {
     public function index()
     {
-        // dd(config('app.parking_charge'));
         Gate::authorize('view', 'booking');
-
         $bookings = Booking::orderBy('check_out_time', 'asc')
             ->orderBy('id', 'desc')
             ->get();
-            // for ($i = 0; $i < count( $bookings); $i++) {
-            //     $bookings[$i]->check_in_time =  $bookings[$i]->getRawOriginal('check_in_time');
-            //     $bookings[$i]->check_out_time =  $bookings[$i]->getRawOriginal('check_out_time');
-            // }
-            // dd($bookings);
         return view('pages.booking.view', compact('bookings'));
     }
 
@@ -85,26 +89,12 @@ class BookingController extends Controller
 
 
 
-//     public function index()
-// {
-//     // Retrieve bookings where check_out_time is null first, and then retrieve the rest.
-//     $bookings = Booking::latest('id')
-//         ->whereNull('check_out_time')
-//         ->union(
-//             Booking::latest('id')
-//                 ->whereNotNull('check_out_time')
-//         )
-//         ->get();
 
-//     return view('pages.booking.view', compact('bookings'));
-// }
 
     public function create(Request $request)
     {
         Gate::authorize('create', 'booking');
-
         if($request->ajax()){
-            // $rooms=Room::where('category_id',$request->id)->where('is_booked','!=',1)->get();
             $rooms=Room::where('category_id',$request->id)->where(function ($query){
                 $query->whereNull('is_booked')->Orwhere('is_booked','!=',1);
             })->where(function ($query){
@@ -163,7 +153,7 @@ class BookingController extends Controller
         $booking->gender=$request->gender;
         $booking->hospital_id=$request->hospital_id;
 
-        // $booking->check_in_time= date('Y-m-d').' '.$request->checkin;
+
         $booking->check_in_time = $request->checkin;
         $booking->age=$request->age;
         $booking->city=$request->city;
@@ -171,7 +161,7 @@ class BookingController extends Controller
         $booking->docter_name=$request->doctor;
         $booking->mobile_number=$request->mobile;
 
-        // id proof saved ===========
+        //============== id proof saved ===========
         if ($request->imageidprf) {
             $bookdet=Booking::find($request->imageidprf);
             if ($request->hasFile('idproof')) {
@@ -198,8 +188,6 @@ class BookingController extends Controller
         // rent ==================
         $roomcat = RoomCategory::where('id', $request->category)->first();
 
-        // dd($roomcat,$request->all());
-            // if($request->ward=="ct" || $request->ward=="rt"){
             if($request->patient=='cancer'){
                 $booking->base_rent = $roomcat->patient_rent;
             }else{
@@ -216,7 +204,6 @@ class BookingController extends Controller
             $booking->base_grace_period = $setting->grace_period;
         }
         // ===========
-        // $booking->save();
         // booking record save block end
         // ==================add guest code=============================
 
@@ -258,19 +245,16 @@ class BookingController extends Controller
             $room->is_booked=1;
             $room->booked_date = Carbon::parse($request->checkin)->format('Y-m-d');
             $room->save();
-
             $advance = new Advance;
-            //dd($request->all());
             $advance->booking_id = $booking->id;
             $advance->amount = $booking->advance_payment;
-            Log::info($request->checkin);
             $advance->received_date = Carbon::parse($request->checkin)->format('Y-m-d');
             $advance->save();
         }
 
         //  if booking data save then this block execute
 
-            // =======================================================================
+         // =======================================================================
 
        // return redirect()->back()->with('message', 'Booking added successfully');
          return redirect('/bookings')->with('message', 'Booking added successfully')->withInput();
@@ -377,8 +361,6 @@ class BookingController extends Controller
                 $checkoutdet->advance_refund = $request->paidrent ? $request->paidrent : 0;
                 $checkoutdet->paid_rent = 0;
             }
-            $checkoutdet->save();
-
             // ==== room isbooked code ====
             if ($checkoutdet->save()) {
                 $room = Room::find($checkoutdet->room_id);
@@ -386,10 +368,7 @@ class BookingController extends Controller
                 $room->booked_date = null;
                 $room->update();
             }
-            // $booking = Booking::find($request->booking_id);
-    //         $phoneNumber = $checkoutdet->mobile_number;
-    // $checkoutdet->notify(new SmsNotification($phoneNumber));
-     //   Notification::send($booking, new CheckoutNotification($booking));
+
 
          return redirect()->route('index-booking')->with('message', 'Checked Out Details Saved Successfully');
         }
@@ -465,15 +444,17 @@ class BookingController extends Controller
 
     public function update(Request $request,$id)
         {
-          //  dd($request->all());
+
         Gate::authorize('update', 'booking');
 
         $bookingedit = Booking::with('bookinglogs')->find($id);
-        $rooms=Room::find($bookingedit->room_id);
-        $rooms->is_booked=0;
-        $rooms->booked_date = null;
-        $rooms->update();
-        $bookingedit->room_id=$request->room;
+
+        $previous_room=$bookingedit->room_id;
+
+
+
+
+
         $bookingedit->guest_name=$request->guest_name;
         $bookingedit->guest_father_name=$request->guest_father;
         $bookingedit->guest_cast=$request->caste;
@@ -527,7 +508,13 @@ class BookingController extends Controller
             $bookingedit->base_check_out_time = $setting->check_out_time;
             $bookingedit->base_grace_period = $setting->grace_period;
         }
-        // ===========
+
+
+
+
+
+
+
         $bookingedit->update();
         // booking record update block end
         // ==================add guest code=============================
@@ -572,10 +559,23 @@ class BookingController extends Controller
             }
             // ================
             // booking record save block end
-            $room=Room::find($request->room);
-            $room->is_booked=1;
-            $room->booked_date = Carbon::parse($request->checkin)->format('Y-m-d');
-            $room->update();
+    // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    // &&&&&&&&&&&&&&&&&&&&& Room Updation &&&&&&&&&&&&&&&&&&&&&&
+
+                        // firstofall room unbooked and status change
+                    $rooms=Room::find($previous_room);
+                    $rooms->is_booked=0;
+                    $rooms->booked_date = null;
+                    $rooms->update();
+                    // room unbooked and  status change
+                        $room=Room::find($request->room);
+                        $room->is_booked=1;
+                        $room->booked_date = Carbon::parse($request->checkin)->format('Y-m-d');
+                        $room->update();
+                        $bookingedit->room_id=$request->room;
+
+     // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    // &&&&&&&&&&&&&&&&&&&&& Room Updation &&&&&&&&&&&&&&&&&&&&&&
             if ($request->advance) {
                 foreach ($request->advance as $value) {
                     // dd($value);

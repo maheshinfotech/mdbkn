@@ -31,23 +31,6 @@ class AdvanceController extends Controller
 
 
 
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'booking_id' => 'required',
-    //         'amount' => 'required',
-    //         'received_date' => 'required',
-    //     ]);
-
-    //     Advance::create([
-    //         'booking_id' => $request->input('booking_id'),
-    //         'amount' => $request->input('amount'),
-    //         'received_date' => $request->input('received_date'),
-    //     ]);
-
-
-    //     return redirect('/bookings')->with('message', 'Your success message goes here');
-    // }
     public function store(Request $request)
     {
     Gate::authorize('create', 'booking');
