@@ -386,7 +386,7 @@ class BookingController extends Controller
                 $room->booked_date = null;
                 $room->update();
             }
-            $booking = Booking::find($request->booking_id);
+            // $booking = Booking::find($request->booking_id);
     //         $phoneNumber = $checkoutdet->mobile_number;
     // $checkoutdet->notify(new SmsNotification($phoneNumber));
      //   Notification::send($booking, new CheckoutNotification($booking));
