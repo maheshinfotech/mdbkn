@@ -13,16 +13,16 @@
     <div class="content  mx-0 w-100">
         <div class="container-fluid px-0">
             <!-- card starts -->
-        <a href="/bookings" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
+            <a href="/bookings" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
 
             <div class="card my-3">
                 <div class="card-header bg-light">
-                    <h3 class="text-purple fw-bold mb-0">Add Booking</h3>
+                    <h3 class="text-purple fw-bold mb-0">Add Booking </h3>
                 </div>
                 <!--card body starts -->
                 <div class="card-body">
                     <!--form starts -->
-                    <form action="/bookings" method="post" enctype="multipart/form-data">
+                    <form action="/bookings" method="post" class="uniqueclass" enctype="multipart/form-data">
                         @csrf
                         <!--begin::Input group -->
                         <div class="row my-4 justify-content-center ">
@@ -34,8 +34,7 @@
                                     Non Cancer Patient
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1">
-                                    <input type="radio" class="toggle-user-type patient" name="patient"
-                                        value="cancer">
+                                    <input type="radio" class="toggle-user-type patient" name="patient" value="cancer">
                                     Cancer Patient
                                 </label>
                             </div>
@@ -46,8 +45,7 @@
 
                             <div class="col-lg-3 col-12 text-center">
                                 <label class=" fs-7 fw-bold mb-1 me-4">
-                                    <input type="radio" class="toggle-user-type is_admit"  name="is_admit"
-                                        value="1">
+                                    <input type="radio" class="toggle-user-type is_admit" name="is_admit" value="1">
                                     Admitted
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1">
@@ -56,24 +54,17 @@
                                     Non-Admitted
                                 </label>
                             </div>
+
                             <div class="col-1 text-center">
                                 <div class="vr" style="opacity:0.5"></div>
                             </div>
-                            <div class="col-lg-3 col-12 text-center">
-                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose ">
-                                    <input type="radio" name="ward"  value="ct" class="ward">
-                                    CT
-                                </label>
-                                <label class=" fs-7 fw-bold mb-1  me-3 cancer-purpose">
-                                    <input type="radio" name="ward"  value="rt" class="ward">
-                                    RT
-                                </label>
+                            <div class="col-lg-4 col-12 text-start">
                                 <label class=" fs-7 fw-bold mb-1 me-3">
-                                    <input type="radio" name="ward"  value="report" class="ward">
-                                    Tests
+                                    <input type="radio" name="ward" value="report" class="ward" >
+                                    Tests/Reports
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1">
-                                    <input type="radio" name="ward" checked value="other" class="ward">
+                                    <input type="radio" name="ward" checked value="other" class="ward" value="{{old('ward')}}">
                                     Other
                                 </label>
                             </div>
@@ -88,7 +79,8 @@
 
                             <div class="col-lg-3 col-12">
                                 <label class="fs-7 fw-bold mb-1">Check-in Time<span class="text-danger">*</span></label>
-                                <input type="datetime-local" class="form-control" name="checkin" value="{{ now()->format('Y-m-d\TH:i') }}" required />
+                                <input type="datetime-local" class="form-control" name="checkin"
+                                    value="{{ now()->format('Y-m-d\TH:i') }}"  />
                             </div>
 
                             <!-- col 0 ends  -->
@@ -96,11 +88,11 @@
                             <!-- col 1 starts  -->
                             <div class="col-lg-3 col-12">
                                 <label class=" fs-7 fw-bold mb-1 ">Choose Category<span class="text-danger">*</span></label>
-                                <select id="category" class="form-select" name="category" required
-                                    onchange="select_category()">
+                                <select id="category" class="form-select" name="category"
+                                    onchange="select_category()" >
                                     <option value="" disabled selected>Category...</option>
                                     @foreach ($category as $cat)
-                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                        <option value="{{ $cat->id }}" {{old('category','')==$cat->id ? 'selected' : ''}}>{{ $cat->name }}</option>
                                     @endforeach
 
                                 </select>
@@ -110,7 +102,7 @@
                             <!-- col 2 starts  -->
                             <div class="col-lg-3 col-12">
                                 <label class=" fs-7 fw-bold mb-1 ">Choose Room<span class="text-danger">*</span></label>
-                                <select id="room" class="form-select" name="room" required>
+                                <select id="room" class="form-select" name="room" >
                                     <option value="" disabled selected>Rooms...</option>
                                 </select>
                             </div>
@@ -128,18 +120,18 @@
                                 <label class=" fw-bold mb-1">Mobile No<span class="text-danger">*</span></label>
                                 <input type="tel" class="form-control" name="mobile" id="mobile"
                                     pattern="[6-9]{1}[0-9]{9}" maxLength="10"
-                                    onkeyup="this.value = this.value.replace(/[^0-9-]/g, '');" required />
+                                    onkeyup="this.value = this.value.replace(/[^0-9-]/g, '');"   value="{{old('mobile')}}"/>
                             </div>
                             <!-- col start -->
                             <div class="col-md-3 ">
                                 <label class=" fw-bold mb-1 ">Guest Name<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="guest_name" id="name" required />
+                                <input type="text" class="form-control" name="guest_name" id="name" value="{{old('guest_name')}}"  />
                             </div>
 
                             <!-- col start -->
                             <div class="col-md-3 ">
                                 <label class="fw-bold mb-1 ">Guest Father Name:</label>
-                                <input type="text" class="form-control" name="guest_father" id="guest_father" />
+                                <input type="text" class="form-control" name="guest_father" id="guest_father"  value="{{old('guest_father')}}"/>
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 ">
@@ -154,8 +146,9 @@
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 ">
-                                <label class="d-flex align-items-center fw-bold mb-1"> Guest Caste<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="caste" id="caste" />
+                                <label class="d-flex align-items-center fw-bold mb-1"> Guest Caste<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="caste" id="caste" value="{{old('caste')}}" />
                             </div>
 
                         </div>
@@ -166,13 +159,13 @@
                             <!-- col start -->
                             <div class="col-md-2">
                                 <label class=" fw-bold mb-1 ">Age:</label>
-                                <input type="number" class="form-control" name="age" id="age" />
+                                <input type="number" class="form-control" name="age" id="age"  value="{{old('age')}}"/>
                             </div>
 
                             <!-- col start -->
                             <div class="col-md-2">
                                 <label class=" fw-bold mb-1">State<span class="text-danger">*</span></label>
-                                <select class="form-select" name="state" required id="state">
+                                <select class="form-select" name="state"  id="state" >
 
                                 </select>
                                 {{-- <input type="text" class="form-control" name="state" id="state" required /> --}}
@@ -188,17 +181,18 @@
                             <!-- col start -->
                             <div class="col-md-2">
                                 <label class="fw-bold mb-1">Tehsil:</label>
-                                <input type="text" class="form-control" id="tehsil" name="tehsil" />
+                                <input type="text" class="form-control" id="tehsil" name="tehsil"  value="{{old('tehsil')}}"/>
                             </div>
                             <!-- col start -->
                             <div class="col-md-2">
-                                <label class="d-flex align-items-center fw-bold mb-1"> Guest Address<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="guest_address" name="guest_address" />
+                                <label class="d-flex align-items-center fw-bold mb-1"> Guest Address<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="guest_address" name="guest_address" value="{{old('guest_address')}}" />
                             </div>
-                              <!-- col start -->
-                              <div class="col-md-2 ">
+                            <!-- col start -->
+                            <div class="col-md-2 ">
                                 <label class="fw-bold mb-1">Relation (Patient)<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="relation" name="relation" required/>
+                                <input type="text" class="form-control" id="relation" name="relation"  value="{{old('relation')}}" />
                             </div>
                         </div>
                         <!--end::Input group-->
@@ -207,9 +201,9 @@
                         <div class="row mb-4">
                             <div class="col-md-12 ">
                                 <label class="fw-bold mb-1">(Guest)ID-Proof<span class="text-danger">*</span></label>
-                                <input type="file" class="form-control" id="idproof" name="idproof" required />
+                                <input type="file" class="form-control" id="idproof" name="idproof"  value="{{old('idproof')}}" />
                                 <a target="_blank" href="" id="showpreviousid">
-                                    <img src="" id="id_numberphoto" style="height:50px;width:80px; display:none">
+                                    <img src="" id="id_numberphoto" style="height:50px;width:80px; display:none" >
                                 </a>
                             </div>
                         </div>
@@ -226,14 +220,15 @@
                             <!-- col start -->
                             <div class="col-md-2 ">
                                 <label class=" fw-bold mb-1 ">Patient Name<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="patient_name" required id="patient_name"
-                                    required />
+                                <input type="text" class="form-control" name="patient_name"
+                                    id="patient_name"  value="{{old('patient_name')}}" />
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 ">
-                                <label class="fw-bold mb-1 ">Hospital (Department)<span class="text-danger">*</span></label>
-                                <select class="form-select" name="hospital_id" id="hospitalname" required>
-                                    <option value="">choose..</option>
+                                <label class="fw-bold mb-1 ">Hospital (Department)<span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" name="hospital_id" id="hospitalname" >
+                                    <option value="">Choose..</option>
                                     @foreach (\DB::table('hospitals')->get() as $hosname)
                                         <option value="{{ $hosname->id }}">{{ $hosname->name }}
                                         </option>
@@ -242,26 +237,30 @@
                             </div>
 
                             <!-- col start -->
-                            <div class="col-md-2 ">
-                                <label class=" fw-bold mb-1 ">Patient Ward No:</label>
-                                <input type="text" class="form-control" name="ward_no" id="wardno"  />
+                            <div class="col-md-2">
+                                <input type="hidden" name="ward_id" id="ward_id" value="">
+
+                                <label class="fw-bold mb-1">Patient Ward No:</label>
+                                <select class="form-select" name="ward_no" id="wardno">
+                                    <option value="" disabled selected>Select Ward...</option>
+                                </select>
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 pbmroomno" style="display:none">
                                 <label class=" fw-bold mb-1 ">Patient Room No:</label>
-                                <input type="text" class="form-control" name="pbm_room_no" id="pbm_room_no"  />
+                                <input type="text" class="form-control" name="pbm_room_no" id="pbm_room_no" />
                             </div>
                             <!-- col start -->
                             <div class="col-md-2 ">
                                 <label class=" fw-bold mb-1 ">Patient Bed No:</label>
-                                <input type="text" class="form-control" name="bedno" id="bedno"  />
+                                <input type="text" class="form-control" name="bedno" value="{{old('bedno')}}" id="bedno" />
                             </div>
 
                             <!-- col start -->
                             <div class="col-md-2 mb-3">
 
                                 <label class="fw-bold mb-1 ">Doctor Name:</label>
-                                <input type="text" class="form-control" name="doctor" id="doctor" />
+                                <input type="text" class="form-control" name="doctor" value="{{old('doctor')}}" id="doctor" />
                             </div>
 
                         </div>
@@ -275,6 +274,27 @@
                                 <textarea name="remark" id="" class="form-control h-auto" rows="4"></textarea>
 
                             </div>
+
+                        </div>
+
+                        <div class="row text-center mb-4">
+                            <div class="col-md-12">
+
+                                <label for="is_parking" class="is_parking_div">
+                                    <input type="checkbox" id="is_parking" class="is_parking" name="is_parking"
+                                        value="1" /> Vehicle Parking
+                                </label>
+
+                                <label for="" class="mx-3">
+                                    <input type="text" placeholder="Vehicle Number"  disabled name="vehicle_number"
+                                        class="form-control parking_number">
+                                </label>
+
+                                <label for="" class="mx-3">
+                                    <input type="text" placeholder="Extra Notes"  disabled name="parking_notes"
+                                        class="form-control parking_number">
+                                </label>
+                            </div>
                         </div>
                         <!--end::Input group-->
 
@@ -282,7 +302,9 @@
                         <div class="repeater mt-4">
                             <!--heading start-->
                             <div class="card-header d-flex justify-content-between align-items-center p-2">
+
                                 <h3 class="text-purple fw-bold mb-0">Add Guest</h3>
+
                                 <div>
                                     <input class="btn btn-purple px-4" data-repeater-create type="button"
                                         value="Add" />
@@ -298,19 +320,19 @@
                                         <!-- col start -->
                                         <div class="col-md-2 mb-3">
                                             <label class=" fw-bold mb-1 ">Guest Name:</label>
-                                            <input type="text" class="form-control" name="guestname"
-                                                id="" />
+                                            <input type="text" class="form-control" name="guestname"  value="{{ old('guestname') }}"
+                                                id=""  />
                                         </div>
                                         <!-- col start -->
                                         <div class="col-md-2 mb-3">
                                             <label class=" fw-bold mb-1 ">Guest Age:</label>
-                                            <input type="number" class="form-control" name="guestage" id="" />
+                                            <input type="number" class="form-control" name="guestage" id=""value="{{ old('guestage') }}" />
                                         </div>
                                         <!-- col start -->
                                         <div class="col-md-2 mb-3">
                                             <label class=" fw-bold mb-1 ">Guest Relation:</label>
                                             <input type="text" class="form-control" name="guestrelation"
-                                                id="" />
+                                                id="" value="{{ old('guestrelation') }}" />
                                         </div>
                                         <!-- col start -->
                                         <div class="col-md-2 mb-3">
@@ -361,6 +383,7 @@
     <script>
         function select_category() {
             var id = $('#category').val();
+
             $.ajax({
                 url: '/bookings/create',
                 data: {
@@ -369,7 +392,7 @@
                 type: 'get',
                 success: function(response) {
                     var html = `<option value="" selected>Rooms...</option>`;
-                     console.log(response);
+                    console.log(response);
                     $('#room').html('');
 
                     for (let i = 0; i < response.length; i++) {
@@ -390,8 +413,6 @@
             .slideUp(500, function() {
                 $("#alert1").slideUp(500);
             });
-
-
 
         // =====================state city dropdown api=========================
         var auth_token;
@@ -485,8 +506,8 @@
         }
         // ===================================
 
-            // =============== get prefilled details on mobile no. =================
-            $('#mobile').on('keyup', function() {
+        // =============== get prefilled details on mobile no. =================
+        $('#mobile').on('keyup', function() {
             var numb = $('#mobile').val();
             var sizeofno = $('#mobile').val().length;
             // console.log(sizeofno);
@@ -501,15 +522,17 @@
                         // console.log(data.guestpredetail);
                         var resp = data.guestpredetail;
                         if (resp) {
-                            $('#name').val(resp.guest_name);id_numberphoto
+                            $('#name').val(resp.guest_name);
+                            // id_numberphoto
                             $('#guest_father').val(resp.guest_father_name);
+                            $('#gender').val(resp.gender);
                             $('#caste').val(resp.guest_cast);
                             $('#age').val(resp.age);
                             $('#guest_address').val(resp.guest_address);
                             $('#tehsil').val(resp.tehsil);
                             // $('#city').val(resp.city);
                             $('#state').val(resp.state);
-                                get_city(resp.city);
+                            get_city(resp.city);
                             if (resp.id_number) {
                                 document.getElementById("id_numberphoto").style.display = 'block';
                                 var img = '/storage/' + resp.id_number;
@@ -517,7 +540,7 @@
                                 $('#idproof').removeAttr("required");
                             } else {
                                 document.getElementById("id_numberphoto").style.display = 'none';
-                                $('#idproof').attr("required","required");
+                                $('#idproof').attr("required", "required");
                             }
                             $('#showpreviousid').attr('href', img);
                             $("#imageidprf").val(resp.id);
@@ -536,11 +559,12 @@
                             $('#tehsil').val('');
                             $('#city').val('');
                             $('#state').val('');
+                            $('#gender').val('');
                             document.getElementById("id_numberphoto").style.display = 'none';
                             $("#id_numberphoto").attr('src', '');
                             $('#showpreviousid').attr('href', '');
                             $("#imageidprf").val('');
-                            $('#idproof').attr("required","required");
+                            $('#idproof').attr("required", "required");
                             $("#patient_name").val('');
                             $("#hospitalname").val('');
                             $("#relation").val('');
@@ -554,6 +578,58 @@
             }
 
         })
-        // ==============================
+
+        // =======Action==========
+
+        $('.is_parking').change(function(){
+
+
+            if($('.is_parking').is(':checked')){
+
+                console.log("hello world");
+                $('.parking_number').removeAttr("disabled");
+
+            }else{
+
+                console.log("bye world");
+                $('.parking_number').attr("disabled" , true );
+
+            }
+
+        })
+
+        $(document).ready(function () {
+        $('#hospitalname').change(function () {
+            var hospitalId = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url: '/get-wards',
+                data: { hospital_id: hospitalId },
+                success: function (response) {
+                    console.log(response);
+                    var options = '<option value="" disabled selected>Select Ward...</option>';
+                    $.each(response.wards, function (key, ward) {
+                        options += '<option value="' + ward.id + '">' + ward.ward + '</option>';
+                    });
+                    $('#wardno').html(options);
+
+                    $('#ward_id').val(response.wards[0].id);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        $('#wardno').change(function () {
+            $('#ward_id').val($(this).val());
+        });
+    });
+
+    $(document).ready(function(){
+            $('form.uniqueclass').submit(function(){
+                $(this).find(':button[type=submit]').prop('disabled', true);
+            });
+        });
     </script>
 @endsection

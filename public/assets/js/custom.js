@@ -36,6 +36,7 @@ $(document).ready(function () {
                     data: "",
                     method: "DELETE",
                     success: function (res) {
+                        console.log(res);
                         if (res.status) {
                             $(context).parents("tr").first().remove();
                             showError(res.message, "success");
@@ -120,15 +121,17 @@ $(document).ready(function () {
         $('ward').removeProp("checked");
         console.log(patient + ' ' + is_admit);
 
-        // if(patient == 'cancer' && is_admit == '1'){
-        //     $('.cancer-purpose').show();
-        // }else{
-        //     $('.cancer-purpose').hide();
-        // }
+        if(patient == 'cancer'){
+            $('.cancer-purpose').show();
+        }else{
+            $('.cancer-purpose').hide();
+        }
           if(patient == 'cancer' && is_admit == '1'){
             $('.pbmroomno').show();
+            // $('.cancer-purpose').show();
         }else{
             $('.pbmroomno').hide();
+            // $('.cancer-purpose').hide();
         }
 
 

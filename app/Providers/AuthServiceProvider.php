@@ -57,12 +57,15 @@ class AuthServiceProvider extends ServiceProvider
         });
     }
 
+
+    
     private function isAuthozied($user, $action, $module)
     {
 
         DB::enableQueryLog();
-
+// dd($module);
         $menu   = Menu::where('menu_name', $module)->first();
+        // dd($menu);
 
 
         if (!in_array($action, $menu->menu_permissions)) {

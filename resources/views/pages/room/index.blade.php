@@ -213,6 +213,7 @@ $("#alert1")
     $(document).ready(function() {
     var table = $('#room_table').DataTable( {
         lengthChange: false,
+        "pageLength":100,
         buttons: [
             {
                 extend: 'collection',

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\RoomCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
 
 class RoomCategoryController extends Controller
 {
@@ -14,6 +16,7 @@ class RoomCategoryController extends Controller
      */
     public function index()
     {
+        Gate::authorize('view', 'category');
         $categories = RoomCategory::all();
         return view('pages.category.index', compact('categories'));
     }
@@ -36,6 +39,8 @@ class RoomCategoryController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', 'category');
+
         // dd($request->all());
         $category = new RoomCategory;
         $category->name = $request->name;
@@ -66,6 +71,8 @@ class RoomCategoryController extends Controller
      */
     public function edit($id, Request $request)
     {
+        Gate::authorize('update', 'category');
+
         if ($request->ajax()) {
             $data = RoomCategory::findOrFail($request->category);
             return response()->json(['data' => $data]);
@@ -81,6 +88,8 @@ class RoomCategoryController extends Controller
      */
     public function update(Request $request, RoomCategory $category)
     {
+        Gate::authorize('update', 'category');
+
         $category = RoomCategory::findOrFail($category->id);
         $category->name = $request->name;
         $category->facility = $request->facility;
@@ -99,6 +108,8 @@ class RoomCategoryController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('delete', 'category');
+
         $cat = RoomCategory::find($id);
 
         return $this->generateResponse($cat->delete());

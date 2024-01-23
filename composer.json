@@ -10,8 +10,10 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
+        "laravel/nexmo-notification-channel": "^3.2",
         "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "twilio/sdk": "^7.13"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -26,7 +28,12 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files":[
+            "app/helpers.php"
+        ]
+
+
     },
     "autoload-dev": {
         "psr-4": {

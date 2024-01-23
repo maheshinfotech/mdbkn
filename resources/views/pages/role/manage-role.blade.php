@@ -1,14 +1,14 @@
 
 @php
-    
+
     $is_update_form = $formData ? true : false;
-    
+
     $action_url = $is_update_form ? route("update-role" , ['role_placeholder' => $formData->id  ])  : route("create-role");
-    
+
     $role_name = old('role_name', $formData->role_name ?? '');
-    
+
     $is_active = old('is_active', $formData->is_active ?? '');
-    
+
     $pageName = "Manage Role";
 
 @endphp
@@ -22,6 +22,9 @@
 @section('content')
     <x-reusables.app-header pageName="{{$pageName}}" :createButton="false" module="role" />
     <div class="content  mx-0 w-100">
+        <div class="mb-3 mx-1">
+            <a href="/roles" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
+        </div>
         <div class="block block-rounded">
             <div class="block-content block-content-full">
                 <form action="{{ $action_url }}" method="post">
@@ -40,11 +43,11 @@
                     <!-- <div class="row justify-content-center">
 
                         <div class="col-6 mt-4 text-center">
-                            
+
                             <input  id="is_active" type="checkbox"
-                            placeholder="Status" name="is_active" value="1" {{ $is_active ? "checked" : "" }} type="text" > 
+                            placeholder="Status" name="is_active" value="1" {{ $is_active ? "checked" : "" }} type="text" >
                             <label class="form-label" for="is_active"> Active</label>
-                            
+
                         </div>
 
                     </div> -->
@@ -56,4 +59,6 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 @endsection
