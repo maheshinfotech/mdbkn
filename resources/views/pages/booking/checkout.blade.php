@@ -81,6 +81,23 @@
                 </div>
 
             </div>
+            <div class="col-md-12 ">
+
+                <label class="fw-bold ">Extra Remark:</label>
+
+                <textarea name="remark" id="" class="form-control h-auto" rows="4"></textarea>
+
+            </div>
+
+        </div>
+            {{-- <div class="col-md-4 mb-3">
+
+                    <label for="" fw-bold mb-1>extra_remark</label>
+
+                    <input type="text" readonly class="form-control payable-amount" value="0"
+                    name="extra_remark" />
+
+              </div> --}}
 
                 <div class="row">
                     <h4>Parking Data</h4>
@@ -112,12 +129,13 @@
                         </div>
                       <div class="col-md-4 mb-3">
 
-                        <label for="" fw-bold mb-1>Payable Amount</label>
+                        <label for="" fw-bold mb-1>Payable Amount </label>
 
                         <input type="text" readonly class="form-control payable-amount" value="0"
                         name="received_amount" />
 
                   </div>
+
 
                     @endforeach
                 </div>
