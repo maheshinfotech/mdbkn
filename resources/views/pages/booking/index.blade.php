@@ -27,7 +27,9 @@
         <a href="/dashboard" class="btn btn-lg btn-purple "> <i class="fa fa-arrow-left"></i> Back</a>
     </div>
     <div class="">
-        <h1 class="text-purple text-center mb-0"> Current Bookings ({{count($cardData['counting'])}})</h1>
+        <h1 class="text-purple text-center mb-0"> Current Bookings
+            {{-- ({{count($cardData['counting'])}}) --}}
+        </h1>
     </div>
     <div></div>
 </div>

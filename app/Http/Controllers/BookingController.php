@@ -450,11 +450,6 @@ class BookingController extends Controller
         $bookingedit = Booking::with('bookinglogs')->find($id);
 
         $previous_room=$bookingedit->room_id;
-
-
-
-
-
         $bookingedit->guest_name=$request->guest_name;
         $bookingedit->guest_father_name=$request->guest_father;
         $bookingedit->guest_cast=$request->caste;
@@ -508,14 +503,6 @@ class BookingController extends Controller
             $bookingedit->base_check_out_time = $setting->check_out_time;
             $bookingedit->base_grace_period = $setting->grace_period;
         }
-
-
-
-
-
-
-
-        $bookingedit->update();
         // booking record update block end
         // ==================add guest code=============================
         //  if booking data save then this block execute
