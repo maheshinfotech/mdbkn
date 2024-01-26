@@ -16,12 +16,12 @@
 
         <div class="card my-3">
           <div class="card-header bg-light">
-            <h3 class="text-purple fw-bold mb-0">Booking Details </h3>
+            <h3 class="text-purple fw-bold mb-0">Booking Details  </h3>
           </div>
           <!--card body starts -->
-          <div class="card-body">
-              <!--begin::Details content-->
-              <div class="row g-5 pt-3 fw-bold text-capitalize justify-content-center">
+        <div class="card-body">
+            <!--begin::Details content-->
+            <div class="row g-5 pt-3 fw-bold text-capitalize justify-content-start">
                   <div class="col-3">
                       <span class=" fs-5">Category </span>
                       <span class="text-muted d-block">{{ $booking->room->category->name }}</span>
@@ -35,7 +35,7 @@
                       <span class="text-muted d-block">{{ $booking->guest_name }}</span>
                       {{-- <span class="text-muted d-block">500 (Per Unit)</span> --}}
                   </div>
-                  <div class="col-3">
+                <div class="col-3">
                     <span class=" fs-5">Relation (Patient)</span>
                     <span class="text-muted d-block">{{ $booking->relation_patient }}</span>
                 </div>
@@ -47,7 +47,7 @@
                       <span class=" fs-5">Guest Caste</span>
                       <span class="text-muted d-block">{{ $booking->guest_cast }}</span>
                   </div>
-                  <div class="col-3">
+                <div class="col-3">
                     <span class=" fs-5">Age</span>
                     <span class="text-muted d-block">{{ $booking->age }}</span>
                 </div>
@@ -137,17 +137,22 @@
                       <span class=" fs-5">Parking Provided</span>
                       <span class="text-muted d-block">{{ $booking->is_parking_provided?'Yes':'No' }}</span>
                   </div> --}}
-                  <div class="col-3">
-                    <span class=" fs-5">Refund Amount</span>
-                    <span class="text-muted d-block">{{ $booking->advance_refund }}</span>
+                    <div class="col-3">
+                        <span class=" fs-5">Refund Amount</span>
+                        <span class="text-muted d-block">{{ $booking->advance_refund }}</span>
+                    </div>
+
+                    <div class="col-3">
+                        <span class=" fs-5">Extra Remarks</span>
+                        <span class="text-muted d-block">{{ $booking->extra_remark }}</span>
+                    </div>
+
+                    <div class="col-3">
+                        <span class=" fs-5 fw-bold">checkout Remarks</span>
+                        <span class="text-muted d-block">{{ $booking->checkout_remark}}</span>
+                    </div>
+            </div>
                 </div>
-
-
-                  <div class="col-12">
-                      <span class=" fs-5">Extra Remarks</span>
-                      <span class="text-muted d-block">{{ $booking->extra_remark }}</span>
-                  </div>
-              </div>
               <!--end::Details content-->
 
                   <div class="row justify-content-center my-5 fw-bold text-capitalize">
