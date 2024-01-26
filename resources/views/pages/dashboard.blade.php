@@ -3,16 +3,12 @@
     $tableHead = ['Full Name', 'Machine Name', 'Reading Number', 'Fuel in Liters'];
     $tableHeadSecond = ['Full Name', 'Machine Name', 'Working Hours'];
 @endphp
-
 @extends('layouts.backend')
-
 @section('content')
     <x-reusables.app-header pageName="{{ $pageName }}" />
     <div class="content  mx-0 w-100">
         <div class="text-center text-purple p-4">
-
             <h1 class="mb-0 dashHeading ">Welcome to Maheshwari Dharamshala</h1>
-
         </div>
     </div>
 
@@ -147,20 +143,6 @@
             <!--end::Statistics Widget 5-->
         </div>
     </div>
-  {{-- <div class="position-absolute  start-50" style="top:70%">
-    <table>
-        <thead>
-            <tr>
-            <th>Guest Name</th>
-            <th>Patient Name</th>
-            <th>Room No</th>
-        </tr>
-        </thead>
-        <tbody id="previous_booking_data">
-
-        </tbody>
-    </table>
-  </div> --}}
 
   <div class="row mx-3 " style="margin-top: 13%" >
     <div class="col-md-6" id="BookedRooms" style="display: none">
@@ -170,7 +152,7 @@
                 <div></div>
             </div>
             <div class=" table-responsive">
-                <table class="table table-striped align-middle py-3 text-center" >
+                <table class="table table-striped align-middle py-3 text-center"  id="bookedRooms_table" >
                     <thead>
                         <tr>
                             <th>S.No</th>
@@ -192,7 +174,7 @@
             <div></div>
         </div>
         <div class="table-responsive">
-            <table class="table table-striped align-middle py-3 text-center">
+            <table class="table table-striped align-middle py-3 text-center" id="avilble_rooms">
                 <thead>
                     <tr>
                         <th>S.No</th>
@@ -209,8 +191,7 @@
     </div>
 </div>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
  $(document).ready(function () {
     $('#dateInput').change(function () {
@@ -297,7 +278,7 @@
             <td>${bookedRooms[i].patient_name}</td>
             <td>${bookedRooms[i].room.room_number}</td>
         </tr>`;
-}
+        }
             var availableRooms = detailsResponse.availableRooms;
 
             console.log(availableRooms);
@@ -318,12 +299,30 @@
 
             $("#previous_booking_data").html(bookedHtml);
             $("#available_rooms_data").html(availableHtml);
+            $('#bookedRooms_table').DataTable( {
+        dom: 'Bfrt',
+        buttons: [
+            // 'copyHtml5',
+            // 'excelHtml5',
+            // 'csvHtml5',
+            'pdfHtml5'
+        ]
+    } );
+    $('#avilble_rooms').DataTable( {
+        dom: 'Bfrt',
+        buttons: [
+            // 'copyHtml5',
+            // 'excelHtml5',
+            // 'csvHtml5',
+            'pdfHtml5'
+        ]
+    } );
         },
         error: function (xhr, status, error) {
             console.error('AJAX Error:', status, error);
         }
+     });
     });
-});
 
 
                     card.appendTo($('body')).addClass('position-absolute top-50 start-50 translate-middle');
@@ -339,10 +338,7 @@
 
 
 });
-
-
-    </script>
-
+</script>
 
 @endsection
 
