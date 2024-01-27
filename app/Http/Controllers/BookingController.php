@@ -341,7 +341,7 @@ class BookingController extends Controller
             $checkoutdet->check_out_time = $request->check_out_time;
             $checkoutdet->estimated_total_days = $request->estimatedays;
             $checkoutdet->payable_rent = $request->totalrent;
-            $checkoutdet->extra_remark = $request->remark;
+            $checkoutdet->checkout_remark = $request->remark;
 
             // Fetch parking data based on parking_id
             $parking = Parking::find($request->parking_id);
