@@ -304,6 +304,8 @@
 
             $('#bookedRooms_table').DataTable( {
         dom: 'Bfrt',
+        lengthChange: false,
+        "pageLength":200,
         buttons: [
             // 'copyHtml5',
             // 'excelHtml5',
@@ -314,6 +316,8 @@
 
     $('#available_rooms_table').DataTable( {
         dom: 'Bfrt',
+        lengthChange: false,
+        "pageLength":200,
         buttons: [
             // 'copyHtml5',
             // 'excelHtml5',
