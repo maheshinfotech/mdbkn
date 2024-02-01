@@ -341,6 +341,7 @@ class BookingController extends Controller
             $checkoutdet->check_out_time = $request->check_out_time;
             $checkoutdet->estimated_total_days = $request->estimatedays;
             $checkoutdet->payable_rent = $request->totalrent;
+            $checkoutdet->checkout_remark = $request->remark;
 
             // Fetch parking data based on parking_id
             $parking = Parking::find($request->parking_id);
@@ -450,11 +451,6 @@ class BookingController extends Controller
         $bookingedit = Booking::with('bookinglogs')->find($id);
 
         $previous_room=$bookingedit->room_id;
-
-
-
-
-
         $bookingedit->guest_name=$request->guest_name;
         $bookingedit->guest_father_name=$request->guest_father;
         $bookingedit->guest_cast=$request->caste;
@@ -508,14 +504,6 @@ class BookingController extends Controller
             $bookingedit->base_check_out_time = $setting->check_out_time;
             $bookingedit->base_grace_period = $setting->grace_period;
         }
-
-
-
-
-
-
-
-        $bookingedit->update();
         // booking record update block end
         // ==================add guest code=============================
         //  if booking data save then this block execute
@@ -853,6 +841,33 @@ public function getBookedRoomsCount(Request $request)
 
 
 
+
+public function getBookedRoomsDetails(Request $request)
+{
+    $selectedDate = $request->input('selectedDate');
+
+    $bookedRoomsDetails = Booking::with('room')
+        ->whereDate('check_in_time', '<=', $selectedDate)
+        ->where(function ($query) use ($selectedDate) {
+            $query->whereNull('check_out_time')
+                ->orWhereDate('check_out_time', '>', $selectedDate);
+        })
+        ->get();
+        $room_category = RoomCategory::where('name', 'other')->first();
+
+    $availableRooms = Room::with('category')->where('category_id', '!=', $room_category->id)->whereDoesntHave('bookings', function ($query) use ($selectedDate) {
+        $query->whereDate('check_in_time', '<=', $selectedDate)
+            ->where(function ($subQuery) use ($selectedDate) {
+                $subQuery->whereNull('check_out_time')
+                    ->orWhereDate('check_out_time', '>', $selectedDate);
+            });
+    })->get();
+
+    return response()->json([
+        'bookedRoomsDetails' => $bookedRoomsDetails,
+        'availableRooms' => $availableRooms,
+    ]);
+}
 
 
 

@@ -133,6 +133,9 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/today-bookings', [BookingController::class, 'showTodayBookings'])->name('today-bookings');
             Route::get('/datebooking/filter', [BookingController::class ,'filterByDate'])->name('datebooking.filter');
             Route::post('/getBookedRoomsCount', [BookingController::class, 'getBookedRoomsCount'])->name('getBookedRoomsCount');
+            Route::post('/getBookedRoomsDetails', [BookingController::class, 'getBookedRoomsDetails'])->name('getBookedRoomsDetails');
+            
+
              Route::delete('/hospital/delete/{id}', [HospitalController::class,'destroy'])->name('hospital.delete');
              Route::post('/hospital/store', [HospitalController::class, 'store'])->name('hospital.store');
              Route::get('/hospital/edit/{id}', [HospitalController::class, 'edit']);
