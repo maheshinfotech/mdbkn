@@ -430,13 +430,18 @@
                     "api-token": "D-FpCSCxWG7D2BjTHw7fu6AG4NJLVdTsPy-quvPKpXt-hfNo8xwOvacZauakrYwsGvY",
                     "user-email": "monikabothra1996@gmail.com",
                 },
+
             });
             $("#state").change(function() {
                 get_city(false);
             });
         }
+        window.addEventListener("load", (event) => {
+            dropdown_state();
+  console.log("page is fully loaded");
+});
 
-        dropdown_state();
+
 
         function get_state(auth_token) {
             var country_name = "India";
