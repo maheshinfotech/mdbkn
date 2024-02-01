@@ -438,8 +438,8 @@
         }
         window.addEventListener("load", (event) => {
             dropdown_state();
-  console.log("page is fully loaded");
-});
+            console.log("page is fully loaded");
+        });
 
 
 
