@@ -18,16 +18,17 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        Gate::authorize('view', 'rooms');
 
-        // Gate::authorize('view', 'rooms');
+     public function index()
+     {
+         Gate::authorize('view', 'rooms');
 
-        $category = RoomCategory::all();
-        $rooms = Room::orderBy('room_number')->get();
-        return view('pages.room.index', compact('category', 'rooms'));
-    }
+         $category = RoomCategory::all();
+         $rooms = Room::with('current_guest')->orderBy('room_number')->get();
+        //  dd($rooms);
+
+         return view('pages.room.index', compact('category', 'rooms'));
+     }
 
     /**
      * Show the form for creating a new resource.

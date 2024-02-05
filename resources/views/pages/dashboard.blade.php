@@ -158,6 +158,7 @@
                             <th>S.No</th>
                             <th>Guest Name</th>
                             <th>Patient Name</th>
+                            <th>Check-IN TIME</th>
                             <th>Room No</th>
                         </tr>
                     </thead>
@@ -180,11 +181,9 @@
                         <th>S.No</th>
                         <th>Room No</th>
                         <th>Catgory</th>
-                        <!-- Add other column headers as needed -->
                     </tr>
                 </thead>
                 <tbody id="available_rooms_data">
-                    <!-- Data will be dynamically inserted here using JavaScript -->
                 </tbody>
             </table>
         </div>
@@ -276,6 +275,7 @@
             <td>${i + 1}</td> <!-- Serial number -->
             <td>${bookedRooms[i].guest_name}</td>
             <td>${bookedRooms[i].patient_name}</td>
+            <td>${bookedRooms[i].check_in_times}</td>
             <td>${bookedRooms[i].room.room_number}</td>
         </tr>`;
         }

@@ -865,7 +865,18 @@ public function getBookedRoomsDetails(Request $request)
             $query->whereNull('check_out_time')
                 ->orWhereDate('check_out_time', '>', $selectedDate);
         })
-        ->get();
+        ->get()
+        ->map(function ($booking) {
+            $booking->check_in_times = Carbon::parse($booking->getRawOriginal('check_in_time'))->format('d-M-y');
+
+            if ($booking->check_out_time !== NULL && $booking->check_out_time !== '--') {
+                $booking->check_out_times = Carbon::parse($booking->getRawOriginal('check_out_time'))->format('d-M-y');
+            }else {
+                $booking->check_out_times = 'N/A';
+            }
+
+            return $booking;
+        });
         $room_category = RoomCategory::where('name', 'other')->first();
 
     $availableRooms = Room::with('category')->where('category_id', '!=', $room_category->id)->whereDoesntHave('bookings', function ($query) use ($selectedDate) {

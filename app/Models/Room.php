@@ -27,4 +27,13 @@ class Room extends Model
     }
 
 
+    public function current_guest()
+    {
+        return $this->hasMany(Booking::class)->latest()->limit(1);
+    }
+
+
+
+
+
 }

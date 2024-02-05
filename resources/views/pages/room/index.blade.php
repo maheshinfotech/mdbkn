@@ -39,6 +39,7 @@
                                 <th class="text-center">Is Booked</th>
                                 <th class="text-center">Guest Capacity</th>
                                 <th class="text-center">Room Status</th>
+                                  <th class="text-center">Guest Name</th>
                                 <th class="text-center">Remarks</th>
                                 <th class="text-end">Action</th>
                             </tr>
@@ -72,7 +73,15 @@
                                     @else
                                     <td class="text-danger fw-bold">Inactive</span></td>
                                     @endif
+                                    {{-- @dd($room->bookings) --}}
+                                    @if (!blank($room->current_guest))
+{{-- @dd($room->current_guest[0]->guest_name) --}}
 
+                                    <td>{{$room->current_guest[0]->guest_name}}</td>
+                                    @else
+                                    <td>Na</td>
+
+                                    @endif
                                     <td>{{ $room->extra_remark }}</td>
                                     <td class="text-end">
                                         <a class="btn btn-sm">
