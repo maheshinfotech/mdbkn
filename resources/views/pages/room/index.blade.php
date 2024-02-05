@@ -73,15 +73,13 @@
                                     @else
                                     <td class="text-danger fw-bold">Inactive</span></td>
                                     @endif
-                                    {{-- @dd($room->bookings) --}}
-                                    @if (!blank($room->current_guest))
-{{-- @dd($room->current_guest[0]->guest_name) --}}
+                                  
+                                    <td>
+                                        @if($room->bookings->isNotEmpty())
+                                            {{ $room->bookings->last()->guest_name }}
+                                        @endif
+                                    </td>
 
-                                    <td>{{$room->current_guest[0]->guest_name}}</td>
-                                    @else
-                                    <td>Na</td>
-
-                                    @endif
                                     <td>{{ $room->extra_remark }}</td>
                                     <td class="text-end">
                                         <a class="btn btn-sm">

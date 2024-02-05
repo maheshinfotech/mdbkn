@@ -24,7 +24,7 @@ class RoomController extends Controller
          Gate::authorize('view', 'rooms');
 
          $category = RoomCategory::all();
-         $rooms = Room::with('current_guest')->orderBy('room_number')->get();
+         $rooms = Room::with('bookings')->orderBy('room_number')->get();
         //  dd($rooms);
 
          return view('pages.room.index', compact('category', 'rooms'));
