@@ -381,7 +381,9 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
-        function select_category() {
+         // IIFE start here
+        (function(){
+            function select_category() {
             var id = $('#category').val();
 
             $.ajax({
@@ -436,10 +438,10 @@
                 get_city(false);
             });
         }
-        window.addEventListener("load", (event) => {
+        // window.addEventListener("load", (event) => {
             dropdown_state();
-            console.log("page is fully loaded");
-        });
+        //     console.log("page is fully loaded");
+        // });
 
 
 
@@ -636,5 +638,7 @@
                 $(this).find(':button[type=submit]').prop('disabled', true);
             });
         });
+        })();
+
     </script>
 @endsection
