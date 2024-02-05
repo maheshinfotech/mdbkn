@@ -27,7 +27,9 @@ use App\Http\Controllers\RoomCategoryController;
 //Route::post('/advances/store', [AdvanceController::class,'store'])->name('advances.store');
 Route::get('/storagelink', function(){
     // dd(new Artisan);
-    \Illuminate\Support\Facades\Artisan::call('storage:link');
+    // \Illuminate\Support\Facades\Artisan::call('storage:link');
+    \Illuminate\Support\Facades\Artisan::call('migrate');
+    Log::info( \Illuminate\Support\Facades\Artisan::call('migrate'));
 
     // exec('composer update my-package');
 
@@ -134,7 +136,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/datebooking/filter', [BookingController::class ,'filterByDate'])->name('datebooking.filter');
             Route::post('/getBookedRoomsCount', [BookingController::class, 'getBookedRoomsCount'])->name('getBookedRoomsCount');
             Route::post('/getBookedRoomsDetails', [BookingController::class, 'getBookedRoomsDetails'])->name('getBookedRoomsDetails');
-            
+
 
              Route::delete('/hospital/delete/{id}', [HospitalController::class,'destroy'])->name('hospital.delete');
              Route::post('/hospital/store', [HospitalController::class, 'store'])->name('hospital.store');

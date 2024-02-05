@@ -175,7 +175,7 @@
             <div></div>
         </div>
         <div class="table-responsive">
-            <table class="table table-striped align-middle py-3 text-center" id="avilble_rooms">
+            <table class="table table-striped align-middle py-3 text-center" id="available_rooms_table">
                 <thead>
                     <tr>
                         <th>S.No</th>
@@ -299,8 +299,13 @@
 
             $("#previous_booking_data").html(bookedHtml);
             $("#available_rooms_data").html(availableHtml);
+            $('#bookedRooms_table').DataTable().destroy();
+            $('#available_rooms_table').DataTable().destroy();
+
             $('#bookedRooms_table').DataTable( {
         dom: 'Bfrt',
+        lengthChange: false,
+        "pageLength":200,
         buttons: [
             // 'copyHtml5',
             // 'excelHtml5',
@@ -308,8 +313,11 @@
             'pdfHtml5'
         ]
     } );
-    $('#avilble_rooms').DataTable( {
+
+    $('#available_rooms_table').DataTable( {
         dom: 'Bfrt',
+        lengthChange: false,
+        "pageLength":200,
         buttons: [
             // 'copyHtml5',
             // 'excelHtml5',
