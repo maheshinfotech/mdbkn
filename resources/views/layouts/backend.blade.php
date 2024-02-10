@@ -319,7 +319,20 @@
             @yield('content')
         </main>
     </div>
-
+    <!-- footer starts -->
+    <div class="footer py-3 fixed-bottom"  style="background-color:rgba(50, 53, 93, 0.9) ;">
+        <!--begin::Container-->
+        <div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-center">
+            <!--begin::Copyright-->
+            <div class="">
+                <span class="text-white  me-1 ">© 2022 Developed by</span>
+                <a href="maheshinfotech.in" target="_blank" class="text-white ">Mahesh Infotech</a>
+            </div>
+            <!--end::Copyright-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--footer ends -->
 
     <!-- Page JS Code -->
     <script src="{{ url('theme/js/pages/be_tables_datatables.min.js') }}"></script>

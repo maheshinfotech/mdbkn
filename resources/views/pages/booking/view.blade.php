@@ -252,7 +252,7 @@ function initializeDataTable() {
             },
             dataType: 'json',
             success: function(res) {
-                console.log(res);
+                // console.log(res);
                 if (bookingTable) {
                     bookingTable.destroy();
                 }
@@ -261,6 +261,18 @@ function initializeDataTable() {
                 table.find('tbody').empty();
 
                 $.each(res.bookings, function(index, booking) {
+                    var advamt = 0;
+                    var totalAmt = 0;
+                    $.each(booking.advance,function(a,adv) {
+                        advamt += adv.amount;
+                    });
+                    // console.log(advamt);
+                    if (booking.advance_refund > 0) {
+                            totalAmt = +advamt - (+booking.advance_refund);
+                        } else {
+                            totalAmt = +advamt + (+booking.paid_rent);
+                        }
+                        // console.log(totalAmt);
                     var createdDate = new Date(booking.created_at);
     var updatedDate = new Date(booking.updated_at);
     var createdFormattedDateTime = createdDate.toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
@@ -278,7 +290,9 @@ function initializeDataTable() {
                         '<td>' + booking.check_out_times + '</td>' +
                         '<td>' + booking.docter_name + '</td>' +
                         '<td>' + booking.mobile_number + '</td>' +
-                     '<td>' + (booking.paid_rent !== null ? booking.paid_rent : 'N/A') + '</td>' +
+                    //  '<td>' + (booking.paid_rent !== null ? booking.paid_rent : 'N/A') + '</td>' +
+                     '<td>' + totalAmt + '</td>' +
+
                      '<td>' + createdFormattedDateTime + '</td>' +
                   '<td>' + updatedFormattedDateTime + '</td>' +
                         '<td class="text-end ">';
