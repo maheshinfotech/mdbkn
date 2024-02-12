@@ -470,6 +470,8 @@ class BookingController extends Controller
         $bookingedit->state=$request->state;
         $bookingedit->docter_name=$request->doctor;
         $bookingedit->mobile_number=$request->mobile;
+        $bookingedit->room_id=$request->room;
+
         // id proof saved ===========
             if ($request->hasFile('idproof')) {
                 $file = $request->file('idproof');
@@ -560,7 +562,6 @@ class BookingController extends Controller
                         $room->is_booked=1;
                         $room->booked_date = Carbon::parse($request->checkin)->format('Y-m-d');
                         $room->update();
-                        $bookingedit->room_id=$request->room;
 
      // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     // &&&&&&&&&&&&&&&&&&&&& Room Updation &&&&&&&&&&&&&&&&&&&&&&
