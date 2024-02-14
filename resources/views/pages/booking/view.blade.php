@@ -63,6 +63,7 @@
                                     <th class="text-center">Total Paid Amt</th>
                                     <th class="text-center">Created At</th>
                                      <th class="text-center">Updated At</th>
+                                     <th class="text-center">Slip No</th>
 
                                     {{-- <th class ="text-center">Normal Rent <br>Patient Rent</th> --}}
                                     <th class="text-end">Action</th>
@@ -110,6 +111,7 @@
                                         </td>
                                         <td>{{ date('d-M-y h:i A', strtotime($booking->created_at)) }}</td>
                                         <td>{{ date('d-M-y h:i A', strtotime($booking->updated_at)) }}</td>
+                                        <td>{{$booking->slip_no}}</td>
 
 
                                         <td class="text-end">
@@ -285,6 +287,7 @@ function initializeDataTable() {
                     '<td>' + (booking.payable_rent !== null ? booking.payable_rent : 'N/A') + '</td>' +
                     '<td>' + createdFormattedDateTime + '</td>' +
                     '<td>' + updatedFormattedDateTime + '</td>' +
+                    '<td>' + booking.slip_no + '</td>' +
                     '<td class="text-end ">';
 
                 if (booking.check_out_time !== null && booking.check_out_time !== '--') {
@@ -311,6 +314,7 @@ function initializeDataTable() {
                     <td></td>
                     <td>Total Amount:</td>
                     <td>${totalPayableRent.toFixed(2)}</td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
