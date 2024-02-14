@@ -381,7 +381,6 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
-         // IIFE start here
          function select_category() {
             var id = $('#category').val();
 
@@ -405,8 +404,6 @@
             });
         }
 
-        (function(){
-
         $('.repeater').repeater({
 
         });
@@ -415,107 +412,9 @@
             .fadeTo(2000, 2000)
             .slideUp(500, function() {
                 $("#alert1").slideUp(500);
-            });
-
-        // =====================state city dropdown api=========================
-        var auth_token;
-
-        function dropdown_state() {
-            $.ajax({
-                type: "GET",
-                url: "https://www.universal-tutorial.com/api/getaccesstoken",
-                success: function(data) {
-                    auth_token = data.auth_token;
-                    get_state(data.auth_token);
-                },
-                headers: {
-                    Accept: "application/json",
-                    "api-token": "D-FpCSCxWG7D2BjTHw7fu6AG4NJLVdTsPy-quvPKpXt-hfNo8xwOvacZauakrYwsGvY",
-                    "user-email": "monikabothra1996@gmail.com",
-                },
-
-            });
-            $("#state").change(function() {
-                get_city(false);
-            });
-        }
-        // window.addEventListener("load", (event) => {
-            dropdown_state();
-        //     console.log("page is fully loaded");
-        // });
-
-
-
-        function get_state(auth_token) {
-            var country_name = "India";
-            $.ajax({
-                type: "GET",
-                url: "https://www.universal-tutorial.com/api/states/" + country_name,
-                success: function(data) {
-                    $("#state").empty();
-                    var html = `<option value="">choose..</option>`;
-                    data.forEach((element) => {
-                        html += '<option value="' +
-                            element.state_name +
-                            '">' +
-                            element.state_name +
-                            "</option>";
-
-                    });
-                    $("#state").append(html);
-                },
-                headers: {
-                    Authorization: "Bearer " + auth_token,
-                    Accept: "application/json",
-                },
-            });
-        }
-
-        function get_city(city) {
-            var state_name = $("#state").val();
-            // console.log(state_name);
-            $.ajax({
-                type: "GET",
-                url: "https://www.universal-tutorial.com/api/cities/" + state_name,
-                success: function(data) {
-                    // $("#city").val('');
-                    $("#city").empty();
-                    var unique = [...new Set(data.map((item) => item.city_name))];
-                    if (city) {
-                        // console.log("get_city fun",city);
-                        unique.forEach((element) => {
-                            $("#city")
-                                .append(
-                                    '<option value="' +
-                                    element +
-                                    '">' +
-                                    element +
-                                    "</option>"
-                                )
-                                .val(city);
-                        });
-                    } else {
-                        unique.forEach((element) => {
-                            $("#city").append(
-                                '<option value="' +
-                                element +
-                                '">' +
-                                element +
-                                "</option>"
-                            );
-                        });
-                    }
-                },
-                headers: {
-                    Authorization: "Bearer " + auth_token,
-                    Accept: "application/json",
-                },
-            });
-        }
-        // ===================================
-
-        // =============== get prefilled details on mobile no. =================
-        $('#mobile').on('keyup', function() {
+        });
+          // =============== get prefilled details on mobile no. =================
+          $('#mobile').on('keyup', function() {
             var numb = $('#mobile').val();
             var sizeofno = $('#mobile').val().length;
             // console.log(sizeofno);
@@ -638,7 +537,109 @@
             $('form.uniqueclass').submit(function(){
                 $(this).find(':button[type=submit]').prop('disabled', true);
             });
-        });
+  });
+         // IIFE start here
+        (function(){
+
+
+        // =====================state city dropdown api=========================
+        var auth_token;
+
+        function dropdown_state() {
+            $.ajax({
+                type: "GET",
+                url: "https://www.universal-tutorial.com/api/getaccesstoken",
+                success: function(data) {
+                    auth_token = data.auth_token;
+                    get_state(data.auth_token);
+                },
+                headers: {
+                    Accept: "application/json",
+                    "api-token": "D-FpCSCxWG7D2BjTHw7fu6AG4NJLVdTsPy-quvPKpXt-hfNo8xwOvacZauakrYwsGvY",
+                    "user-email": "monikabothra1996@gmail.com",
+                },
+
+            });
+            $("#state").change(function() {
+                get_city(false);
+            });
+        }
+        // window.addEventListener("load", (event) => {
+            dropdown_state();
+        //     console.log("page is fully loaded");
+        // });
+
+
+
+        function get_state(auth_token) {
+            var country_name = "India";
+            $.ajax({
+                type: "GET",
+                url: "https://www.universal-tutorial.com/api/states/" + country_name,
+                success: function(data) {
+                    $("#state").empty();
+                    var html = `<option value="">choose..</option>`;
+                    data.forEach((element) => {
+                        html += '<option value="' +
+                            element.state_name +
+                            '">' +
+                            element.state_name +
+                            "</option>";
+
+                    });
+                    $("#state").append(html);
+                },
+                headers: {
+                    Authorization: "Bearer " + auth_token,
+                    Accept: "application/json",
+                },
+            });
+        }
+
+        function get_city(city) {
+            var state_name = $("#state").val();
+            // console.log(state_name);
+            $.ajax({
+                type: "GET",
+                url: "https://www.universal-tutorial.com/api/cities/" + state_name,
+                success: function(data) {
+                    // $("#city").val('');
+                    $("#city").empty();
+                    var unique = [...new Set(data.map((item) => item.city_name))];
+                    if (city) {
+                        // console.log("get_city fun",city);
+                        unique.forEach((element) => {
+                            $("#city")
+                                .append(
+                                    '<option value="' +
+                                    element +
+                                    '">' +
+                                    element +
+                                    "</option>"
+                                )
+                                .val(city);
+                        });
+                    } else {
+                        unique.forEach((element) => {
+                            $("#city").append(
+                                '<option value="' +
+                                element +
+                                '">' +
+                                element +
+                                "</option>"
+                            );
+                        });
+                    }
+                },
+                headers: {
+                    Authorization: "Bearer " + auth_token,
+                    Accept: "application/json",
+                },
+            });
+        }
+        // ===================================
+
+
         })();
 
     </script>

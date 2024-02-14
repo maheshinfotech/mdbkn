@@ -494,7 +494,7 @@
             });
 
 
-
+        (function(){
         // =====================state city dropdown api=========================
         var auth_token;
 
@@ -606,6 +606,7 @@
             });
         }
         // ===================================
+    });
 
             // =============== get prefilled details on mobile no. =================
         //     $('#mobile').on('keyup', function() {
