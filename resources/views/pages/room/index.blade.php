@@ -73,7 +73,7 @@
                                     @else
                                     <td class="text-danger fw-bold">Inactive</span></td>
                                     @endif
-                                  
+
                                     <td>
                                         @if($room->bookings->isNotEmpty())
                                             {{ $room->bookings->last()->guest_name }}

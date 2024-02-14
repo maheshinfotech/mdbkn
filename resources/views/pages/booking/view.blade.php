@@ -53,7 +53,7 @@
                             data-ordering="false" data-info="true">
                             <thead class="align-middle">
                                 <tr>
-                                    <th class="text-start">Guest Name</th>
+                                    <th class="text-start">Guest Name </th>
                                     <th class="text-center">Patient Name</th>
                                     <th class ="text-center">Room Details </th>
                                     <th class="text-center">Check-In Time</th>
@@ -239,83 +239,95 @@ function initializeDataTable() {
             });
         });
 
-    function updateBookings() {
-        var selectedDate = $('#filterDate').val();
-        var selectedType = $('.filterTypeClass').val();
+        function updateBookings() {
+    var selectedDate = $('#filterDate').val();
+    var selectedType = $('.filterTypeClass').val();
 
-        $.ajax({
-            url: '{{ route("datebooking.filter") }}',
-            type: 'GET',
-            data: {
-                filterDate: selectedDate,
-                filterType: selectedType
-            },
-            dataType: 'json',
-            success: function(res) {
-                // console.log(res);
-                if (bookingTable) {
-                    bookingTable.destroy();
+    $.ajax({
+        url: '{{ route("datebooking.filter") }}',
+        type: 'GET',
+        data: {
+            filterDate: selectedDate,
+            filterType: selectedType
+        },
+        dataType: 'json',
+        success: function(res) {
+            console.log(res);
+            if (bookingTable) {
+                bookingTable.destroy();
+            }
+
+            var table = $('#booking_table');
+            table.find('tbody').empty();
+
+            var totalPayableRent = 0;
+
+            $.each(res.bookings, function(index, booking) {
+                var createdDate = new Date(booking.created_at);
+                var updatedDate = new Date(booking.updated_at);
+                var createdFormattedDateTime = createdDate.toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
+                var updatedFormattedDateTime = updatedDate.toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
+                if (booking.payable_rent !== null) {
+                    totalPayableRent += parseFloat(booking.payable_rent);
+                }
+                var row = '<tr>' +
+                    '<td>' + booking.guest_name + '</td>' +
+                    '<td>' + booking.patient_name + '</td>' +
+                    '<td>' +
+                        booking.room.room_number +
+                        '<span class="badge badge-primary bg-primary">' + booking.room.category.name + '</span>' +
+                        '<span class="d-block">' + booking.base_rent + ' /-</span>' +
+                    '</td>' +
+                    '<td>' + booking.check_in_times + '</td>' +
+                    '<td>' + booking.check_out_times + '</td>' +
+                    '<td>' + booking.docter_name + '</td>' +
+                    '<td>' + booking.mobile_number + '</td>' +
+                    '<td>' + (booking.payable_rent !== null ? booking.payable_rent : 'N/A') + '</td>' +
+                    '<td>' + createdFormattedDateTime + '</td>' +
+                    '<td>' + updatedFormattedDateTime + '</td>' +
+                    '<td class="text-end ">';
+
+                if (booking.check_out_time !== null && booking.check_out_time !== '--') {
+                    row += '<a href="{{ url("/bookings/") }}/' + booking.id + '" class="btn btn-sm btn-purple" data-bs-toggle="tooltip me-2" data-bs-placement="bottom" data-bs-title="Ajax View" ><i class="fa-solid fa-eye"></i></a>';
+                } else {
+                    row += '<a href="{{ url("/bookings/edit/") }}/' + booking.id + '" class="btn btn-sm btn-purple me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Edit"><i class="fa-solid fa-pen"></i></a>' +
+                        '<a href="{{ url("/bookings/checkout/") }}/' + booking.id + '" class="btn btn-sm btn-purple me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Checkout"><i class="fa-solid fa-sign-out"></i></a>' +
+                        '<a href="{{ url("/bookings/") }}/' + booking.id + '" class="btn btn-sm btn-purple me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View"><i class="fa-solid fa-eye"></i></a>';
                 }
 
-                var table = $('#booking_table');
-                table.find('tbody').empty();
+                row += `</td>
+                </tr>`;
+                table.find('tbody').append(row);
 
-                $.each(res.bookings, function(index, booking) {
-                    var advamt = 0;
-                    var totalAmt = 0;
-                    $.each(booking.advance,function(a,adv) {
-                        advamt += adv.amount;
-                    });
-                    // console.log(advamt);
-                    if (booking.advance_refund > 0) {
-                            totalAmt = +advamt - (+booking.advance_refund);
-                        } else {
-                            totalAmt = +advamt + (+booking.paid_rent);
-                        }
-                        // console.log(totalAmt);
-                    var createdDate = new Date(booking.created_at);
-    var updatedDate = new Date(booking.updated_at);
-    var createdFormattedDateTime = createdDate.toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
-    var updatedFormattedDateTime = updatedDate.toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
 
-                    var row = '<tr>' +
-                        '<td>' + booking.guest_name + '</td>' +
-                        '<td>' + booking.patient_name + '</td>' +
-                        '<td>' +
-                            booking.room.room_number +
-                            '<span class="badge badge-primary bg-primary">' + booking.room.category.name + '</span>' +
-                            '<span class="d-block">' + booking.base_rent + ' /-</span>' +
-                        '</td>' +
-                        '<td>' + booking.check_in_times + '</td>' +
-                        '<td>' + booking.check_out_times + '</td>' +
-                        '<td>' + booking.docter_name + '</td>' +
-                        '<td>' + booking.mobile_number + '</td>' +
-                    //  '<td>' + (booking.paid_rent !== null ? booking.paid_rent : 'N/A') + '</td>' +
-                     '<td>' + totalAmt + '</td>' +
+            });
+            row=`
+            <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Total Amount:</td>
+                    <td>${totalPayableRent.toFixed(2)}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>`;
 
-                     '<td>' + createdFormattedDateTime + '</td>' +
-                  '<td>' + updatedFormattedDateTime + '</td>' +
-                        '<td class="text-end ">';
-
-                    if (booking.check_out_time !== null && booking.check_out_time !== '--') {
-                        row += '<a href="{{ url("/bookings/") }}/' + booking.id + '" class="btn btn-sm btn-purple" data-bs-toggle="tooltip me-2" data-bs-placement="bottom" data-bs-title="Ajax View" ><i class="fa-solid fa-eye"></i></a>';
-                    } else {
-                        row += '<a href="{{ url("/bookings/edit/") }}/' + booking.id + '" class="btn btn-sm btn-purple me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Edit"><i class="fa-solid fa-pen"></i></a>' +
-                            '<a href="{{ url("/bookings/checkout/") }}/' + booking.id + '" class="btn btn-sm btn-purple me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Checkout"><i class="fa-solid fa-sign-out"></i></a>' +
-                            '<a href="{{ url("/bookings/") }}/' + booking.id + '" class="btn btn-sm btn-purple me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View"><i class="fa-solid fa-eye"></i></a>';
-                    }
-
-                    row += '</td></tr>';
                     table.find('tbody').append(row);
-                });
 
-                initializeDataTable();
-            },
-            error: function(error) {
-                console.error('Error loading bookings:', error);
-            }
-        });
-    }
+           // console.log('Total Payable Rent:', totalPayableRent.toFixed(2));
+
+            initializeDataTable();
+        },
+        error: function(error) {
+            console.error('Error loading bookings:', error);
+        }
+    });
+}
+
 
     $(document).ready(function() {
         initializeDataTable();
