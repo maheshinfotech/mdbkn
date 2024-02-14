@@ -260,7 +260,7 @@ function initializeDataTable() {
             var table = $('#booking_table');
             table.find('tbody').empty();
 
-            var totalPayableRent = 0; 
+            var totalPayableRent = 0;
 
             $.each(res.bookings, function(index, booking) {
                 var createdDate = new Date(booking.created_at);
