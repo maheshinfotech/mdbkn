@@ -382,8 +382,7 @@
 
     <script>
          // IIFE start here
-        (function(){
-            function select_category() {
+         function select_category() {
             var id = $('#category').val();
 
             $.ajax({
@@ -405,6 +404,8 @@
                 }
             });
         }
+
+        (function(){
 
         $('.repeater').repeater({
 
