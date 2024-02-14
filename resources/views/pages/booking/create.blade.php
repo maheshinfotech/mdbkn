@@ -381,9 +381,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
-         // IIFE start here
-        (function(){
-            function select_category() {
+        function select_category() {
             var id = $('#category').val();
 
             $.ajax({
@@ -409,6 +407,10 @@
         $('.repeater').repeater({
 
         });
+         // IIFE start here
+        (function(){
+
+
 
         $("#alert1")
             .fadeTo(2000, 2000)

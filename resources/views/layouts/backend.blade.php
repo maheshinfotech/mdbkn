@@ -320,7 +320,7 @@
         </main>
     </div>
     <!-- footer starts -->
-    <div class="footer py-3 fixed-bottom"  style="background-color:rgba(50, 53, 93, 0.9) ;">
+    <div class="footer py-3 "  style="background-color:rgba(50, 53, 93, 0.9) ;">
         <!--begin::Container-->
         <div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-center">
             <!--begin::Copyright-->
