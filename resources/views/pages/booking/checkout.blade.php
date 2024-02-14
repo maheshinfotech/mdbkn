@@ -80,15 +80,19 @@
                     <input type="text" class="form-control" id="" name="paidrent" required/>
                 </div>
 
+
+            <div class="col-md-4 mb-3">
+                <label class="fw-bold mb-1">Slip NO:</label>
+                <input type="number" class="form-control" id="" name="slipno" required/>
             </div>
-            <div class="col-md-12 ">
+            <div class="col-md-8 mb-3">
 
                 <label class="fw-bold ">Extra Remark:</label>
 
-                <textarea name="remark" id="" class="form-control h-auto" rows="4"></textarea>
+                <textarea  name="remark" id="" class="form-control h-auto" rows="2"></textarea>
 
             </div>
-
+        </div>
         </div>
             {{-- <div class="col-md-4 mb-3">
 
