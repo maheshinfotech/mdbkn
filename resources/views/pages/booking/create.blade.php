@@ -413,78 +413,7 @@
             .slideUp(500, function() {
                 $("#alert1").slideUp(500);
         });
-          // =============== get prefilled details on mobile no. =================
-          $('#mobile').on('keyup', function() {
-            var numb = $('#mobile').val();
-            var sizeofno = $('#mobile').val().length;
-            // console.log(sizeofno);
-            if (sizeofno == 10) {
-                $.ajax({
-                    url: '/getguestpreviousdetails',
-                    data: {
-                        numb: numb
-                    },
-                    type: 'get',
-                    success: function(data) {
-                        // console.log(data.guestpredetail);
-                        var resp = data.guestpredetail;
-                        if (resp) {
-                            $('#name').val(resp.guest_name);
-                            // id_numberphoto
-                            $('#guest_father').val(resp.guest_father_name);
-                            $('#gender').val(resp.gender);
-                            $('#caste').val(resp.guest_cast);
-                            $('#age').val(resp.age);
-                            $('#guest_address').val(resp.guest_address);
-                            $('#tehsil').val(resp.tehsil);
-                            // $('#city').val(resp.city);
-                            $('#state').val(resp.state);
-                            get_city(resp.city);
-                            if (resp.id_number) {
-                                document.getElementById("id_numberphoto").style.display = 'block';
-                                var img = '/storage/' + resp.id_number;
-                                $("#id_numberphoto").attr('src', img);
-                                $('#idproof').removeAttr("required");
-                            } else {
-                                document.getElementById("id_numberphoto").style.display = 'none';
-                                $('#idproof').attr("required", "required");
-                            }
-                            $('#showpreviousid').attr('href', img);
-                            $("#imageidprf").val(resp.id);
-                            $("#patient_name").val(resp.patient_name);
-                            $("#hospitalname").val(resp.hospital_id);
-                            $("#relation").val(resp.relation_patient);
-                            $("#wardno").val(resp.patient_ward_no);
-                            $("#doctor").val(resp.docter_name);
 
-                        } else {
-                            $('#name').val('');
-                            $('#guest_father').val('');
-                            $('#caste').val('');
-                            $('#age').val('');
-                            $('#guest_address').val('');
-                            $('#tehsil').val('');
-                            $('#city').val('');
-                            $('#state').val('');
-                            $('#gender').val('');
-                            document.getElementById("id_numberphoto").style.display = 'none';
-                            $("#id_numberphoto").attr('src', '');
-                            $('#showpreviousid').attr('href', '');
-                            $("#imageidprf").val('');
-                            $('#idproof').attr("required", "required");
-                            $("#patient_name").val('');
-                            $("#hospitalname").val('');
-                            $("#relation").val('');
-                            $("#wardno").val('');
-                            $("#doctor").val('');
-                        }
-
-                        // idproof
-                    }
-                })
-            }
-
-        })
 
         // =======Action==========
 
@@ -638,7 +567,78 @@
             });
         }
         // ===================================
+ // =============== get prefilled details on mobile no. =================
+ $('#mobile').on('keyup', function() {
+            var numb = $('#mobile').val();
+            var sizeofno = $('#mobile').val().length;
+            // console.log(sizeofno);
+            if (sizeofno == 10) {
+                $.ajax({
+                    url: '/getguestpreviousdetails',
+                    data: {
+                        numb: numb
+                    },
+                    type: 'get',
+                    success: function(data) {
+                        // console.log(data.guestpredetail);
+                        var resp = data.guestpredetail;
+                        if (resp) {
+                            $('#name').val(resp.guest_name);
+                            // id_numberphoto
+                            $('#guest_father').val(resp.guest_father_name);
+                            $('#gender').val(resp.gender);
+                            $('#caste').val(resp.guest_cast);
+                            $('#age').val(resp.age);
+                            $('#guest_address').val(resp.guest_address);
+                            $('#tehsil').val(resp.tehsil);
+                            // $('#city').val(resp.city);
+                            $('#state').val(resp.state);
+                            get_city(resp.city);
+                            if (resp.id_number) {
+                                document.getElementById("id_numberphoto").style.display = 'block';
+                                var img = '/storage/' + resp.id_number;
+                                $("#id_numberphoto").attr('src', img);
+                                $('#idproof').removeAttr("required");
+                            } else {
+                                document.getElementById("id_numberphoto").style.display = 'none';
+                                $('#idproof').attr("required", "required");
+                            }
+                            $('#showpreviousid').attr('href', img);
+                            $("#imageidprf").val(resp.id);
+                            $("#patient_name").val(resp.patient_name);
+                            $("#hospitalname").val(resp.hospital_id);
+                            $("#relation").val(resp.relation_patient);
+                            $("#wardno").val(resp.patient_ward_no);
+                            $("#doctor").val(resp.docter_name);
 
+                        } else {
+                            $('#name').val('');
+                            $('#guest_father').val('');
+                            $('#caste').val('');
+                            $('#age').val('');
+                            $('#guest_address').val('');
+                            $('#tehsil').val('');
+                            $('#city').val('');
+                            $('#state').val('');
+                            $('#gender').val('');
+                            document.getElementById("id_numberphoto").style.display = 'none';
+                            $("#id_numberphoto").attr('src', '');
+                            $('#showpreviousid').attr('href', '');
+                            $("#imageidprf").val('');
+                            $('#idproof').attr("required", "required");
+                            $("#patient_name").val('');
+                            $("#hospitalname").val('');
+                            $("#relation").val('');
+                            $("#wardno").val('');
+                            $("#doctor").val('');
+                        }
+
+                        // idproof
+                    }
+                })
+            }
+
+        });
 
         })();
 

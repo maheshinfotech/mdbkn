@@ -88,6 +88,7 @@
     <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('js/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('js/plugins/jquery-validation/additional-methods.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     {{-- <script src="{{ asset('js/plugins/select2/js/select2.full.min.js') }}"></script> --}}
     <script src="{{ asset('js/plugins/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
