@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RoomController;
@@ -136,8 +137,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/datebooking/filter', [BookingController::class ,'filterByDate'])->name('datebooking.filter');
             Route::post('/getBookedRoomsCount', [BookingController::class, 'getBookedRoomsCount'])->name('getBookedRoomsCount');
             Route::post('/getBookedRoomsDetails', [BookingController::class, 'getBookedRoomsDetails'])->name('getBookedRoomsDetails');
-
-
+            Route::get('/check-slipno', [BookingController:: class ,'checkSlipNo']);
              Route::delete('/hospital/delete/{id}', [HospitalController::class,'destroy'])->name('hospital.delete');
              Route::post('/hospital/store', [HospitalController::class, 'store'])->name('hospital.store');
              Route::get('/hospital/edit/{id}', [HospitalController::class, 'edit']);
@@ -200,5 +200,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::post('/reset-password/{id}', 'resetPassword');
 
         });
+
+
     });
 });

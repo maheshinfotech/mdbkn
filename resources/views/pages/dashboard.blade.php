@@ -195,7 +195,8 @@
  $(document).ready(function () {
     $('#dateInput').change(function () {
         var selectedDate = $(this).val();
-
+             $('#bookedRooms_table').DataTable().destroy();
+            $('#available_rooms_table').DataTable().destroy();
         $.ajax({
             type: 'POST',
             url: '{{ route("getBookedRoomsCount") }}',
@@ -331,9 +332,7 @@
         }
      });
     });
-
-
-                    card.appendTo($('body')).addClass('position-absolute top-50 start-50 translate-middle');
+           card.appendTo($('body')).addClass('position-absolute top-50 start-50 translate-middle');
                 } else {
                     console.error('Invalid response format:', response);
                 }

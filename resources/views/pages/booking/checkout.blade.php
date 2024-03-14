@@ -67,24 +67,26 @@
                <!-- col start -->
                <div class="col-md-4 mb-3">
                 <label class="fw-bold mb-1">Advance Payment:</label>
-                <input type="text" class="form-control" id="" name="advancepayment" value="{{$advanceAmt}}" />
+                <input type="number" class="form-control" id="" name="advancepayment" value="{{$advanceAmt}}" />
               </div>
               <!-- col start -->
               <div class="col-md-4 mb-3">
                 <label class="fw-bold mb-1">Total Rent:</label>
-                <input type="text" class="form-control" id="paybleRent" name="totalrent" />
+                <input type="number" class="form-control" id="paybleRent" name="totalrent" />
               </div>
                 <!-- col start -->
                 <div class="col-md-4 mb-3">
                     <label class="fw-bold mb-1">Paid Rent:</label>
-                    <input type="text" class="form-control" id="" name="paidrent" required/>
+                    <input type="number" class="form-control" id="" name="paidrent" required/>
                 </div>
 
 
-            <div class="col-md-4 mb-3">
-                <label class="fw-bold mb-1">Slip NO:</label>
-                <input type="number" class="form-control" id="" name="slipno" required/>
-            </div>
+                <div class="col-md-4 mb-3">
+                    <label class="fw-bold mb-1">Slip NO:</label>
+                    <input type="number" class="form-control" id="slipno" name="slipno" required value="{{ old('slipno') }}" oninput="checkSlipNo()">
+                    <div id="slipno-error" class="text-danger"></div>
+                </div>
+
             <div class="col-md-8 mb-3">
 
                 <label class="fw-bold ">Extra Remark:</label>
@@ -146,7 +148,7 @@
 
             <!--end::Input group-->
             <div class="text-center my-4">
-                <button class="btn btn-lg btn-purple" type="submit">Save Details</button>
+                <button id="saveDetailsBtn" class="btn btn-lg btn-purple" type="submit">Save Details</button>
             </div>
         </form>
           <!--form ends -->
@@ -239,7 +241,39 @@
                   }
             })
         })
+        function checkSlipNo() {
+    var slipNo = $('#slipno').val();
+    var bookingId = $('#booking_id_checkout').val();
+    var checkOutDate = new Date($('#check_out_timedet').val());
+    var currentYear = new Date().getFullYear();
+    var bookingYear = checkOutDate.getFullYear();
 
+    if (slipNo && bookingYear === currentYear) {
+        $.ajax({
+            url: "/check-slipno",
+            type: "GET",
+            data: { slipNo, bookingId },
+            success: function (data) {
+                if (data.exists) {
+                    $('#slipno-error').text('Slip NO already exists. Please choose a different one.');
+                    $('#saveDetailsBtn').prop('disabled', true);
+                } else {
+                    $('#slipno-error').text('');
+                    $('#saveDetailsBtn').prop('disabled', false);
+                }
+            }
+        });
+    } else {
+        $('#slipno-error').text('');
+        $('#saveDetailsBtn').prop('disabled', false);
+    }
+}
+
+$(document).ready(function () {
+    $('#slipno').on('input', checkSlipNo);
+    $('#check_out_timedet').on('change', checkSlipNo);
+    checkSlipNo();
+});
 
      </script>
      @endsection

@@ -63,7 +63,7 @@ class BookingController extends Controller
                       ->orderByRaw('check_out_time', $selectedDate);
             }
         })
-        ->get()
+        ->orderBy('slip_no', 'asc')->get()
         ->map(function ($booking) {
             $booking->check_in_times = Carbon::parse($booking->getRawOriginal('check_in_time'))->format('d-M-y h:i A');
 
@@ -111,7 +111,7 @@ class BookingController extends Controller
     public function store(Request $request)
     {
 
-
+              //  dd($request->all());
         $request->validate(
 
             [
@@ -376,6 +376,7 @@ class BookingController extends Controller
         }
 
     public function getguestpreviousdetails(Request $request) {
+      //  dd($request->all());
         $guestpredetail = Booking::where('mobile_number',$request->numb)->latest()->first();
 
             return response()->json(
@@ -908,6 +909,15 @@ public function test()
             dd("Error: ". $e->getMessage());
         }
     }
+    public function checkSlipNo(Request $request)
+{
+    $slipNo = $request->input('slipNo');
+    $bookingId = $request->input('bookingId');
+
+    $existingSlip = Booking::where('slip_no', $slipNo)->first();
+
+    return response()->json(['exists' => $existingSlip && $existingSlip->id != $bookingId]);
+}
 
     }
 

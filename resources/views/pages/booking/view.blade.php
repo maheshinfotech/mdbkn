@@ -98,12 +98,12 @@
                                                     $Amt = 0;
                                                     $totalAmt = 0;
                                                     foreach ($booking->advance as $adv) {
-                                                        $Amt += $adv->amount;
+                                                        $Amt += (int) $adv->amount;
                                                     }
                                                     if ($booking->advance_refund > 0) {
-                                                        $totalAmt = $Amt - $booking->advance_refund;
+                                                        $totalAmt = (int)$Amt - (int) $booking->advance_refund;
                                                     } else {
-                                                        $totalAmt = $Amt + $booking->paid_rent;
+                                                        $totalAmt = (int)$Amt + (int)$booking->paid_rent;
                                                     }
                                                 @endphp
                                                 {{ $totalAmt }}

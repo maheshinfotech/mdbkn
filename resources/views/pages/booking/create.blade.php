@@ -224,14 +224,12 @@
                                     id="patient_name"  value="{{old('patient_name')}}" />
                             </div>
                             <!-- col start -->
-                            <div class="col-md-2 ">
-                                <label class="fw-bold mb-1 ">Hospital (Department)<span
-                                        class="text-danger">*</span></label>
-                                <select class="form-select" name="hospital_id" id="hospitalname" >
-                                    <option value="">Choose..</option>
+                            <div class="col-md-2">
+                                <label class="fw-bold mb-1">Hospital (Department)<span class="text-danger">*</span></label>
+                                <select class="form-select" name="hospital_id" id="hospitalname">
+                                    <option value="" disabled selected>Choose..</option>
                                     @foreach (\DB::table('hospitals')->get() as $hosname)
-                                        <option value="{{ $hosname->id }}">{{ $hosname->name }}
-                                        </option>
+                                    <option value="{{ $hosname->id }}">{{ $hosname->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -416,8 +414,9 @@
           // =============== get prefilled details on mobile no. =================
           $('#mobile').on('keyup', function() {
             var numb = $('#mobile').val();
+           console.log(numb);
             var sizeofno = $('#mobile').val().length;
-            // console.log(sizeofno);
+             console.log(sizeofno);
             if (sizeofno == 10) {
                 $.ajax({
                     url: '/getguestpreviousdetails',
@@ -426,7 +425,7 @@
                     },
                     type: 'get',
                     success: function(data) {
-                        // console.log(data.guestpredetail);
+                         console.log(data.guestpredetail);
                         var resp = data.guestpredetail;
                         if (resp) {
                             $('#name').val(resp.guest_name);
@@ -437,9 +436,11 @@
                             $('#age').val(resp.age);
                             $('#guest_address').val(resp.guest_address);
                             $('#tehsil').val(resp.tehsil);
-                            // $('#city').val(resp.city);
                             $('#state').val(resp.state);
-                            get_city(resp.city);
+                            //$('#city').val(resp.city);
+                            // console.log(resp.city);
+                           // get_city(resp.city);
+                              //get_city('#city').val(resp.city);
                             if (resp.id_number) {
                                 document.getElementById("id_numberphoto").style.display = 'block';
                                 var img = '/storage/' + resp.id_number;
@@ -504,28 +505,34 @@
             }
 
         })
-
+  // hospital ajax
         $(document).ready(function () {
         $('#hospitalname').change(function () {
             var hospitalId = $(this).val();
-            $.ajax({
-                type: 'GET',
-                url: '/get-wards',
-                data: { hospital_id: hospitalId },
-                success: function (response) {
-                    console.log(response);
-                    var options = '<option value="" disabled selected>Select Ward...</option>';
-                    $.each(response.wards, function (key, ward) {
-                        options += '<option value="' + ward.id + '">' + ward.ward + '</option>';
-                    });
-                    $('#wardno').html(options);
+            if (hospitalId !== "") { // Check if a hospital is selected
+                // Disable the "Choose..." option
+                $(this).find('option[value=""]').prop('disabled', true);
 
-                    $('#ward_id').val(response.wards[0].id);
-                },
-                error: function (xhr, status, error) {
-                    console.error(error);
-                }
-            });
+                // Your existing AJAX code...
+                $.ajax({
+                    type: 'GET',
+                    url: '/get-wards',
+                    data: { hospital_id: hospitalId },
+                    success: function (response) {
+                        console.log(response);
+                        var options = '<option value="" disabled selected>Select Ward...</option>';
+                        $.each(response.wards, function (key, ward) {
+                            options += '<option value="' + ward.id + '">' + ward.ward + '</option>';
+                        });
+                        $('#wardno').html(options);
+
+                        $('#ward_id').val(response.wards[0].id);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
         });
 
         $('#wardno').change(function () {
