@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Room;
 use App\Models\Advance;
 use App\Models\Booking;
+use App\Models\Canteen;
 use App\Models\Parking;
 use App\Models\Setting;
 use Twilio\Rest\Client;
@@ -39,10 +40,17 @@ class BookingController extends Controller
     public function index()
     {
         Gate::authorize('view', 'booking');
+
+        // Retrieve bookings from the "Bookings" table
         $bookings = Booking::orderBy('check_out_time', 'asc')
             ->orderBy('id', 'desc')
             ->get();
-        return view('pages.booking.view', compact('bookings'));
+
+        // Retrieve canteens from the "Canteens" table
+        $canteens = Canteen::all();
+        $category = RoomCategory::all();
+
+        return view('pages.booking.view', compact('bookings', 'canteens','category'));
     }
 
 
@@ -918,6 +926,44 @@ public function test()
 
     return response()->json(['exists' => $existingSlip && $existingSlip->id != $bookingId]);
 }
+
+public function addCanteen(Request $request)
+{
+     //  dd($request->all());
+    $canteen = new Canteen();
+    $canteen->name = $request->input('name');
+    $canteen->room_id = $request->input('room_id');
+    $canteen->startdate = $request->input('startdate');
+    $canteen->enddate = $request->input('enddate');
+    $canteen->amount = $request->input('amount');
+
+    $canteen->save();
+
+    // Redirect back or to a success page
+    return redirect()->back()->with('success', 'Canteen added successfully!');
+}
+
+public function editCanteen($id)
+{
+    $canteen = Canteen::with('room')->findOrFail($id);
+
+    return response()->json($canteen);
+}
+
+
+public function updateCanteen(Request $request, $id)
+{
+    $canteen = Canteen::findOrFail($id);
+    $canteen->name = $request->input('name');
+    $canteen->room_id = $request->input('room_id');
+    $canteen->startdate = $request->input('startdate');
+    $canteen->enddate = $request->input('enddate');
+    $canteen->amount = $request->input('amount');
+    $canteen->save();
+
+    return redirect()->back()->with('success', 'Canteen updated successfully');
+}
+
 
     }
 

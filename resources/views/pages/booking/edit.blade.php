@@ -35,6 +35,7 @@
                                     @endif
                                     name="patient"
                                         value="non-cancer">
+
                                     Non Cancer Patient
                                 </label>
                                 <label class=" fs-7 fw-bold mb-1">
@@ -453,7 +454,9 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
-        function select_categoryEdit(id) {
+
+(function(){
+    function select_categoryEdit(id) {
             var cate_id = $('#categoryedit').val();
             var  pre_room =$('input[name=edit_roomno]').val();
             // console.log(pre_room);
@@ -711,6 +714,11 @@
                 $(this).find(':button[type=submit]').prop('disabled', true);
             });
         });
+
+
+})();
+
+
     </script>
 @endsection
 

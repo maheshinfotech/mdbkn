@@ -138,6 +138,13 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::post('/getBookedRoomsCount', [BookingController::class, 'getBookedRoomsCount'])->name('getBookedRoomsCount');
             Route::post('/getBookedRoomsDetails', [BookingController::class, 'getBookedRoomsDetails'])->name('getBookedRoomsDetails');
             Route::get('/check-slipno', [BookingController:: class ,'checkSlipNo']);
+            Route::post('/add-canteen', [BookingController::class, 'addCanteen']);
+            Route::get('/canteens/{id}', [BookingController::class,'editCanteen']);
+            Route::put('/canteens/{id}', [BookingController::class,'updateCanteen'])->name('canteens.update');
+
+
+
+
              Route::delete('/hospital/delete/{id}', [HospitalController::class,'destroy'])->name('hospital.delete');
              Route::post('/hospital/store', [HospitalController::class, 'store'])->name('hospital.store');
              Route::get('/hospital/edit/{id}', [HospitalController::class, 'edit']);
