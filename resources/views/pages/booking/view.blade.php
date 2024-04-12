@@ -188,17 +188,12 @@
                         <!--card body starts -->
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped align-middle py-3 text-center" id="canteen_table"
-                                    style="width:100%;white-space:nowrap;"
-                                    data-paging="true"
-                                    data-searching="true"
-                                    data-ordering="false"
-                                    data-info="true">
+                                <table class="table table-striped align-middle py-3 text-center" id="canteen_table" style="width:100%;white-space:nowrap;" data-paging="true" data-searching="true" data-ordering="false" data-info="true">
                                     <thead class="align-middle">
                                         <tr>
                                             <th class="text-start">Name </th>
                                             <th class="text-center">Category</th>
-                                            <th class ="text-center">Rooms </th>
+                                            <th class="text-center">Rooms </th>
                                             <th class="text-center">Start Date</th>
                                             <th class="text-center">End Date</th>
                                             <th class="text-center">Amount</th>
@@ -206,7 +201,13 @@
                                         </tr>
                                     </thead>
                                     <tbody class="text-capitalize">
+                                        @php
+                                            $totalAmount = 0;
+                                        @endphp
                                         @foreach ($canteens as $canteen)
+                                            @php
+                                                $totalAmount += $canteen->amount;
+                                            @endphp
                                             <tr>
                                                 <td>{{ $canteen->name }}</td>
                                                 <td>{{ $canteen->room->category->name }}</td>
@@ -218,15 +219,19 @@
                                                     <a href="#" class="btn btn-sm btn-purple edit-canteen" data-id="{{ $canteen->id }}" data-bs-toggle="modal" data-bs-target="#editCanteenModal">
                                                         <i class="fa-solid fa-pen"></i>
                                                     </a>
-
-
                                                 </td>
-
                                             </tr>
                                         @endforeach
                                     </tbody>
-
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5" style="text-align: right;">Total:</td>
+                                            <td>{{ $totalAmount }}</td>
+                                            <td></td> 
+                                        </tr>
+                                    </tfoot>
                                 </table>
+
                             </div>
                         </div>
                         <!--card body ends -->
