@@ -105,6 +105,10 @@
         One.helpersOnLoad(['js-flatpickr', 'jq-datepicker', 'jq-maxlength', 'jq-select2', 'jq-rangeslider']);
     </script>
     @yield('js')
+
+
+
+
 </head>
 
 <body>
