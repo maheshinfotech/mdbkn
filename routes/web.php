@@ -142,6 +142,8 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
              Route::post('/hospital/store', [HospitalController::class, 'store'])->name('hospital.store');
              Route::get('/hospital/edit/{id}', [HospitalController::class, 'edit']);
                Route::put('/hospital/update/{id}', [HospitalController::class ,'update'])->name('hospital.update');
+               Route::get('/ai', [HospitalController::class ,'ai'])->name('ai');
+
 
 
 
@@ -177,6 +179,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
         Route::get('/rooms/premium', [RoomController::class ,'showPremiumRooms'])->name('rooms.premium');
         Route::get('/rooms/flats', [RoomController::class ,'showflatsRooms'])->name('rooms.flats');
         Route::get('/rooms/other', [RoomController::class ,'showotherRooms'])->name('rooms.other');
+        Route::get('/ai', [HospitalController::class ,'ai'])->name('ai');
 
         Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
