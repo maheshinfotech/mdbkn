@@ -420,6 +420,7 @@
                 }
             });
             // canteenTable.buttons().container().appendTo('.col-md-6:eq(0)');
+            // hrllo
          });
     </script>
 @endsection
