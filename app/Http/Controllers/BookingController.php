@@ -936,6 +936,7 @@ public function addCanteen(Request $request)
     $canteen->startdate = $request->input('startdate');
     $canteen->enddate = $request->input('enddate');
     $canteen->amount = $request->input('amount');
+    $canteen->slipno = $request->input('slipno');
 
     $canteen->save();
 
@@ -951,6 +952,7 @@ public function editCanteen($id)
 }
 
 
+
 public function updateCanteen(Request $request, $id)
 {
     $canteen = Canteen::findOrFail($id);
@@ -959,10 +961,12 @@ public function updateCanteen(Request $request, $id)
     $canteen->startdate = $request->input('startdate');
     $canteen->enddate = $request->input('enddate');
     $canteen->amount = $request->input('amount');
+    $canteen->slipno = $request->input('slipno');
     $canteen->save();
 
-    return redirect()->back()->with('success', 'Canteen updated successfully');
+    return response()->json(['success' => true, 'message' => 'Canteen updated successfully']);
 }
+
 
 
     }

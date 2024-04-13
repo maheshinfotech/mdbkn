@@ -401,6 +401,10 @@
                                         <label class="fw-bold mb-1">Amount:</label>
                                         <input type="text" class="form-control" id="" name="amount" value="" />
                                     </div>
+                                    <div class="col-md-4 col-12 mb-4">
+                                        <label class="fw-bold mb-1">Slip_No:</label>
+                                        <input type="text" class="form-control" id="" name="slipno" value="" />
+                                    </div>
                                 </div>
                                 <div class="text-center mt-4">
                                     <button type="submit" class="btn btn-purple btn-lg">Add Canteen</button>
