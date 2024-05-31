@@ -169,4 +169,10 @@ public function edit($id)
 
     return response()->json(['wards' => $wards]);
 }
+
+
+public function ai(){
+    return view('pages.room.ai');
+}
+
 }

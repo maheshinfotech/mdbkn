@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Room;
 use App\Models\Advance;
 use App\Models\Booking;
+use App\Models\Canteen;
 use App\Models\Parking;
 use App\Models\Setting;
 use Twilio\Rest\Client;
@@ -39,11 +40,24 @@ class BookingController extends Controller
     public function index()
     {
         Gate::authorize('view', 'booking');
-        $bookings = Booking::orderBy('check_out_time', 'asc')
+
+        $currentYear = Carbon::now()->year;
+
+        $startDate = Carbon::create($currentYear, 4, 1);
+
+        $endDate = Carbon::create($currentYear + 1, 3, 31);
+
+        $bookings = Booking::whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('check_out_time', 'asc')
             ->orderBy('id', 'desc')
             ->get();
-        return view('pages.booking.view', compact('bookings'));
+        $canteens = Canteen::all();
+        $category = RoomCategory::all();
+          $parkings = Parking::all();
+
+        return view('pages.booking.view', compact('bookings', 'canteens', 'category' ,'parkings'));
     }
+
 
 
 
@@ -63,7 +77,7 @@ class BookingController extends Controller
                       ->orderByRaw('check_out_time', $selectedDate);
             }
         })
-        ->get()
+        ->orderBy('slip_no', 'asc')->get()
         ->map(function ($booking) {
             $booking->check_in_times = Carbon::parse($booking->getRawOriginal('check_in_time'))->format('d-M-y h:i A');
 
@@ -111,7 +125,7 @@ class BookingController extends Controller
     public function store(Request $request)
     {
 
-
+              //  dd($request->all());
         $request->validate(
 
             [
@@ -376,6 +390,7 @@ class BookingController extends Controller
         }
 
     public function getguestpreviousdetails(Request $request) {
+      //  dd($request->all());
         $guestpredetail = Booking::where('mobile_number',$request->numb)->latest()->first();
 
             return response()->json(
@@ -908,6 +923,72 @@ public function test()
             dd("Error: ". $e->getMessage());
         }
     }
+    public function checkSlipNo(Request $request)
+{
+    $slipNo = $request->input('slipNo');
+    $bookingId = $request->input('bookingId');
+
+    $existingSlip = Booking::where('slip_no', $slipNo)->first();
+
+    return response()->json(['exists' => $existingSlip && $existingSlip->id != $bookingId]);
+}
+
+public function addCanteen(Request $request)
+{
+     //  dd($request->all());
+    $canteen = new Canteen();
+    $canteen->name = $request->input('name');
+    $canteen->room_id = $request->input('room_id');
+    $canteen->startdate = $request->input('startdate');
+    $canteen->enddate = $request->input('enddate');
+    $canteen->amount = $request->input('amount');
+    $canteen->slipno = $request->input('slipno');
+
+    $canteen->save();
+
+    // Redirect back or to a success page
+    return redirect()->back()->with('success', 'Canteen added successfully!');
+}
+
+public function editCanteen($id)
+{
+    $canteen = Canteen::with('room')->findOrFail($id);
+
+    return response()->json($canteen);
+}
+
+
+
+public function updateCanteen(Request $request, $id)
+{
+    $canteen = Canteen::findOrFail($id);
+    $canteen->name = $request->input('name');
+    $canteen->room_id = $request->input('room_id');
+    $canteen->startdate = $request->input('startdate');
+    $canteen->enddate = $request->input('enddate');
+    $canteen->amount = $request->input('amount');
+    $canteen->slipno = $request->input('slipno');
+    $canteen->save();
+
+    return response()->json(['success' => true, 'message' => 'Canteen updated successfully']);
+}
+
+public function Parkingadd(Request $request)
+{
+   // dd($request->all());
+    $request->validate([
+        'date' => 'required|date',
+        'amount' => 'required|numeric'
+    ]);
+
+    $parking = new Parking();
+    $parking->date = $request->date;
+    $parking->amount = $request->amount;
+    $parking->save();
+
+    return redirect()->back()->with('success', 'Parking added successfully!');
+}
+
 
     }
 

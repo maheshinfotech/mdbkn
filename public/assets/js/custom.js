@@ -126,11 +126,13 @@ $(document).ready(function () {
         }else{
             $('.cancer-purpose').hide();
         }
-          if(patient == 'cancer' && is_admit == '1'){
+          if( (patient == 'cancer'|| patient=='non-cancer') && is_admit == '1' ){
             $('.pbmroomno').show();
             // $('.cancer-purpose').show();
         }else{
             $('.pbmroomno').hide();
+            // $('.pbmroomno').hide();
+
             // $('.cancer-purpose').hide();
         }
 

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RoomController;
@@ -136,12 +137,21 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::get('/datebooking/filter', [BookingController::class ,'filterByDate'])->name('datebooking.filter');
             Route::post('/getBookedRoomsCount', [BookingController::class, 'getBookedRoomsCount'])->name('getBookedRoomsCount');
             Route::post('/getBookedRoomsDetails', [BookingController::class, 'getBookedRoomsDetails'])->name('getBookedRoomsDetails');
+            Route::get('/check-slipno', [BookingController:: class ,'checkSlipNo']);
+            Route::post('/add-canteen', [BookingController::class, 'addCanteen']);
+            Route::get('/canteens/{id}', [BookingController::class,'editCanteen']);
+            Route::put('/canteens/{id}', [BookingController::class,'updateCanteen'])->name('canteens.update');
+            Route::post('/parkings', [BookingController::class, 'Parkingadd'])->name('parkings.store');
+
+
 
 
              Route::delete('/hospital/delete/{id}', [HospitalController::class,'destroy'])->name('hospital.delete');
              Route::post('/hospital/store', [HospitalController::class, 'store'])->name('hospital.store');
              Route::get('/hospital/edit/{id}', [HospitalController::class, 'edit']);
                Route::put('/hospital/update/{id}', [HospitalController::class ,'update'])->name('hospital.update');
+               Route::get('/ai', [HospitalController::class ,'ai'])->name('ai');
+
 
 
 
@@ -177,6 +187,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
         Route::get('/rooms/premium', [RoomController::class ,'showPremiumRooms'])->name('rooms.premium');
         Route::get('/rooms/flats', [RoomController::class ,'showflatsRooms'])->name('rooms.flats');
         Route::get('/rooms/other', [RoomController::class ,'showotherRooms'])->name('rooms.other');
+        Route::get('/ai', [HospitalController::class ,'ai'])->name('ai');
 
         Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
@@ -200,5 +211,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::post('/reset-password/{id}', 'resetPassword');
 
         });
+
+
     });
 });
