@@ -557,6 +557,7 @@
                             table.find('tbody').append(row);
 
                 // console.log('Total Payable Rent:', totalPayableRent.toFixed(2));
+                //data show update data
 
                     initializeDataTable();
                 },
