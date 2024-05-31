@@ -146,7 +146,6 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
 
 
 
-
              Route::delete('/hospital/delete/{id}', [HospitalController::class,'destroy'])->name('hospital.delete');
              Route::post('/hospital/store', [HospitalController::class, 'store'])->name('hospital.store');
              Route::get('/hospital/edit/{id}', [HospitalController::class, 'edit']);

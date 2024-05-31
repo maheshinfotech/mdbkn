@@ -262,6 +262,7 @@
                        <!--card body starts -->
                        <div class="card-body">
                            <div class="table-responsive">
+<<<<<<< HEAD
                             <table class="table table-striped align-middle py-3 text-center" id="parking_table" style="width:100%;white-space:nowrap;" data-paging="true" data-searching="true" data-ordering="false" data-info="true">
                                 <thead class="align-middle">
                                     <tr>
@@ -298,6 +299,39 @@
                                 </tbody>
                             </table>
 
+=======
+                               <table class="table table-striped align-middle py-3 text-center" id="parking_table" style="width:100%;white-space:nowrap;" data-paging="true" data-searching="true" data-ordering="false" data-info="true">
+                                   <thead class="align-middle">
+                                       <tr>
+                                           <th class="text-start">Date </th>
+                                           <th class="text-center">Amount</th>
+                                           <th class="text-end">Action</th>
+                                       </tr>
+                                   </thead>
+                                   <tbody class="text-capitalize">
+                                    @foreach($parkings as $parking)
+                                        <tr>
+                                            <td class="text-start">
+                                                @if($parking->date)
+                                                    {{ $parking->date->format('d-M-y') }}
+                                                @else
+                                                    Not set
+                                                @endif
+                                            </td>
+
+                                            <td class="text-center">{{ number_format($parking->amount, 2) }}</td>
+                                            <td class="text-end">
+                                                <a href="javascript:void(0)" class="btn btn-sm btn-purple " data-bs-toggle="modal" data-bs-target="#addparking" data-id="{{ $parking->id }}">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                </a>
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+
+                               </table>
+>>>>>>> ba890a9075891d9ed0c1f1ed948b00c38123b676
 
                            </div>
                        </div>
