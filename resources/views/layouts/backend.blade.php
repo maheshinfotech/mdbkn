@@ -10,9 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-
     <title>{{ config('app.app_name') }} | {{ $pageName ?? '' }}</title>
-
     <meta name="description"
         content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
     <meta name="author" content="pixelcave">
@@ -32,7 +30,7 @@
     <link rel="stylesheet"
         href="{{ asset('js/plugins/datatables-responsive-bs5/css/responsive.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('js/plugins/flatpickr/flatpickr.min.css') }}">
-    <link rel="stylesheet" id="css-main" href="{{ asset('theme/css/oneui.min.css') }}">
+    {{-- <link rel="stylesheet" id="css-main" href="{{ asset('theme/css/oneui.min.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('js/plugins/ion-rangeslider/css/ion.rangeSlider.css') }}">
     <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/custom.css?' . date('Ymdhis')) }}">
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> --}}
@@ -50,6 +48,94 @@
         }
     </style>
     <!-- Modules -->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style type="text/css" scoped>
+        @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        a,
+        a:hover,
+        a:focus {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .navbar {
+            padding: 15px 10px;
+            background: #fff;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 40px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ---------------------------------------------------
+            SIDEBAR STYLE
+        ----------------------------------------------------- */
+
+        .wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background: rgba(50, 53, 93, 0.9);
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        #sidebar.active {
+            margin-left: -250px;
+        }
+
+        #sidebar .sidebar-header {
+            padding: 22px;
+            background: rgba(50, 53, 93, 0.9);
+        }
+
+        #sidebar ul li a {
+            padding: 12px;
+            padding-left: 22px;
+            display: block;
+        }
+
+        #sidebar ul li a:hover {
+            color: #7386D5;
+            background: #fff;
+        }
+
+        #sidebar ul li.active>a,
+        a[aria-expanded="true"] {
+            color: #fff;
+            background: #6d7fcc;
+        }
+
+        #content {
+            width: 100%;
+            min-height: 100vh;
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            #sidebar {
+                margin-left: -250px;
+            }
+            #sidebar.active {
+                margin-left: 0;
+            }
+            #sidebarCollapse span {
+                display: none;
+            }
+        }
+    </style>
 
     {{-- @vite(['resources/sass/main.scss', 'resources/js/oneui/app.js']) --}}
 
@@ -60,7 +146,6 @@
         const base = "{!! url(config('app.admin_prefix')) !!}";
     </script>
     {{-- datatables cdn start --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
@@ -73,7 +158,7 @@
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
     {{-- datatables cdn end --}}
-    <script src="{{ asset('theme/js/oneui.app.min.js') }}"></script>
+    {{-- <script src="{{ asset('theme/js/oneui.app.min.js') }}"></script> --}}
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
@@ -108,151 +193,82 @@
 </head>
 
 <body>
-    <!-- add class sidebar-dark for dark code -->
-    <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-fixed main-content-narrow">
-        <!-- Side Overlay-->
-        <!-- Side Overlay-->
-        <aside id="side-overlay">
-            <!-- Side Header -->
-            <div class="content-header border-bottom">
-                <!-- User Avatar -->
-                <a class="img-link me-1" href="javascript:void(0)">
-                    <img class="img-avatar img-avatar32" src="{{ asset('media/avatars/avatar10.jpg') }}"
-                        alt="">
-                </a>
-                <!-- END User Avatar -->
 
-                <!-- User Info -->
-                <div class="ms-2">
-                    <a class="text-dark fw-semibold fs-sm" href="javascript:void(0)">John Smith</a>
-                </div>
-                <!-- END User Info -->
-
-                <!-- Close Side Overlay -->
-                <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                <a class="ms-auto btn btn-sm btn-alt-danger" href="javascript:void(0)" data-toggle="layout"
-                    data-action="side_overlay_close">
-                    <i class="fa fa-fw fa-times"></i>
-                </a>
-                <!-- END Close Side Overlay -->
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h4 >Maheshwari Dharamshala</h4>
             </div>
-            <!-- END Side Header -->
+            <div class="text-start">
+                <ul class="navbar-nav justify-content-end flex-grow-1 ">
+                    @foreach ($parentMenus as $parentMenu)
+                    @php
+                        if ($parentMenu->is_active == 0) {
+                            continue;
+                        }
+                        $otherClass = count($parentMenu->childMenus) ? '' : '';
+                        $otherSubClass = count($parentMenu->childMenus) ? 'nav-main-link-submenu' : '';
+                        $otherAttributes = count($parentMenu->childMenus) ? "data-toggle='submenu' aria-haspopup='true' aria-expanded='false'" : '';
 
-            <!-- Side Content -->
-            <div class="content-side">
-                <p>
-                    Content..
-                </p>
-            </div>
-            <!-- END Side Content -->
-        </aside>
-        <!-- END Side Overlay -->
-        <nav id="sidebar" class="" aria-label="Main Navigation" >
-            <!-- Side Header -->
-            <div class="content-header d-flex justify-content-center " style="background-color: rgba(50, 53, 93, 0.9); color:white;">
-                <!-- Logo -->
-                <a class="font-semibold text-dual mt-4" href="{{ url(config('app.admin_prefix')) }}">
-                    <span class="smini-visible">
-                        <i class="fa fa-circle-notch text-primary"></i>
-                    </span>
-                    <!-- <span class="smini-hide fs-5 tracking-wider">{{ config('app.app_name') }}</span> -->
-                    <span class="text-center fw-bolder">
-                        {{-- <img class="" src="{{ asset('media/logo.png') }}" alt="Header Avatar"
-                            style="width: 100px;height:80px"> --}}
-                            <h6 class="text-white">Maheshwari Dharamshala</h6>
-                    </span>
-                </a>
-                <!-- END Logo -->
-            </div>
-            <!-- END Side Header -->
-
-            <!-- Sidebar Scrolling -->
-            <div class="js-sidebar-scroll" style="background-color: rgba(50, 53, 93, 0.9); color:white;">
-                <!-- Side Navigation -->
-                <div class="content-side ">
-                    <ul class="nav-main">
-
-                        @foreach ($parentMenus as $parentMenu)
-                            @php
-                                if ($parentMenu->is_active == 0) {
-                                    continue;
+                        $menu_arr = $parentMenu->toArray();
+                        $parentMenuOpen = '';
+                        if (isset($menu_arr['child_menus']) && !empty(isset($menu_arr['child_menus']))) {
+                            foreach ($menu_arr['child_menus'] as $cm) {
+                                if (str_contains($routePrefix, $cm['menu_href'])) {
+                                    $parentMenuOpen = 'open';
                                 }
-                                $otherClass = count($parentMenu->childMenus) ? '' : '';
-                                $otherSubClass = count($parentMenu->childMenus) ? 'nav-main-link-submenu' : '';
-                                $otherAttributes = count($parentMenu->childMenus) ? "data-toggle='submenu' aria-haspopup='true' aria-expanded='false'" : '';
+                            }
+                        }
 
-                                $menu_arr = $parentMenu->toArray();
-                                $parentMenuOpen = '';
-                                if (isset($menu_arr['child_menus']) && !empty(isset($menu_arr['child_menus']))) {
-                                    foreach ($menu_arr['child_menus'] as $cm) {
-                                        if (str_contains($routePrefix, $cm['menu_href'])) {
-                                            $parentMenuOpen = 'open';
-                                        }
-                                    }
-                                }
+                    @endphp
 
-                            @endphp
+                    <li class="nav-main-item text-capitalize {{ $parentMenuOpen }} {{ $otherClass }}" >
+                        <a class=" nav-main-link {{ in_array(config('app.admin_prefix') . $parentMenu['menu_href'], [$routePrefix, $parentRoute]) ? 'active' : '' }} {{ $otherSubClass }}"
+                            href="{{ $parentMenu['menu_href'] ? url(config('app.admin_prefix') . $parentMenu['menu_href']) : '#' }}"
+                            {!! $otherAttributes !!}>
+                            {!! $parentMenu['menu_icon'] !!}
+                            <span class="nav-main-link-name mx-2">{{ $parentMenu['menu_placeholder'] }}</span>
+                        </a>
 
-                            <li class="nav-main-item text-capitalize {{ $parentMenuOpen }} {{ $otherClass }}" >
-                                <a class=" nav-main-link {{ in_array(config('app.admin_prefix') . $parentMenu['menu_href'], [$routePrefix, $parentRoute]) ? 'active' : '' }} {{ $otherSubClass }}"
-                                    href="{{ $parentMenu['menu_href'] ? url(config('app.admin_prefix') . $parentMenu['menu_href']) : '#' }}"
-                                    {!! $otherAttributes !!}>
-                                    {!! $parentMenu['menu_icon'] !!}
-                                    <span class="nav-main-link-name mx-2">{{ $parentMenu['menu_placeholder'] }}</span>
-                                </a>
-
-                                @if (count($parentMenu->childMenus))
-                                    <ul class="nav-main-submenu">
-                                        @foreach ($parentMenu->childMenus as $childMenu)
-                                            <!-- if($role_id==1 && ($childMenu->id==14 || $childMenu->id==15))
-                                                continue
-                                            endif -->
-                                            @if ($childMenu->is_active == 0)
-                                                @continue;
-                                            @endif
-                                            @php
-                                                $is_active_menu = config('app.admin_prefix') . $childMenu['menu_href'] == $routePrefix ? 'active' : '';
-                                            @endphp
-                                            <li class="nav-main-item">
-                                                <a class="nav-main-link {{ $is_active_menu }} "
-                                                    href="{{ url(config('app.admin_prefix') . $childMenu['menu_href']) }}">
-                                                    <span
-                                                        class="nav-main-link-name">{{ $childMenu['menu_placeholder'] }}</span>
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                @endif
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                <!-- END Side Navigation -->
+                        @if (count($parentMenu->childMenus))
+                            <ul class="nav-main-submenu">
+                                @foreach ($parentMenu->childMenus as $childMenu)
+                                    <!-- if($role_id==1 && ($childMenu->id==14 || $childMenu->id==15))
+                                        continue
+                                    endif -->
+                                    @if ($childMenu->is_active == 0)
+                                        @continue;
+                                    @endif
+                                    @php
+                                        $is_active_menu = config('app.admin_prefix') . $childMenu['menu_href'] == $routePrefix ? 'active' : '';
+                                    @endphp
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link {{ $is_active_menu }} "
+                                            href="{{ url(config('app.admin_prefix') . $childMenu['menu_href']) }}">
+                                            <span
+                                                class="nav-main-link-name">{{ $childMenu['menu_placeholder'] }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </li>
+                    @endforeach
+                </ul>
             </div>
-            <!-- END Sidebar Scrolling -->
         </nav>
-        <!-- END Sidebar -->
-        <!-- Header -->
-        <header id="page-header">
-            <!-- Header Content -->
-            <div class="content-header w-100" style="background-color: rgba(50, 53, 93, 0.9); color:white;">
-                <!-- Left Section -->
-                <div class="d-flex align-items-center">
-                    <!-- Toggle Sidebar -->
-                    <!-- Layout API, functionality initialized in Template._uiApiLayout()-->
-                    <button type="button" class="btn btn-sm btn-alt-secondary me-2 d-lg-none" data-toggle="layout"
-                    data-action="sidebar_toggle">
-                        <i class="fa fa-fw fa-bars"></i>
+        
+        <!-- Page Content  -->
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(50, 53, 93, 0.9);">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-dark">
+                        <i class="fa fa-caret-right"></i>
                     </button>
-                    <!-- END Toggle Sidebar -->
-                </div>
-                <!-- END Left Section -->
-
-                <!-- Right Section -->
-                <div class="d-flex align-items-center">
                     <!-- User Dropdown -->
                     <div class="dropdown d-inline-block ms-2">
-                        <button type="button" class="btn btn-sm btn-alt-secondary d-flex align-items-center"
+                        <button type="button" class="btn btn-sm btn-light d-flex align-items-center"
                             id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
                             <img class="rounded-circle" src="{{ asset('media/avatars/avatar10.jpg') }}"
@@ -281,80 +297,67 @@
                         </div>
                     </div>
                     <!-- END User Dropdown -->
-
-                    <!-- Notifications Dropdown -->
-                    {{-- <div class="dropdown d-inline-block ms-2">
-                        <button type="button" class="btn btn-sm btn-alt-secondary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-fw fa-bell"></i>
-                        <span class="text-primary">•</span>
-                        </button>
-                    </div> --}}
-                    <!-- END Notifications Dropdown -->
-
-                    <!-- Toggle Side Overlay -->
-                    <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                    {{-- <button type="button" class="btn btn-sm btn-alt-secondary ms-2" data-toggle="layout" data-action="side_overlay_toggle">
-                        <i class="fa fa-fw fa-list-ul fa-flip-horizontal"></i>
-                    </button> --}}
-                    <!-- END Toggle Side Overlay -->
                 </div>
-                <!-- END Right Section -->
-            </div>
-            <!-- Header content -->
-            <!-- Please check out the Loaders page under Components category to see examples of showing/hiding it -->
-            <div id="page-header-loader" class="overlay-header bg-body-extra-light">
-                <div class="content-header">
-                    <div class="w-100 text-center">
-                        <i class="fa fa-fw fa-circle-notch fa-spin"></i>
+                <!-- Please check out the Loaders page under Components category to see examples of showing/hiding it -->
+                {{-- <div id="page-header-loader" class="overlay-header bg-body-extra-light">
+                    <div class="content-header">
+                        <div class="w-100 text-center">
+                            <i class="fa fa-fw fa-circle-notch fa-spin"></i>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <!-- END Header Loader -->
-        </header>
-        <!-- END Header -->
+                </div> --}}
+                <!-- END Header Loader -->
+            </nav>
 
-
-        <!-- Main Container -->
-        <main id="main-container">
-            @yield('content')
-        </main>
+            <!-- Main Container -->
+            <main id="main-container">
+                @yield('content')
+            </main>
+        </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
 
     <!-- Page JS Code -->
     <script src="{{ url('theme/js/pages/be_tables_datatables.min.js') }}"></script>
-    @php
-        $flash = request()
-            ->session()
-            ->get('flash_data');
-        $message = '';
-        $status = false;
+        @php
+            $flash = request()
+                ->session()
+                ->get('flash_data');
+            $message = '';
+            $status = false;
 
-        if ($flash) {
-            $notification_class = $flash['status'] ? 'success' : 'danger';
-            $message = $flash['message'];
-            $status = $flash['status'];
-        } elseif ($errors->any()) {
-            $notification_class = 'danger';
+            if ($flash) {
+                $notification_class = $flash['status'] ? 'success' : 'danger';
+                $message = $flash['message'];
+                $status = $flash['status'];
+            } elseif ($errors->any()) {
+                $notification_class = 'danger';
 
-            foreach ($errors->all() as $error) {
-                $message .= "<span>$error</span><br>";
+                foreach ($errors->all() as $error) {
+                    $message .= "<span>$error</span><br>";
+                }
             }
-        }
 
-        $flashData = [];
+            $flashData = [];
 
-        if ($message) {
-            $flashData = [
-                'class' => $notification_class,
-                'message' => $message,
-            ];
-        }
-    @endphp
+            if ($message) {
+                $flashData = [
+                    'class' => $notification_class,
+                    'message' => $message,
+                ];
+            }
+        @endphp
     <script>
         let show_alert = JSON.parse('{!! isset($flashData) ? json_encode($flashData) : json_encode([]) !!}');
     </script>
     <!-- END Page Container -->
 </body>
-
 </html>
