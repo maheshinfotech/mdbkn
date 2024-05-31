@@ -41,17 +41,23 @@ class BookingController extends Controller
     {
         Gate::authorize('view', 'booking');
 
-        // Retrieve bookings from the "Bookings" table
-        $bookings = Booking::orderBy('check_out_time', 'asc')
+        $currentYear = Carbon::now()->year;
+
+        $startDate = Carbon::create($currentYear, 4, 1);
+
+        $endDate = Carbon::create($currentYear + 1, 3, 31);
+
+        $bookings = Booking::whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('check_out_time', 'asc')
             ->orderBy('id', 'desc')
             ->get();
-
-        // Retrieve canteens from the "Canteens" table
         $canteens = Canteen::all();
         $category = RoomCategory::all();
+          $parkings = Parking::all();
 
-        return view('pages.booking.view', compact('bookings', 'canteens','category'));
+        return view('pages.booking.view', compact('bookings', 'canteens', 'category' ,'parkings'));
     }
+
 
 
 
@@ -967,6 +973,21 @@ public function updateCanteen(Request $request, $id)
     return response()->json(['success' => true, 'message' => 'Canteen updated successfully']);
 }
 
+public function Parkingadd(Request $request)
+{
+   // dd($request->all());
+    $request->validate([
+        'date' => 'required|date',
+        'amount' => 'required|numeric'
+    ]);
+
+    $parking = new Parking();
+    $parking->date = $request->date;
+    $parking->amount = $request->amount;
+    $parking->save();
+
+    return redirect()->back()->with('success', 'Parking added successfully!');
+}
 
 
     }

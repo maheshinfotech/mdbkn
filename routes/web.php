@@ -141,6 +141,8 @@ Route::prefix(config('app.admin_prefix'))->group(function () {
             Route::post('/add-canteen', [BookingController::class, 'addCanteen']);
             Route::get('/canteens/{id}', [BookingController::class,'editCanteen']);
             Route::put('/canteens/{id}', [BookingController::class,'updateCanteen'])->name('canteens.update');
+            Route::post('/parkings', [BookingController::class, 'Parkingadd'])->name('parkings.store');
+
 
 
 

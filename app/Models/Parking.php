@@ -10,4 +10,5 @@ class Parking extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $dates = ['date'];
 }
