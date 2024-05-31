@@ -302,6 +302,7 @@
                            </div>
                        </div>
                        <!--card body ends -->
+                       {{-- data chekout --}}
                    </div>
                    <!-- card end -->
                </div>
@@ -557,7 +558,7 @@
                             table.find('tbody').append(row);
 
                 // console.log('Total Payable Rent:', totalPayableRent.toFixed(2));
-                //hello
+                //data show update data
 
                     initializeDataTable();
                 },
