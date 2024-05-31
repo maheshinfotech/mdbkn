@@ -368,6 +368,7 @@
                                         <input type="text" class="form-control" name="name" value=""  />
                                     </div>
 
+
                                     <div class="col-lg-4 col-12 mb-4">
                                         <label class=" fs-7 fw-bold mb-1 ">Choose Category<span class="text-danger">*</span></label>
                                         <select id="categoryes" class="form-select" name="category"
@@ -400,10 +401,6 @@
                                     <div class="col-md-4 col-12 mb-4">
                                         <label class="fw-bold mb-1">Amount:</label>
                                         <input type="text" class="form-control" id="" name="amount" value="" />
-                                    </div>
-                                    <div class="col-md-4 col-12 mb-4">
-                                        <label class="fw-bold mb-1">Slip_No:</label>
-                                        <input type="text" class="form-control" id="" name="slipno" value="" />
                                     </div>
                                 </div>
                                 <div class="text-center mt-4">
@@ -618,5 +615,114 @@
         });
         })();
 
+        var auth_token;
+
+function dropdown_state() {
+    $.ajax({
+        type: "GET",
+        url: "https://www.universal-tutorial.com/api/getaccesstoken",
+        success: function(data) {
+            auth_token = data.auth_token;
+            get_state(data.auth_token);
+        },
+        headers: {
+            Accept: "application/json",
+            "api-token": "D-FpCSCxWG7D2BjTHw7fu6AG4NJLVdTsPy-quvPKpXt-hfNo8xwOvacZauakrYwsGvY",
+            "user-email": "monikabothra1996@gmail.com",
+        },
+    });
+    $("#state").change(function() {
+        get_city(false);
+    });
+}
+
+dropdown_state();
+
+function get_state(auth_token) {
+    var country_name = "India";
+    var state_namepre = $('input[name="editstate"]').val();
+    $.ajax({
+        type: "GET",
+        url: "https://www.universal-tutorial.com/api/states/" + country_name,
+        success: function(data) {
+            $("#state").empty();
+            var html = `<option value="">choose..</option>`;
+            data.forEach((element) => {
+                if (state_namepre==element.state_name) {
+                    html += '<option value="' +
+                    element.state_name +
+                    '" selected >' +
+                    element.state_name +
+                    "</option>";
+                }else{
+                    html += '<option value="' +
+                    element.state_name +
+                    '">' +
+                    element.state_name +
+                    "</option>";
+                }
+
+
+            });
+            $("#state").append(html);
+            // for edit ==========
+            var precity = $('input[name="editcity"]').val();
+            get_city(precity)
+            // ===================
+        },
+        headers: {
+            Authorization: "Bearer " + auth_token,
+            Accept: "application/json",
+        },
+    });
+}
+
+function get_city(city) {
+    var state_name = $("#state").val();
+    // console.log(state_name);
+    // var precity = $('input[name="editcity"]').val();
+    // if (precity!='') {
+    //             $("#city").val(precity);
+    //             return;
+    //         }
+    $.ajax({
+        type: "GET",
+        url: "https://www.universal-tutorial.com/api/cities/" + state_name,
+        success: function(data) {
+            // $("#city").val('');
+
+            $("#city").empty();
+            var unique = [...new Set(data.map((item) => item.city_name))];
+            if (city) {
+                // console.log("get_city fun",city);
+                unique.forEach((element) => {
+                    $("#city")
+                        .append(
+                            '<option value="' +
+                            element +
+                            '">' +
+                            element +
+                            "</option>"
+                        )
+                        .val(city);
+                });
+            } else {
+                unique.forEach((element) => {
+                    $("#city").append(
+                        '<option value="' +
+                        element +
+                        '">' +
+                        element +
+                        "</option>"
+                    );
+                });
+            }
+        },
+        headers: {
+            Authorization: "Bearer " + auth_token,
+            Accept: "application/json",
+        },
+    });
+}
     </script>
 @endsection
